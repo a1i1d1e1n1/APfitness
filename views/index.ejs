@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="App" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="App">
+<!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AP Fitness</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--css -->
+  <link rel="stylesheet" href="css/app.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!--Main js files-->
+  <script src="/javascripts/scripts/jquery.min.js"></script>
+  <script src="/javascripts/scripts/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+  <script src="/javascripts/scripts/angular-route.js"></script>
+  <script src="/javascripts/scripts/angular-toastr.js"></script>
+  <script src="/javascripts/mainCtrls/controllers.js"></script>
+  <script src="/javascripts/mainServices/mainServices.js"></script>
+  <script src="/javascripts/navigation/navCtrl.js"></script>
+  <script src="/javascripts/angularApp.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/">APfitness</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <form class="navbar-form navbar-right" role="search">
+        <button type="submit" class="btn btn-default">Sign In</button>
+        <button type="submit" class="btn btn-default">Register</button>
+      </form>
+    </div><!--/.navbar-collapse -->
+  </div>
+</nav>
+
+<div ng-view></div>
+</body>
+</html>
