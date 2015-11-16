@@ -6,7 +6,7 @@
     'ngRoute',
     'App.controllers',
     'navigation.controllers',
-      'App.factories'
+    'App.factories'
   ]);
 
 
