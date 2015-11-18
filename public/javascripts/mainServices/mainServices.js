@@ -15,7 +15,18 @@ app.factory('author', ['$http', function ($http) {
             return a;
         });
     };
+    a.setAll = function(user) {
+        return $http.post('/register',user).success(function(data){
+            angular.copy(data, a.authors);
 
+        });
+    };
+    a.login = function(user) {
+        return $http.post('/login',user).success(function(data){
+            angular.copy(data, a.authors);
+
+        });
+    };
 
     return a;
 
