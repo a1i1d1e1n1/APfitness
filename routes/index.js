@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var mysql      = require('mysql');
 var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
+var secret = require('../config/secret');
+
+var tokenManager = require('../config/token_manager');
 
 var pool  = mysql.createPool({
   connectionLimit : 10,
@@ -12,15 +16,11 @@ var pool  = mysql.createPool({
 });
 
 var setsalt = function(){
-  salt = crypto.randomBytes(16).toString('hex');
-
-  return salt ;
+  return crypto.randomBytes(16).toString('hex');
 };
 
 var getHash = function(password,salt){
-  var hash = crypto.pbkdf2Sync(password, salt, 1000, 64).toString('hex');
-
-  return hash ;
+  return crypto.pbkdf2Sync(password, salt, 1000, 64).toString('hex');
 };
 
 var compareHash = function(storedHash,genHash){
@@ -28,7 +28,6 @@ var compareHash = function(storedHash,genHash){
 };
 
 router.route('/user')
-
     // fetch all users
     .get(function (req, res) {
       pool.getConnection(function(err, connection) {
@@ -40,22 +39,7 @@ router.route('/user')
             console.log('Error while performing Query.');
         });
       })
-    })
-
-    // create a user
-    .post(function (req, res) {
-      pool.getConnection(function(err, connection) {
-          // Use the connection
-        connection.query('INSERT INTO USER', function(err, rows, fields) {
-          connection.release();
-          if (!err)
-            res.json(rows);
-          else
-            console.log('Error while performing Query.');
-        });
-      });
     });
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -84,26 +68,65 @@ router.route('/register')
 
   });
 
+router.route('/logout')
+    .get(function(req, res, next){
+
+        if (req.user) {
+            tokenManager.expireToken(req.headers);
+            delete req.user;
+            return res.send(200);
+        }
+        else {
+            return res.send(401);
+        }
+
+    });
+
+//login a user to the system.
 router.route('/login')
     .post(function (req, res) {
-      pool.getConnection(function(err, connection) {
-        console.log(req.body.email);
-        connection.query('SELECT * from User where email = "' + req.body.email +'"', function(err, row) {
+        //Sets the email and password that is passed from the client.
+        var email = req.body.email || '';
+        var password = req.body.password || '';
+
+        //checks to see if the email and password are valid.
+        if (email == '' || password == '') {
+            return res.sendStatus(401);
+        }
+
+        console.log(email +"  "+ password);
+
+        //Get connection to the database
+        pool.getConnection(function(err, connection) {
+        connection.query('SELECT * from User where email = "' + email +'"', function(err, row) {
           connection.release();
           if (err) {
             console.log('Error while performing Query.');
-          } else {
-            console.log(row);
-            var valid = compareHash(row[0].hash,getHash(req.body.password, row[0].salt) );
-
-            if(valid) {
-              console.log("Logged in :)");
-            }else{
-              console.log('Not valid password');
-            }
+            return res.sendStatus(401);
           }
+            //Check to see if the email exists in the system.
+            if(!row[0]){
+                console.log("Attempt failed to login with " + email);
+                return res.sendStatus(401);
+            }
+
+            //Checks if the password is valid
+            var valid =  compareHash(row[0].hash,getHash(password, row[0].salt));
+
+            if(!valid){
+                console.log("Password is incorrect " + email);
+                return res.sendStatus(401);
+            }
+            console.log("Password is correct " + email);
+
+            //Assigns a user a token.
+            var token = jwt.sign(email, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION_SEC });
+
+            return res.json({token:token});
+            });
+
         });
       });
-    });
+
 
 module.exports = router;

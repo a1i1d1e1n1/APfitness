@@ -1,23 +1,38 @@
-(function () {
+
   "use strict";
 
   // Declare app level module which depends on filters, and services
-  var module = angular.module('App', [
+  var app  = angular.module('App', [
     'ngRoute',
-    'App.controllers',
+    'App.factories',
     'navigation.controllers',
-    'App.factories'
+    'App.controllers'
   ]);
 
 
-  module.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', { templateUrl: 'views/home.ejs', controller: 'homeCtrl' });
-    $routeProvider.when('/login', { templateUrl: 'views/login.ejs', controller: 'loginCtrl' });
-    $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'registerCtrl' });
-    $routeProvider.when('/404', { templateUrl: '/views/404.html' });
+
+  app .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    $routeProvider.when('/', { templateUrl: 'views/home.ejs'});
+    $routeProvider.when('/login', { templateUrl: 'views/login.ejs', controller: 'AdminUserCtrl' });
+    $routeProvider.when('/register', { templateUrl: 'views/register.ejs' });
+    $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
+    $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true } });
     $routeProvider.otherwise({ redirectTo: '/' });
 
 
   }]);
 
-})();
+  app .config(function ($httpProvider) {
+    $httpProvider.interceptors.push('TokenInterceptor');
+  });
+
+  app .run(function($rootScope, $location, AuthenticationService, $window) {
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+      if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
+          && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
+        $location.path("/login");
+      }
+    });
+  });
+
+
