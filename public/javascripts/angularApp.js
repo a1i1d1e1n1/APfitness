@@ -6,33 +6,38 @@
     'ngRoute',
     'App.factories',
     'navigation.controllers',
-    'App.controllers'
+    'App.controllers',
+
+    'ui.calendar'
   ]);
 
 
 
-  app .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+  app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', { templateUrl: 'views/home.ejs'});
     $routeProvider.when('/login', { templateUrl: 'views/login.ejs', controller: 'AdminUserCtrl' });
     $routeProvider.when('/register', { templateUrl: 'views/register.ejs' });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
-    $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true } });
+    $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
 
 
   }]);
 
-  app .config(function ($httpProvider) {
+  app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
   });
 
-  app .run(function($rootScope, $location, AuthenticationService, $window) {
+  app.run(function($rootScope, $location, AuthenticationService, $window) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
       if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
           && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
-        $location.path("/login");
+        $location.path("/");
       }
     });
   });
+
+
+
 
 

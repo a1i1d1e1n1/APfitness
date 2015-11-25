@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="css/app.css" />
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/flat-ui-pro.min.css" rel="stylesheet">
+  <link href="css/fullcalendar.css" rel="stylesheet">
+
+
 
   <!--Main js files-->
   <script src="/javascripts/scripts/jquery.min.js"></script>
@@ -23,10 +26,12 @@
   <script src="/javascripts/Scripts/flat-ui-pro.js"></script>
   <script src="/javascripts/Scripts/prettify.js"></script>
   <script src="/javascripts/Scripts/application.js"></script>
+  <script src="/javascripts/scripts/moment.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
   <script src="/javascripts/scripts/angular-route.js"></script>
-  <script src="/javascripts/scripts/angular-toastr.js"></script>
+  <script src="/javascripts/scripts/calendar.js"></script>
+  <script src="/javascripts/scripts/fullcalendar.js"></script>
 
   <!-- Angular files-->
   <script src="/javascripts/mainCtrls/controllers.js"></script>
@@ -39,9 +44,12 @@
 
 </head>
 
-<body>
+<body style="margin-bottom: 108px;">
 
-  <nav class="navbar navbar-inverse">
+
+<div ng-controller="HomePageCtrl">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -53,26 +61,40 @@
         <a class="navbar-brand" href="#/">APfitness</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <form class="navbar-form navbar-right" role="search">
-          <button class="btn btn-default" ><a href="#/login">Log In</a></button>
-          <button class="btn btn-default"><a href="#/register">Register</a></button>
-        </form>
+
       </div><!--/.navbar-collapse -->
     </div>
   </nav>
 
 
-  <div ng-view></div>
+  <div class="container-fluid" style="padding-left: 0px;padding-right: 0px">
 
+      <div ng-view></div>
 
+  </div>
+</div>
 
 </body>
-<footer>
+<footer class="footer">
   <div class="bottom-menu bottom-menu-inverse">
     <div class="container">
-      This is the footer for this application
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <a class="bottom-menu-brand" href="#fakelink">APfitness</a>
+        </div>
+        <div class="col-md-8 col-sm-8">
+
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <ul class="bottom-menu-iconic-list">
+            <li><a class="fui-pinterest" href="#fakelink"></a></li>
+            <li><a class="fui-facebook" href="#fakelink"></a></li>
+            <li><a class="fui-twitter" href="#fakelink"></a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+    </div>
 
 </footer>
 </html>

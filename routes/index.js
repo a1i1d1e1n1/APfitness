@@ -91,7 +91,8 @@ router.route('/login')
 
         //checks to see if the email and password are valid.
         if (email == '' || password == '') {
-            return res.sendStatus(401);
+            res.status(401);
+            return res.send('Please enter a email or password');
         }
 
         console.log(email +"  "+ password);
