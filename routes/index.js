@@ -49,36 +49,38 @@ router.get('/', function(req, res, next) {
 //Register a users
 router.route('/register')
   .post(function(req, res, next){
+    if(req.body.password === req.body.passwordConfirmation){
+        var email = req.body.email;
+        var salt = setsalt();
+        var hash = getHash(req.body.password,salt);
 
-    var email = req.body.email;
-    var salt = setsalt();
-    var hash = getHash(req.body.password,salt);
 
-    console.log("hash: " + hash);
-    pool.getConnection(function(err, connection) {
-      connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' + connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) + ',true,false)', function (err, rows, fields) {
-        connection.release();
-        if (!err)
-          console.log("YEAH BITCH IT WORKED");
-        else
-          console.log("shit")
-          return next(err);
-      });
-    });
+        console.log("hash: " + hash);
+        pool.getConnection(function(err, connection) {
+            connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' + connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) + ',true,false)', function (err, rows, fields) {
+                connection.release();
+                if (!err){
+                    var token = jwt.sign(email, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION_SEC });
+                    return res.json({token:token});
+                }
+                else{
+                    console.log("shit")
+                    return next(err);
+                }
+            });
+        });
+    }
+
 
   });
 
 router.route('/logout')
-    .get(function(req, res, next){
+    .get(function(req, res){
 
-        if (req.user) {
-            tokenManager.expireToken(req.headers);
-            delete req.user;
+
+
+
             return res.send(200);
-        }
-        else {
-            return res.send(401);
-        }
 
     });
 

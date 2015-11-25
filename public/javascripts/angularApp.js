@@ -7,16 +7,15 @@
     'App.factories',
     'navigation.controllers',
     'App.controllers',
-
     'ui.calendar'
   ]);
 
 
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', { templateUrl: 'views/home.ejs'});
+    $routeProvider.when('/', { templateUrl: 'views/home.ejs', controller: 'AdminUserCtrl'});
     $routeProvider.when('/login', { templateUrl: 'views/login.ejs', controller: 'AdminUserCtrl' });
-    $routeProvider.when('/register', { templateUrl: 'views/register.ejs' });
+    $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'AdminUserCtrl'  });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
