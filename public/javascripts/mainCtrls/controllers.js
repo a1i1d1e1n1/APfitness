@@ -43,6 +43,8 @@
                 }
                 else {
                     UserService.register(email, password, passwordConfirm).success(function(data) {
+                        AuthenticationService.isAuthenticated = true;
+                        $window.sessionStorage.token = data.token;
                         $location.path("/userHome");
                     }).error(function(status, data) {
                         console.log(status);
