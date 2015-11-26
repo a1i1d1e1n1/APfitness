@@ -61,6 +61,8 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
     function($rootScope, $scope, $location, $window, UserService, AuthenticationService) {
         $scope.auth = AuthenticationService;
 
+
+
         $scope.logOut = function logOut() {
             if (AuthenticationService.isAuthenticated) {
 

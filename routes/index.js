@@ -70,18 +70,12 @@ router.route('/register')
             });
         });
     }
-
-
   });
 
 router.route('/logout')
     .get(function(req, res){
 
-
-
-
             return res.send(200);
-
     });
 
 //login a user to the system.
@@ -127,7 +121,6 @@ router.route('/login')
 
             return res.json({token:token});
             });
-
         });
       });
 
