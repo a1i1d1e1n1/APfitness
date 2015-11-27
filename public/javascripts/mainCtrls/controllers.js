@@ -39,6 +39,8 @@
 
             $scope.register = function register(email, password, passwordConfirm) {
                 if (AuthenticationService.isAuthenticated) {
+                    AuthenticationService.isAuthenticated = true;
+                    $window.sessionStorage.token = data.token;
                     $location.path("/userHome");
                 }
                 else {
@@ -53,6 +55,15 @@
                 }
             };
 
+            $scope.user = function(){
+                UserService.users().success(function(data) {
+                    $scope.data = data;
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+
             $scope.navigate = function(page){
                 $location.path(page);
             }
@@ -61,14 +72,15 @@
 
 app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', 'UserService', 'AuthenticationService',
     function($rootScope, $scope, $location, $window, UserService, AuthenticationService) {
-        $scope.auth = AuthenticationService;
 
+        $scope.auth = AuthenticationService;
 
 
         $scope.logOut = function logOut() {
             if (AuthenticationService.isAuthenticated) {
 
                 UserService.logOut().success(function(data) {
+                    $rootScope.isAuthenticated = false;
                     AuthenticationService.isAuthenticated = false;
                     delete $window.sessionStorage.token;
                     $location.path("/");
@@ -87,9 +99,18 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 ]);
 
 
-app.controller('UserHomeCtrl', ['$scope', '$location',
-    function($scope, $location) {
+app.controller('UserHomeCtrl', ['$scope', '$location', 'UserService',
+    function($scope, $location, UserService) {
 
+        $scope.user = function(){
+            UserService.users().success(function(data) {
+                $scope.data = data;
+                console.log(data);
+            }).error(function(status, data) {
+                console.log(status);
+                console.log(data);
+            });
+        }
 
 
     }

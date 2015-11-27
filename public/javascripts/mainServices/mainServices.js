@@ -24,16 +24,21 @@ app.factory('UserService', function ($http) {
 
         register: function(email, password, passwordConfirmation) {
             return $http.post('/register', {email: email, password: password, passwordConfirmation: passwordConfirmation });
+        },
+
+        users: function() {
+            return $http.get('/user');
         }
+
     }
 });
 
-app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
+app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService,$rootScope) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
             if ($window.sessionStorage.token) {
-                config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                config.headers.Authorization = $window.sessionStorage.token;
             }
             return config;
         },
@@ -46,6 +51,7 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
         response: function (response) {
             if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
                 AuthenticationService.isAuthenticated = true;
+                $rootScope.isAuthenticated = true;
             }
             return response || $q.when(response);
         },
@@ -54,6 +60,7 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
         responseError: function(rejection) {
             if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
                 delete $window.sessionStorage.token;
+                $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
                 $location.path("/login");
             }
