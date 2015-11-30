@@ -18,6 +18,7 @@
     $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false } });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
+    $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
 
 
@@ -30,6 +31,7 @@
   app.run(function($rootScope, $location, AuthenticationService, $window) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 
+      //If the
       if (nextRoute != null && nextRoute.access != null && !nextRoute.access.requiredAuthentication
           && AuthenticationService.isAuthenticated && $window.sessionStorage.token) {
         $location.path("/userHome");

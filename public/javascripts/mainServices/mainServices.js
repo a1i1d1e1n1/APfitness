@@ -15,19 +15,23 @@ app.factory('AuthenticationService', function() {
 app.factory('UserService', function ($http) {
     return {
         signIn: function(email, password) {
-            return $http.post('/login', {email: email, password: password});
+            return $http.post('api/login', {email: email, password: password});
         },
 
         logOut: function() {
-            return $http.get('/logout');
+            return $http.get('api/logout');
         },
 
         register: function(email, password, passwordConfirmation) {
-            return $http.post('/register', {email: email, password: password, passwordConfirmation: passwordConfirmation });
+            return $http.post('api/register', {email: email, password: password, passwordConfirmation: passwordConfirmation });
         },
 
         users: function() {
-            return $http.get('/user');
+            return $http.get('api/user');
+        },
+
+        passwordReset: function(email) {
+            return $http.post('api/passwordReset', {email: email});
         }
 
     }

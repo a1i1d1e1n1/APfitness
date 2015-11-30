@@ -99,8 +99,8 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 ]);
 
 
-app.controller('UserHomeCtrl', ['$scope', '$location', 'UserService',
-    function($scope, $location, UserService) {
+app.controller('UserHomeCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
 
         $scope.user = function(){
             UserService.users().success(function(data) {
@@ -111,6 +111,23 @@ app.controller('UserHomeCtrl', ['$scope', '$location', 'UserService',
                 console.log(data);
             });
         }
+
+
+    }
+]);
+
+app.controller('PasswordResetCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
+
+    $scope.passwordReset = function(email){
+        UserService.passwordReset(email).success(function(data) {
+            $scope.data = data;
+            console.log(data);
+        }).error(function(status, data) {
+            console.log(status);
+            console.log(data);
+        });
+    }
 
 
     }

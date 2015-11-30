@@ -4,6 +4,8 @@ var mysql      = require('mysql');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport();
 
 var pool  = mysql.createPool({
   connectionLimit : 10,
@@ -27,10 +29,12 @@ var compareHash = function(storedHash,genHash){
 
 
 router.route('/passwordReset')
-    .get(function(req, res){
-        var email = req.body.email;
-        pool.getConnection(function(err, connection) {
+    .post(function(req, res){
 
+        var email = req.body.email;
+        console.log(req.body);
+        pool.getConnection(function(err, connection) {
+            console.log(email);
             //Inserts the new user into the database.
             connection.query('SELECT * from User where email = "' + email +'"', function(err, row) {
 
@@ -39,6 +43,15 @@ router.route('/passwordReset')
 
                 if (!err){
                     if(row[0]){
+                        var code = '1234r';
+                        transporter.sendMail({
+                            from: 'APfitness@mail.com',
+                            to: email,
+                            subject: 'Password Reset',
+                            html: '<p>Hi,</p><p>To reset your password enter the following code on the password reset screen:</p>' +
+                            '<h3><var>code</var></h3>' +
+                            '<p>Thanks</p>' // html body
+                        });
                         return res.json("Reset email has been sent to: " + email);
                     }else{
                         return res.json("There is no account with that email :-(");
@@ -77,7 +90,7 @@ router.route('/register')
 
                     if (!err){
                         //Creates a new unique json web token and passes it back to the client.
-                        var token = jwt.sign(email, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION_SEC });
+                        var token = jwt.sign(email, secret.secretToken, { expiresIn: 3600 });
                         return res.json({token:token});
                     }
                     else{
@@ -93,7 +106,6 @@ router.route('/logout')
 
         return res.send(200);
     });
-
 
 
 //login a user to the system.
