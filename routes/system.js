@@ -149,7 +149,7 @@ router.route('/login')
                 //Assigns a user a token.
                 var token = jwt.sign(email, secret.secretToken, { expiresIn: 3600 });
 
-                return res.json({token:token});
+                return res.json({token:token,admin:row[0].admin});
             });
         });
     });

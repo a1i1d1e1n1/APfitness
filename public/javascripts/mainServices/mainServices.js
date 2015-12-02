@@ -66,7 +66,8 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
                 delete $window.sessionStorage.token;
                 $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
-                $location.path("/login");
+                AuthenticationService.isAdmin = false;
+                $location.path("/");
             }
 
             return $q.reject(rejection);

@@ -10,18 +10,15 @@
     'ui.calendar'
   ]);
 
-
-
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', { templateUrl: 'views/home.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false }});
     $routeProvider.when('/login', { templateUrl: 'views/login.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false } });
     $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false } });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
+    $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true } });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
-
-
   }]);
 
   app.config(function ($httpProvider) {
@@ -31,12 +28,20 @@
   app.run(function($rootScope, $location, AuthenticationService, $window) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 
-      //If the
+      //  If the users is authenticated and has a token they will not be able to access routes
+      //  such as login page etc. They will be redirected to user home.
       if (nextRoute != null && nextRoute.access != null && !nextRoute.access.requiredAuthentication
-          && AuthenticationService.isAuthenticated && $window.sessionStorage.token) {
+          && AuthenticationService.isAuthenticated && $window.sessionStorage.token && !AuthenticationService.isAdmin) {
         $location.path("/userHome");
       }
 
+      if (nextRoute != null && nextRoute.access != null && !nextRoute.access.requiredAuthentication
+          && AuthenticationService.isAuthenticated && $window.sessionStorage.token && AuthenticationService.isAdmin) {
+        $location.path("/adminHome");
+      }
+
+      //  If the users is not authenticated  they will not be able to access routes that require authentication.
+      //  They will be redirected to login page.
       if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
           && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
         $location.path("/");

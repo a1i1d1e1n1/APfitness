@@ -10,9 +10,17 @@
                 if (email != null && password != null) {
 
                     UserService.signIn(email, password).success(function(data) {
+
                         AuthenticationService.isAuthenticated = true;
                         $window.sessionStorage.token = data.token;
-                        $location.path("/userHome");
+
+                        if (data.admin == 1){
+                            AuthenticationService.isAdmin = true;
+                            $location.path("/adminHome");
+                        }else{
+                            AuthenticationService.isAdmin = false;
+                            $location.path("/userHome");
+                        }
                     }).error(function(status, data) {
                         console.log(status);
                         console.log(data);
@@ -81,11 +89,12 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 
                 UserService.logOut().success(function(data) {
                     $rootScope.isAuthenticated = false;
+                    AuthenticationService.isAdmin = false;
                     AuthenticationService.isAuthenticated = false;
                     delete $window.sessionStorage.token;
                     $location.path("/");
                 }).error(function(status, data) {
-                    $location.path("/");
+                    $location.path("/userHome");
                     console.log(status);
                     console.log(data);
                 });
