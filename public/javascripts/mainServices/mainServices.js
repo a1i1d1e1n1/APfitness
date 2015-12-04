@@ -30,14 +30,20 @@ app.factory('UserService', function ($http) {
             return $http.get('api/user');
         },
 
+        checkAdmin: function() {
+            return $http.get('api/user/checkAdmin');
+        },
+
         passwordReset: function(email) {
             return $http.post('api/passwordReset', {email: email});
         }
 
+
+
     }
 });
 
-app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService,$rootScope) {
+app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -56,6 +62,9 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
             if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
                 AuthenticationService.isAuthenticated = true;
                 $rootScope.isAuthenticated = true;
+            }
+            if ((response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAdmin)){
+
             }
             return response || $q.when(response);
         },

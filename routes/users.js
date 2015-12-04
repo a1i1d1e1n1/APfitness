@@ -63,5 +63,21 @@ router.route('/')
         });
       })
     });
+router.route('/checkAdmin')
+    // fetch all users
+    .get(function (req, res, next) {
+
+      var email = req.decoded;
+
+      pool.getConnection(function(err, connection) {
+        connection.query('SELECT * from User WHERE email ="' + email + '"', function(err, rows) {
+          connection.release();
+          if (!err)
+            res.json(rows[0].admin);
+          else
+            console.log('Error while performing Query.');
+        });
+      })
+    });
 
 module.exports = router;

@@ -32,9 +32,9 @@ router.route('/passwordReset')
     .post(function(req, res){
 
         var email = req.body.email;
-        console.log(req.body);
+
         pool.getConnection(function(err, connection) {
-            console.log(email);
+
             //Inserts the new user into the database.
             connection.query('SELECT * from User where email = "' + email +'"', function(err, row) {
 
@@ -83,7 +83,9 @@ router.route('/register')
             pool.getConnection(function(err, connection) {
 
                 //Inserts the new user into the database.
-                connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' + connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) + ',true,false)', function (err, rows, fields) {
+                connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' +
+                    connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) +
+                    ',true,false)', function (err, rows, fields) {
 
                     //Returns connection to the pool
                     connection.release();
@@ -118,31 +120,29 @@ router.route('/login')
         //checks to see if the email and password are valid.
         if (email == '' || password == '') {
             res.status(401);
-            return res.send('Please enter a email or password');
+            return res.json({message:'Please enter a email or password'});
         }
-
-        console.log(email +"  "+ password);
 
         //Get connection to the database
         pool.getConnection(function(err, connection) {
             connection.query('SELECT * from User where email = "' + email +'"', function(err, row) {
                 connection.release();
                 if (err) {
-                    console.log('Error while performing Query.');
-                    return res.sendStatus(401);
+                    res.status(401);
+                    return res.json({message:'Error performing Query'});
                 }
                 //Check to see if the email exists in the system.
                 if(!row[0]){
-                    console.log("Attempt failed to login with " + email);
-                    return res.sendStatus(401);
+                    res.status(401);
+                    return res.json({message:'Email or Password do not match'});
                 }
 
                 //Checks if the password is valid
                 var valid =  compareHash(row[0].hash,getHash(password, row[0].salt));
 
                 if(!valid){
-                    console.log("Password is incorrect " + email);
-                    return res.sendStatus(401);
+                    res.status(401);
+                    return res.json({message:'Email or Password do not match'});
                 }
                 console.log("Password is correct " + email);
 
