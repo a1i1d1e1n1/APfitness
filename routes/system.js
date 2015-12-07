@@ -35,7 +35,7 @@ router.route('/passwordReset')
 
         pool.getConnection(function(err, connection) {
 
-            //Inserts the new user into the database.
+
             connection.query('SELECT * from User where email = "' + email +'"', function(err, row) {
 
                 //Returns connection to the pool
@@ -69,7 +69,7 @@ router.route('/passwordReset')
 //Register a users
 router.route('/register')
     .post(function(req, res, next){
-        //Checks to see if the password and confirm password ma
+        //Checks to see if the password and confirm password match
         if(req.body.password === req.body.passwordConfirmation){
             //Gets the email from the request
             var email = req.body.email;
@@ -96,10 +96,15 @@ router.route('/register')
                         return res.json({token:token});
                     }
                     else{
-                        return next(err);
+
+                        res.status(401);
+                        return res.json({message:"That email already exists."});
+
                     }
                 });
             });
+        } else{
+            return res.json("Passwords don't match");
         }
     });
 

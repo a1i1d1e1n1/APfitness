@@ -7,7 +7,8 @@
     'App.factories',
     'navigation.controllers',
     'App.controllers',
-    'ui.calendar'
+    'ui.calendar',
+    'toastr'
   ]);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -16,6 +17,7 @@
     $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false } });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
+    $routeProvider.when('/exercises', { templateUrl: '/views/exercises.ejs', access: { requiredAuthentication: true } });
     $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true , requiredAdmin:true} });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
@@ -23,6 +25,21 @@
 
   app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
+  });
+
+  app.config(function(toastrConfig) {
+    angular.extend(toastrConfig, {
+      autoDismiss: false,
+      containerId: 'toast-container',
+      maxOpened: 0,
+      extendedTimeOut: 1000,
+      timeOut: 2000,
+      newestOnTop: true,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: false,
+      preventOpenDuplicates: false,
+      target: 'body'
+    });
   });
 
   app.run(function($rootScope, AuthenticationService, UserService,$location) {
