@@ -48,7 +48,7 @@
                         if (password.length > 5 ) {
                             if (password == passwordConfirm) {
                                 UserService.register(email, password, passwordConfirm).success(function (data) {
-
+                                    toastr.success("Registered");
                                     AuthenticationService.isAuthenticated = true;
                                     $window.sessionStorage.token = data.token;
                                     $location.path("/userHome");

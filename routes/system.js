@@ -85,7 +85,7 @@ router.route('/register')
                 //Inserts the new user into the database.
                 connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' +
                     connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) +
-                    ',true,false)', function (err, rows, fields) {
+                    ',false,false)', function (err, rows, fields) {
 
                     //Returns connection to the pool
                     connection.release();
