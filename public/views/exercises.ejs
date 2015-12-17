@@ -1,12 +1,14 @@
 <br>
+
 <div class="col-sm-2 col-md-2 col-lg-2">
-    <ul class="nav nav-list">
-        <li class="active">
-            <a href="#/">
+    <ul class="nav nav-list nav-list-vivid">
+        <li>
+            <a href="#/userHome">
                 <i class="fui-calendar"> </i> Home
             </a>
         </li>
-        <li class="divider"></li>
+        <br>
+
         <li>
             <a href="#">
                 <i class="fui-user"> </i> Profile
@@ -17,27 +19,27 @@
                 <i class="fui-bookmark"> </i> Assigned Workouts
             </a>
         </li>
-        <li class="divider"></li>
+        <br>
         <li>
             <a href="#">
                 <i class="fui-document"> </i> Workouts
                 <span class="badge pull-right">42</span>
             </a>
         </li>
-        <li>
-            <a href="#">
+        <li class="active">
+            <a href="#/exercises">
                 <i class="fui-document"> </i> Exercises
                 <span class="badge pull-right">21</span>
             </a>
         </li>
-        <li class="divider"></li>
+        <br>
         <li>
             <a href="#">
                 Tools
             </a>
         </li>
 
-        <li class="divider"></li>
+        <br>
 
         <li>
             <a href="#">
@@ -59,30 +61,48 @@
                   <span class="input-group-btn">
                     <button class="btn" type="submit"><span class="fui-search"></span></button>
                   </span>
-                        <input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+                        <input ng-model="q" id="search" class="form-control" placeholder="Search">
                     </div>
                 </div>
             </div>
             <div class="col-xs-4">
-
+                <select class="form-control select select-primary select-block mbl">
+                    <optgroup label="Body Part">
+                        <option value="0">All</option>
+                        <option value="1">Biceps</option>
+                        <option value="2">Back</option>
+                        <option value="3">Chest</option>
+                        <option value="4">Triceps</option>
+                    </optgroup>
+                </select>
 
             </div>
             <div class="col-xs-4">
                 <div class="form-group">
                     <label for="search">items per page:</label>
-                    <input type="checkbox" checked data-toggle="switch" name="custom-switch-text" data-on-text="12" data-off-text="28" id="switch-10" />
+                    <input type="checkbox" checked data-toggle="switch" name="default-switch-colors" data-on-color="primary" data-off-color="default" id="switch-03" />
                 </div>
             </div>
         </div>
         <br>
-        <div class="col-sm-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                {{ex.name}}
+        <div class="col-sm-12">
+            <div class="col-sm-6" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{{ex.name}}</h4>
+                        <button class="btn btn-info btn-sm pull-right" > <i class="fui-info-circle"></i> </button>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
                 </div>
+
             </div>
         </div>
-
+        <div class="col-sm-12">
+            <br>
+            <h2 ng-show="exercises.length == 0" style="text-align: center">No Items Found !!!</h2>
+        </div>
         <div class="col-sm-12">
             <div ng-controller="OtherController" class="other-controller">
                 <div class="text-center">
@@ -90,8 +110,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
 </div>

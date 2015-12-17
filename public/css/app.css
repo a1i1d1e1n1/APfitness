@@ -1,6 +1,6 @@
 ﻿@media (min-height: 360px) {
     .carousel {
-        min-height: 140px;
+        min-height: 250px;
 
     }
     /* Since positioning the image, we need to help out the caption */
@@ -10,7 +10,7 @@
 
     /* Declare heights because of positioning of img element */
     .carousel .item {
-        min-height: 140px;
+        min-height: 250px;
         background-color: #777;
     }
     .carousel-inner > .item > img {
@@ -18,14 +18,14 @@
         top: 0;
         left: 0;
         min-width: 100%;
-        min-height: 140px;
+        min-height: 250px;
     }
 
 
 }
 @media (min-height: 768px) {
     .carousel {
-        min-height: 240px;
+        min-height: 300px;
 
     }
     /* Since positioning the image, we need to help out the caption */
@@ -35,7 +35,7 @@
 
     /* Declare heights because of positioning of img element */
     .carousel .item {
-        min-height: 240px;
+        min-height: 300px;
         background-color: #777;
     }
     .carousel-inner > .item > img {
@@ -43,7 +43,7 @@
         top: 0;
         left: 0;
         min-width: 100%;
-        min-height: 240px;
+        min-height: 300px;
     }
 
 
@@ -73,12 +73,6 @@
     }
 
 
-}
-
-.vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
 }
 
 html {

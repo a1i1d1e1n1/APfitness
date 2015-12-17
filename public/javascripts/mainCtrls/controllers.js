@@ -121,7 +121,7 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
     function($rootScope, $scope, ExerciseService, toastr) {
         $scope.currentPage = 1;
-        $scope.pageSize = 12;
+        $scope.pageSize = 6;
         $scope.exercises = [];
 
         ExerciseService.getAllExercises().success(function(data) {
@@ -135,6 +135,16 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
             console.log('meals page changed to ' + num);
         };
 
+        var focusButtons = function() {
+            $('.input-group').on('focus', '.form-control', function () {
+                $(this).closest('.form-group').addClass('focus');
+            }).on('blur', '.form-control', function () {
+                $(this).closest('.form-group').removeClass('focus');
+            });
+        };
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+
+        focusButtons();
     }
 ]);
 
@@ -160,6 +170,13 @@ app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
                 console.log(data);
             });
         }
+
+
+    }
+]);
+
+app.controller('CreateWorkoutCtrl', ['$scope', 'UserService','toastr',
+    function($scope, UserService, toastr) {
 
 
     }

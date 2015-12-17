@@ -20,6 +20,7 @@
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
     $routeProvider.when('/exercises', { templateUrl: '/views/exercises.ejs', access: { requiredAuthentication: true }, controller: 'ExerciseCtrl' });
     $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true , requiredAdmin:true} });
+    $routeProvider.when('/createworkout', { templateUrl: '/views/createWorkout.ejs', access: { requiredAuthentication: true }, controller: 'CreateWorkoutCtrl' });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
   }]);
@@ -52,7 +53,7 @@
     });
   });
 
-  app.run(function($rootScope, $location, AuthenticationService, $window) {
+  app.run(function($rootScope, $location, AuthenticationService, $window,toastr) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 
       //  If the users is authenticated and has a token they will not be able to access routes
@@ -61,6 +62,7 @@
           (!nextRoute.access.requiredAuthentication && AuthenticationService.isAuthenticated) ||
           (nextRoute.access.requiredAdmin && !AuthenticationService.isAdmin) ) {
         $location.path("/userHome");
+        toastr.info("you are already logged in");
       }
 
 
@@ -68,7 +70,8 @@
       //  They will be redirected to login page.
       if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
           && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
-        $location.path("/");
+        $location.path("/login");
+        toastr.info("Please log in first");
       }
 
     });

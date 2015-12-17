@@ -365,7 +365,7 @@ body {
   font-size: 18px;
   line-height: 1.72222;
   color: #34495e;
-  background-color: #fff;
+  background-color: #edeff1;;
   }
 a {
   color: #16a085;
@@ -4899,7 +4899,7 @@ a.label:focus {
   font-weight: normal;
   line-height: 1.615;
   color: #fff;
-  background-color: #d8dce0;
+  background-color:#3498db;
   border-radius: 4px;
   }
 .btn .badge {
