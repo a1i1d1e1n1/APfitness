@@ -42,6 +42,15 @@ app.factory('UserService', function ($http) {
 
     }
 });
+app.factory('ExerciseService', function ($http) {
+    return {
+        getAllExercises: function() {
+            return $http.get('api/exercise');
+        },
+
+    }
+});
+
 
 app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope) {
     return {

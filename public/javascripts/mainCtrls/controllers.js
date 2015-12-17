@@ -63,7 +63,7 @@
                                 toastr.error("Passwords don't match");
                             }
                         } else {
-                            toastr.error("Password too short. Must be 5 characters.")
+                            toastr.error("Password too short. Must be 5 characters.");
                         }
                     }else{
                         toastr.error("Please enter all fields");
@@ -118,9 +118,38 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
     }
 ]);
 
+app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
+    function($rootScope, $scope, ExerciseService, toastr) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 12;
+        $scope.exercises = [];
+
+        ExerciseService.getAllExercises().success(function(data) {
+            $scope.exercises = data;
+        }).error(function(status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
+        $scope.pageChangeHandler = function(num) {
+            console.log('meals page changed to ' + num);
+        };
+
+    }
+]);
+
+app.controller('OtherController', ['$scope',
+    function($scope) {
+
+        $scope.pageChangeHandler = function(num) {
+            console.log('going to page ' + num);
+        };
+    }
+]);
 
 app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     function($scope, UserService, toastr) {
+
 
         $scope.user = function(){
             UserService.users().success(function(data) {

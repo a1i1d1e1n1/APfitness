@@ -13,6 +13,7 @@
                                 <input type="email"
                                     class="form-control"
                                     placeholder="Email"
+                                       name="email"
                                     ng-model="user.email">
                                 <span class="form-control-feedback fui-checkbox-unchecked" ng-show="!user.email"> </span>
                                 <span class="form-control-feedback fui-checkbox-checked" ng-show="user.email"> </span>
@@ -25,6 +26,7 @@
                                 <input type="password"
                                     class="form-control"
                                     placeholder="Password"
+                                       name="password"
                                     ng-model="user.password">
                                 <span class="form-control-feedback fui-checkbox-unchecked" ng-show="!user.password || user.password.length < 5"></span>
                                 <span class="form-control-feedback fui-checkbox-checked" ng-show="user.password && user.password.length > 4"></span>
@@ -33,6 +35,7 @@
                                 <input type="password"
                                        class="form-control"
                                        placeholder="Password"
+                                       name="passwordConfirm"
                                        ng-model="user.passwordConfirm">
                                 <span class="form-control-feedback fui-checkbox-unchecked" ng-show="(user.password != user.passwordConfirm) || !user.passwordConfirm"></span>
                                 <span class="form-control-feedback fui-checkbox-checked" ng-show="(user.password == user.passwordConfirm) && user.passwordConfirm"></span>

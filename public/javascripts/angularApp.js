@@ -8,7 +8,8 @@
     'navigation.controllers',
     'App.controllers',
     'ui.calendar',
-    'toastr'
+    'toastr',
+     'angularUtils.directives.dirPagination'
   ]);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -17,7 +18,7 @@
     $routeProvider.when('/register', { templateUrl: 'views/register.ejs', controller: 'AdminUserCtrl', access: { requiredAuthentication: false } });
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
-    $routeProvider.when('/exercises', { templateUrl: '/views/exercises.ejs', access: { requiredAuthentication: true } });
+    $routeProvider.when('/exercises', { templateUrl: '/views/exercises.ejs', access: { requiredAuthentication: true }, controller: 'ExerciseCtrl' });
     $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true , requiredAdmin:true} });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
@@ -44,10 +45,10 @@
 
   app.run(function($rootScope, AuthenticationService, UserService,$location) {
     UserService.checkAdmin().success(function(data) {
-      if(data == 1){
-        AuthenticationService.isAdmin = true;
-        $location.path("/adminHome");
-      }
+        if(data == 1){
+          AuthenticationService.isAdmin = true;
+          $location.path("/adminHome");
+        }
     });
   });
 
