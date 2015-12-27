@@ -121,8 +121,11 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
     function($rootScope, $scope, ExerciseService, toastr) {
         $scope.currentPage = 1;
-        $scope.pageSize = 6;
+        $scope.pageSize = 15;
         $scope.exercises = [];
+        $scope.searchType = 2;
+
+
 
         ExerciseService.getAllExercises().success(function(data) {
             $scope.exercises = data;
@@ -131,8 +134,13 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
             console.log(data);
         });
 
+
         $scope.pageChangeHandler = function(num) {
             console.log('meals page changed to ' + num);
+        };
+
+        $scope.searchType = function(type) {
+            console.log(type);
         };
 
         var focusButtons = function() {
@@ -175,10 +183,42 @@ app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     }
 ]);
 
-app.controller('CreateWorkoutCtrl', ['$scope', 'UserService','toastr',
-    function($scope, UserService, toastr) {
+app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
+    function($scope, ExerciseService, toastr) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 12;
+        $scope.exercises = [];
+        $scope.searchType = 2;
+        $scope.workout = [];
 
+        ExerciseService.getAllExercises().success(function(data) {
+            $scope.exercises = data;
+        }).error(function(status, data) {
+            console.log(status);
+            console.log(data);
+        });
 
+        $scope.addExercise = function (exercise){
+            exercise.sets = [];
+            $scope.workout.push(exercise);
+
+        };
+
+        $scope.addSet = function (index){
+            var set = {reps: 5, weight:50};
+            $scope.workout[index].sets.push(set);
+        };
+
+        var focusButtons = function() {
+            $('.input-group').on('focus', '.form-control', function () {
+                $(this).closest('.form-group').addClass('focus');
+            }).on('blur', '.form-control', function () {
+                $(this).closest('.form-group').removeClass('focus');
+            });
+        };
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+
+        focusButtons();
     }
 ]);
 
