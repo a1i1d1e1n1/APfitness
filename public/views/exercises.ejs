@@ -1,6 +1,6 @@
 <br>
 
-<div class="col-sm-2 col-md-2 col-lg-2">
+<div class="col-sm-2 col-md-2 col-lg-2" style="padding-right: 0">
     <ul class="nav nav-list nav-list-vivid">
         <li>
             <a href="#/userHome">
@@ -52,7 +52,7 @@
     </ul>
 </div>
 
-<div class="col-sm-10 col-md-10 col-lg-10" >
+<div class="col-sm-10 col-md-10 col-lg-10" style="padding-left: 0">
     <div class="container-fluid">
         <div class="col-sm-12">
             <div class="col-xs-4">
@@ -81,7 +81,6 @@
 
             </div>
         </div>
-        <hr>
         <div class="col-sm-12">
 
             <div class="col-sm-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
@@ -94,10 +93,6 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-sm-12">
-            <br>
-            <h2 ng-show="exercises.length == 0" style="text-align: center">No Items Found !!!</h2>
         </div>
         <div class="col-sm-12">
             <div ng-controller="OtherController" class="other-controller">

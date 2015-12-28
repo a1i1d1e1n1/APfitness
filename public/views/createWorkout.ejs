@@ -1,43 +1,40 @@
 <br>
-<div class="col-sm-2 col-md-3 col-lg-3" >
+<div class="col-sm-2 col-md-3 col-lg-3" style="padding-right: 0">
     <div class="container-fluid">
 
         <h4 style="margin-top: 0px;"> <u>Workout Exercises</u></h4>
-        <div ng-repeat="exercise in workout" ng-init="sectionIndex = $index">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{exercise.name}}</h4>
+        <div style="overflow-y: scroll; height:70vh;">
+            <div ng-repeat="exercise in workout" ng-init="sectionIndex = $index" >
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{{exercise.name}}</h4>
 
-                    </div>
-                    <div class="panel-body" style="font-size: 14px">
-                        <div>
-                            <div class="col-sm-4" >
-                                reps: 8
-                            </div>
-                            <div class="col-sm-6">
-                                weight: 60
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="btn btn-xs btn-info" ng-click="addSet(sectionIndex)"><i class="fui-plus"></i> </div>
-                            </div>
                         </div>
-                        <div ng-repeat="set in workout[$index].sets">
-                            <div class="col-sm-4" >
-                                reps: {{set.reps}}
+                        <div class="panel-body" style="font-size: 14px">
+
+                            <div ng-repeat="set in workout[$index].sets">
+                                <div class="col-sm-4" >
+                                    reps: {{set.reps}}
+                                </div>
+                                <div class="col-sm-5">
+                                    weight: {{set.weight}}
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="btn btn-xs btn-danger" ng-click="removeSet(sectionIndex,$index)"><i class="fui-cross"></i> </div>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                weight: {{set.weight}}
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="btn btn-xs btn-info" ng-click="addSet(sectionIndex)"><i class="fui-plus"></i> </div>
+                            <div>
+                                <div class="col-sm-12">
+                                    <div class="btn btn-xs btn-info" ng-click="addSet(sectionIndex)" style="width: 100%"><i class="fui-plus"> ADD SET</i> </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-sm-10 col-md-9 col-lg-9" >
+<div class="col-sm-10 col-md-9 col-lg-9" style="padding-left: 0">
     <div class="container-fluid">
         <div class="col-sm-12">
             <div class="col-xs-4">
@@ -79,18 +76,16 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-sm-12">
-            <br>
-            <h2 ng-show="exercises.length == 0" style="text-align: center">No Items Found !!!</h2>
-        </div>
-        <div class="col-sm-12">
-            <div ng-controller="OtherController" class="other-controller">
-                <div class="text-center">
-                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/views/dirPagination.tpl.ejs"></dir-pagination-controls>
+            <div class="col-sm-12">
+                <div ng-controller="OtherController" class="other-controller">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/views/dirPagination.tpl.ejs"></dir-pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
 </div>

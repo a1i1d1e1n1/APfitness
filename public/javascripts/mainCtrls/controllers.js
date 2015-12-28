@@ -209,6 +209,11 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
             $scope.workout[index].sets.push(set);
         };
 
+        $scope.removeSet = function (index,i){
+            var set = {reps: 5, weight:50};
+            $scope.workout[index].sets.splice(i, 1);;
+        };
+
         var focusButtons = function() {
             $('.input-group').on('focus', '.form-control', function () {
                 $(this).closest('.form-group').addClass('focus');
