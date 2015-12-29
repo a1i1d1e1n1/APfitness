@@ -4,12 +4,14 @@
 
         <h4 style="margin-top: 0px;"> <u>Workout Exercises</u></h4>
         <div style="overflow-y: scroll; height:70vh;">
-            <div ng-repeat="exercise in workout" ng-init="sectionIndex = $index" >
+            <div ng-repeat="exercise in workout" ng-init="sectionIndex = $index" ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)" class="ng-scope">
+                <div ng-drag="true" ng-drag-data="exercise" ng-class="exercise.name" class="ng-binding one" draggable="false">
                     <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">{{exercise.name}}</h4>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">{{exercise.name}}</h4>
 
-                        </div>
+                            </div>
+
                         <div class="panel-body" style="font-size: 14px">
 
                             <div ng-repeat="set in workout[$index].sets">
@@ -30,6 +32,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -68,9 +71,18 @@
             <div class="col-sm-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title">{{ex.name}}</h4>
-                        <button class="btn-info btn btn-xs" ng-click="addExercise(ex)">ADD</button>
+                        <h5 style="font-size: 14px;text-align: center" class="panel-title">{{ex.name}}</h5>
 
+                        <div style="text-align: center">
+                            <span style="font-size: 12px" class="panel-title">Rating: 4</span>
+                            <span style="font-size: 12px" class="panel-title">Comments: 4</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="btn-group" style="width: 100%">
+                                <button class="btn-primary btn btn-embossed btn-xs" ng-click="addExercise(ex)">Add</button>
+                                <button class="btn-primary btn-embossed btn btn-xs" ng-click="addExercise(ex)"><i class="fui-info-circle"></i> </button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

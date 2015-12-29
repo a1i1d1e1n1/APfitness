@@ -9,7 +9,8 @@
     'App.controllers',
     'ui.calendar',
     'toastr',
-     'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination',
+    'ngDraggable'
   ]);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {

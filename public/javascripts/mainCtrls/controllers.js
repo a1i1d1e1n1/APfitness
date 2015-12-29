@@ -214,6 +214,14 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
             $scope.workout[index].sets.splice(i, 1);;
         };
 
+        $scope.onDropComplete = function (index, obj, evt) {
+            var otherObj = $scope.workout[index];
+            var otherIndex = $scope.workout.indexOf(obj);
+            $scope.workout[index] = obj;
+            $scope.workout[otherIndex] = otherObj;
+            console.log($scope.workout);
+        };
+
         var focusButtons = function() {
             $('.input-group').on('focus', '.form-control', function () {
                 $(this).closest('.form-group').addClass('focus');
