@@ -4,7 +4,8 @@
 
         <input type="text" placeholder="Workout Name..." ng-model="workoutName" class="form-control flat input-hg"
                style="background-color: #2c3e50; color: white"/>
-        <hr>
+
+        <hr style="border-top-color: white">
 
         <div style="overflow-y: scroll; height:70vh;">
 
@@ -40,7 +41,7 @@
                                 <div class="col-sm-12">
                                     <div class="btn btn-xs btn-info" ng-click="addSet(p.$index)"
                                          style="width: 100%">
-                                        <i class="fui-plus"> ADD SET</i>
+                                        <i class="fui-plus"> </i>ADD SET
                                     </div>
                                 </div>
                             </div>
@@ -85,30 +86,25 @@
         </div>
         <hr>
         <div class="col-sm-12">
-            <div class="col-sm-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize"
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize"
                  current-page="currentPage">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
 
                         <h5 style="font-size: 14px;text-align: center" class="panel-title">{{ex.name}}</h5>
-                        <hr style="margin: 3px;border-top-color: white">
-                        <div style="padding-bottom: 8px">
-                            <span style="font-size: 12px" class="panel-title pull-left">Rating: 4</span>
-                            <span style="font-size: 12px" class="panel-title pull-right">Comments: 4</span>
-                        </div>
 
                     </div>
                     <div class="panel-body" style="margin: 0;padding: 0">
-                        <div class="btn-group " style="width: 100%">
-                            <button type="button" class="btn btn-sm btn-info " ng-click="addExercise(ex)"
-                                    style="width:84.5%;border-top-left-radius: 0;">
-                                Add Exercise
+
+                        <div class="btn-group " style="width: 50%">
+                            <button type="button" class="btn btn-sm btn-primary " ng-click="addExercise(ex)"
+                                    style="width:50%">
+                                <i class="fui-plus-circle"></i>
                             </button>
                             <button type="button" class="btn btn-sm btn-primary"
-                                    style="width:15%;position:absolute;top:0;right:0;border-top-right-radius: 0;">
+                                    style="width:50%;position:absolute;border-top-right-radius: 0;">
                                 <i class="fui-info-circle"></i>
                             </button>
-
                         </div>
                     </div>
 
