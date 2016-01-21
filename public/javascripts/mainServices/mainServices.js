@@ -50,7 +50,14 @@ app.factory('ExerciseService', function ($http) {
 
     }
 });
+app.factory('WorkoutService', function ($http) {
+    return {
+        saveWorkout: function(workout,workoutName) {
+            return $http.post('api/workout/save', {workout: workout, name: workoutName});
+        },
 
+    }
+});
 
 app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope) {
     return {

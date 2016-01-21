@@ -1,65 +1,89 @@
-<br>
-    <div class="col-sm-2 col-md-2 col-lg-2">
-        <ul class="nav nav-list nav-list-vivid">
-            <li class="active">
-                <a href="#">
-                    <i class="fui-calendar"> </i> Home
+<div class="col-sm-3 col-md-3 col-lg-3" style="padding-left: 0">
+    <nav class="left-menu">
+        <ul class="left-menu-nav">
+            <li>
+                <a href="#/userHome" class="current">
+                    <i class="fui-home">
+                    </i>
+                    <span class="nav-text">
+                        Home
+                    </span>
                 </a>
             </li>
             <br>
             <li>
-                <a href="#">
-                    <i class="fui-user"> </i> Profile
+                <a>
+                    <i class="fui-user"> </i>
+                    <span class="nav-text">
+                        Profile
+                    </span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fui-bookmark"> </i> Assigned Workouts
+                <a>
+                    <i class="fui-bookmark">
+                    </i>
+                    <span class="nav-text">
+                        Assigned Workouts
+                    </span>
+                    <div class="notification">
+                        <small>0</small>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="fui-location">
+                    </i>
+                    <span class="nav-text">
+                        Tools
+                    </span>
                 </a>
             </li>
             <br>
             <li>
-                <a href="#">
-                     <i class="fui-document"> </i> Workouts
-                    <span class="badge pull-right">42</span>
+                <a href="#/exercises">
+
+                    <i class="fui-document">
+                    </i>
+                    <span class="nav-text">
+                        Workouts
+                    </span>
+
                 </a>
             </li>
             <li>
                 <a href="#/exercises">
-                    <i class="fui-document"> </i> Exercises
-                    <span class="badge pull-right">21</span>
+                    <i class="fui-document">
+                    </i>
+                    <span class="nav-text">
+                        Exercises
+                    </span>
                 </a>
             </li>
             <br>
             <li>
-                <a href="#">
-                      Tools
-                </a>
-            </li>
-
-            <br>
-
-            <li>
-                <a href="#">
-                    <i class="fui-gear"> </i> Settings
-                </a>
                 <a>
-                    <i class="fui-exit"> </i> Logout
+                    <i class="fui-gear">
+                    </i>
+                    <span class="nav-text">
+                        Settings
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="fui-exit">
+                    </i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
                 </a>
             </li>
         </ul>
-    </div>
+    </nav>
+</div>
 
-    <div class="col-sm-10 col-md-10 col-lg-10" >
-        <div class="container-fluid">
-            <div class="panel panel-default" style="margin: 0px">
-
-                <div class="panel-body">
-                    <button class="btn btn-info" ng-click="user()">get user</button>
-                    <p>{{data}}</p>
-
-                </div>
-            </div>
-
-    </div>
+<div class="col-sm-9 col-md-9 col-lg-9">
+<button class="btn btn-primary pull-right">Create Workout</button>
 </div>

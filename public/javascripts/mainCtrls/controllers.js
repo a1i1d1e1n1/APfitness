@@ -121,7 +121,7 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
     function($rootScope, $scope, ExerciseService, toastr) {
         $scope.currentPage = 1;
-        $scope.pageSize = 15;
+        $scope.pageSize = 12;
         $scope.exercises = [];
         $scope.searchType = 2;
 
@@ -168,7 +168,6 @@ app.controller('OtherController', ['$scope',
 app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     function($scope, UserService, toastr) {
 
-
         $scope.user = function(){
             UserService.users().success(function(data) {
                 $scope.data = data;
@@ -183,8 +182,8 @@ app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     }
 ]);
 
-app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
-    function($scope, ExerciseService, toastr) {
+app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService', 'toastr',
+    function($scope, ExerciseService, WorkoutService, toastr) {
         $scope.currentPage = 1;
         $scope.pageSize = 12;
         $scope.exercises = [];
@@ -204,13 +203,17 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
 
         };
 
+        $scope.removeExercise = function (i){
+            $scope.workout.splice(i, 1);;
+        }
+
         $scope.addSet = function (index){
-            var set = {reps: 5, weight:50};
+            var set = {reps: 0, weight:0};
             $scope.workout[index].sets.push(set);
         };
 
         $scope.removeSet = function (index,i){
-            var set = {reps: 5, weight:50};
+
             $scope.workout[index].sets.splice(i, 1);;
         };
 
@@ -219,6 +222,32 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','toastr',
             var otherIndex = $scope.workout.indexOf(obj);
             $scope.workout[index] = obj;
             $scope.workout[otherIndex] = otherObj;
+            console.log($scope.workout);
+        };
+
+        $scope.saveWorkout = function (workout,workoutName) {
+            //Makes sure workout has at least one exercise
+            if(workout.length > 0){
+                var checkSets = true;
+
+                //Checks to see if the exercise's have at least one set
+                for(var i = 0; i < workout.length; i++){
+                    if(workout[i].sets.length == 0) {
+                        checkSets = false;
+                    }
+                }
+
+                if(checkSets){
+                    WorkoutService.saveWorkout(workout,workoutName).success(function(data){
+
+                    });
+                }else{
+                    toastr.error("Please make sure all your exercises have sets added !!");
+                }
+
+            }else{
+                toastr.error("Please add at least one exercise !!");
+            }
             console.log($scope.workout);
         };
 
