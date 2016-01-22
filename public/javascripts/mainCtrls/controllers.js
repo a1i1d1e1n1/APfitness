@@ -156,6 +156,45 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
     }
 ]);
 
+
+app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr',
+    function($rootScope, $scope, WorkoutService, toastr) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 12;
+        $scope.exercises = [];
+        $scope.searchType = 2;
+
+
+
+        WorkoutService.getAllWorkouts().success(function(data) {
+            $scope.workouts = data;
+        }).error(function(status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
+
+        $scope.pageChangeHandler = function(num) {
+            console.log('meals page changed to ' + num);
+        };
+
+        $scope.searchType = function(type) {
+            console.log(type);
+        };
+
+        var focusButtons = function() {
+            $('.input-group').on('focus', '.form-control', function () {
+                $(this).closest('.form-group').addClass('focus');
+            }).on('blur', '.form-control', function () {
+                $(this).closest('.form-group').removeClass('focus');
+            });
+        };
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+
+        focusButtons();
+    }
+]);
+
 app.controller('OtherController', ['$scope',
     function($scope) {
 
@@ -227,24 +266,17 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
             console.log($scope.workout);
         };
 
-        $scope.saveWorkout = function (workout,workoutName) {
+        $scope.saveWorkout = function (workout) {
             //Makes sure workout has at least one exercise
             if(workout.exercises.length > 0){
-                var checkSets = true;
+                var validWorkout = true;
 
-                //Checks to see if the exercise's have at least one set
-                for(var i = 0; i < workout.exercises.length; i++){
-                    if(workout.exercises[i].sets.length == 0) {
-                        checkSets = false;
-                    }
-                }
+                checkName(workout.name);
+                checkSets(workout);
 
-                if(checkSets){
-                    WorkoutService.saveWorkout(workout,workoutName).success(function(data){
-
+                if(validWorkout){
+                    WorkoutService.saveWorkout(workout).success(function(data){
                     });
-                }else{
-                    toastr.error("Please make sure all your exercises have sets added !!");
                 }
 
             }else{
@@ -253,6 +285,25 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
             console.log($scope.workout);
         };
 
+        //Checks to see if the workout has a name.
+        var checkName = function(workoutName) {
+            if(!workoutName){
+                validWorkout = false;
+                toastr.error("Please make sure you enter a Workout Name");
+            }
+        }
+
+        //Checks to see if the exercise's have at least one set
+        var checkSets = function(workout){
+            for(var i = 0; i < workout.exercises.length; i++){
+                if(workout.exercises[i].sets.length == 0) {
+                    validWorkout = false;
+                    toastr.error("Please make sure all your exercises have sets added !!");
+                }
+            }
+        }
+
+        //Coode added to add flat-ui component styling.
         var focusButtons = function() {
             $('.input-group').on('focus', '.form-control', function () {
                 $(this).closest('.form-group').addClass('focus');
