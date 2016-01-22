@@ -73,26 +73,39 @@ router.route('/save')
     .post(function (req, res, next) {
 
         var user = req.decoded;
-        var workout = req.body;
-        var e;
-
+        var workout = req.body.workout;
         var workoutID = {};
 
         pool.getConnection(function(err, connection) {
             connection.query('Insert into workout (name,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
                 connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(3) + ')' , function(err, rows, fields) {
-
-                if (!err)
-                    var id = rows.insertId;
-
-                    for( e in workout){
-
-                    }
-
+                connection.release();
+                if (!err) {
+                    var workoutID = rows.insertId;
+                    insertExercises(workoutID)
+                }
             });
         });
 
-        console.log(workout);
+        var insertExercises = function (workoutID){
+            pool.getConnection(function(err, connection) {
+                if(workoutID){
+                    for (var i = 0; i < workout.exercises.length; i++) {
+                        var exercise = workout.exercises[i]
+                        connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
+                            connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ')', function (err, rows, fields) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+
+
+                    }
+                }
+
+            });
+        };
+
 
     });
 

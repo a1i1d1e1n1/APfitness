@@ -9,7 +9,7 @@
 
         <div style="overflow-y: scroll; height:70vh;">
 
-            <div ng-repeat="exercise in workout" ng-init="p = this" ng-drop="true"
+            <div ng-repeat="exercise in workout.exercises" ng-init="p = this" ng-drop="true"
                  ng-drop-success="onDropComplete($index, $data,$event)" class="ng-scope">
 
                 <div ng-drag="true" ng-drag-data="exercise" ng-class="exercise.name" class="ng-binding one"
@@ -24,7 +24,7 @@
 
                         <div class="panel-body" style="font-size: 14px">
 
-                            <div ng-repeat="set in workout[$index].sets">
+                            <div ng-repeat="set in workout.exercises[$index].sets">
                                 <div class="col-sm-4">
                                     reps: {{set.reps}}
                                 </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-block btn-primary" ng-click="saveWorkout(workout,workoutName)">
+        <button class="btn btn-block btn-primary" ng-click="saveWorkout(workout,workoutName)" style="padding-top: 10px">
             Save Workout
         </button>
     </nav>

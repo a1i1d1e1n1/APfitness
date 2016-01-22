@@ -23,6 +23,7 @@
     $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true , requiredAdmin:true} });
     $routeProvider.when('/createworkout', { templateUrl: '/views/createWorkout.ejs', access: { requiredAuthentication: true }, controller: 'CreateWorkoutCtrl' });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
+    $routeProvider.when('/workouts', { templateUrl: '/views/workouts.ejs', access: { requiredAuthentication: true }, controller: 'WorkoutCtrl' });
     $routeProvider.otherwise({ redirectTo: '/' });
   }]);
 
