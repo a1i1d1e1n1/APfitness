@@ -11,7 +11,7 @@
     'toastr',
     'angularUtils.directives.dirPagination',
     'ngDraggable',
-    'App.directivesModule'
+    'App.Directives'
   ]);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {

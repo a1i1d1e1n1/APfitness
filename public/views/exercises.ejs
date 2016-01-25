@@ -76,7 +76,7 @@
     </nav>
 </div>
 
-<div class="col-sm-9 col-md-9 col-lg-9" style="padding-left: 0">
+<div class="col-sm-9 col-md-9 col-lg-9" style="padding-left: 0; padding-top: 15px">
     <div class="container-fluid">
         <div class="col-sm-12">
             <div class="col-xs-4">
@@ -105,7 +105,7 @@
 
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12" >
 
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
                 <div class="panel panel-primary">
@@ -119,7 +119,7 @@
 
                         </div>
                         <div class="col-sm-6" style="padding: 0">
-                            <non-sucky-youtube-embed id="ex.url" height="250" width="250"></non-sucky-youtube-embed>
+                            <non-sucky-youtube-embed id="{{ex.exerciseURL}}" height="250" width="250"></non-sucky-youtube-embed>
                         </div>
                     </div>
                 </div>
