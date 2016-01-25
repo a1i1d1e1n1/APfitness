@@ -14,14 +14,6 @@
             <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
             <li>
                 <a>
-                    <i class="fui-user"> </i>
-                    <span class="nav-text">
-                        Profile
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
                     <i class="fui-bookmark">
                     </i>
                     <span class="nav-text">
@@ -117,31 +109,19 @@
 
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
                 <div class="panel panel-primary">
-                    <!--<div class="panel-heading">
 
-                        <h5 style="font-size: 14px;text-align: center" class="panel-title">{{ex.name}}</h5>
-                        <hr style="margin: 3px;border-top-color: white">
-                        <div style="padding-bottom: 8px">
-                            <span style="font-size: 12px" class="panel-title pull-left">Rating: 4</span>
-                            <span style="font-size: 12px" class="panel-title pull-right">Comments: 4</span>
-                        </div>
-
-                    </div>-->
                     <div class="panel-body" style="margin: 0;padding: 0">
                         <div class="col-sm-6" style="padding: 0">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/rT7DgCr-3pg" frameborder="0" allowfullscreen "></iframe>
+                            <h6 style="text-align: center;font-size: 16px;margin-top: 5px">{{ex.name}}</h6>
+                            <hr>
+                            <span class="label label-primary">Rating: 0</span>
+                            <span class="label label-primary">Comments: 0</span>
+
                         </div>
                         <div class="col-sm-6" style="padding: 0">
-                            <h6 style="text-align: center">{{ex.name}}</h6>
-                        </div>
-                        <div class="btn-group " style="margin-top:0;width: 100%">
-                            <button type="button" class="btn btn-sm btn-info"
-                                    style="width:100%;border-top-right-radius: 0;border-top-left-radius: 0">
-                                <i class="fui-info-circle"></i>
-                            </button>
+                            <non-sucky-youtube-embed id="ex.url" height="250" width="250"></non-sucky-youtube-embed>
                         </div>
                     </div>
-
                 </div>
 
             </div>

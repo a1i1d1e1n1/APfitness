@@ -4,7 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
-var mysql = require('promise-mysql');
+var mysql = require('mysql');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
 

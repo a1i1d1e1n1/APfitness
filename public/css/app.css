@@ -71,8 +71,6 @@
         min-width: 100%;
         min-height: 400px;
     }
-
-
 }
 
 .left-menu-create{
@@ -126,21 +124,9 @@
     padding-left: 22px;
 
 }
-
-.notification{
-    background: red;
-    display: inline-block;
-    border-radius: 50%;
-    width:18px;
-    height:18px;
-    font-size: 12px;
-    position: absolute;
-}
-
-.notification small{
-    position: absolute;
-    left: 6px;
-    top:-1px;
+iframe {
+    display:block;
+    width:100%;
 }
 
 html {
@@ -149,7 +135,7 @@ html {
 }
 
 body {
-    padding-top: 62px;
+    padding-top: 71px;
 }
 
 .footer {
