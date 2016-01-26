@@ -4,7 +4,8 @@
 
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
+var mysql = require('promise-mysql');
+var Promise = require("bluebird");
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
 
@@ -15,6 +16,38 @@ var pool = mysql.createPool({
     password: 'maddog_1',
     database: 'ApFitness'
 });
+
+var insertExercises = function (workoutID, exercise, connection) {
+    return new Promise(function(resolve,reject){
+        connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
+            connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ')', function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }else{
+                    console.log("Inserted Exercise: " + exercise.name);
+                    exercise.insertedId = rows.insertId;
+                    resolve(exercise);
+                }
+        });
+    });
+
+
+};
+
+var insertSets = function (set,insertedID, connection) {
+
+        connection.query('Insert into sets (reps,weight,workout_exerciseID) VALUES (' + connection.escape(set.reps) + ',' +
+            connection.escape(set.weight) + ',' + connection.escape(insertedID) + ')', function (err, rows, fields) {
+
+            if (err) {
+                console.log(err);
+            }else{
+                console.log("inserted set: " + set);
+            }
+        });
+
+};
 
 // route middleware to verify a token
 router.use(function (req, res, next) {
@@ -74,51 +107,30 @@ router.route('/save')
 
         var user = req.decoded;
         var workout = req.body.workout;
-        var workoutID = {};
+        var workoutID = 0;
 
         pool.getConnection().then(function (connection) {
             connection.query('Insert into workout (name,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
                 connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(3) + ')').then(function (rows) {
-                var workoutID = rows.insertId;
-                insertExercises(workoutID, connection);
-            }).catch(function (err) {
-                done(err);
-            });
-
-
-            var insertExercises = function (workoutID, connection) {
+                workoutID = rows.insertId;
 
                 for (var i = 0; i < workout.exercises.length; i++) {
                     var exercise = workout.exercises[i]
 
-                    connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
-                        connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ')').then(function (rows) {
-
-                        var workoutExerciseID = rows.insertId;
-                        insertSets(workoutExerciseID, i, connection);
-
-                    });
-                }
-
-            };
-
-            var insertSets = function (workoutExerciseID, connection) {
-
-                for (var j = 0; j < workout.exercises[i].sets.length; i++) {
-                    var set = workout.exercises[i].sets[j];
-
-                    connection.query('Insert into sets (reps,weight,workout_exerciseID) VALUES (' + connection.escape(set.reps) + ',' +
-                        connection.escape(set.weight) + ',' + connection.escape(workoutExerciseID) + ')', function (err, rows, fields) {
-                        connection.release();
-                        if (err) {
-                            console.log(err);
+                    insertExercises(workoutID, exercise, connection).then(function(results){
+                        for (var j = 0; j < results.sets.length; j++) {
+                            insertSets(results.sets[j],results.insertedId,connection);
                         }
                     });
 
                 }
 
-            };
-
+                res.json("completed");
+            }).catch(function (err) {
+                console.log(err);
+            });
         });
+
+
     });
 module.exports = router;

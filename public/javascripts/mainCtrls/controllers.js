@@ -125,6 +125,18 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
         $scope.exercises = [];
         $scope.searchType = 2;
 
+        var $slider = $("#slider");
+
+        if ($slider.length > 0) {
+            $slider.slider({
+                min: 8,
+                max: 24,
+                value: $scope.pageSize,
+                orientation: "horizontal",
+                range: "min",
+
+            }).addSliderSegments($slider.slider("option").max);
+        }
 
 
         ExerciseService.getAllExercises().success(function(data) {
@@ -269,13 +281,14 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
         $scope.saveWorkout = function (workout) {
             //Makes sure workout has at least one exercise
             if(workout.exercises.length > 0){
-                var validWorkout = true;
+                var validWorkout = false;
 
-                checkName(workout.name);
-                checkSets(workout);
+                validWorkout = checkName(workout.name);
+                validWorkout = checkSets(workout,validWorkout);
 
                 if(validWorkout){
                     WorkoutService.saveWorkout(workout).success(function(data){
+                        toastr.success("SAVED!!");
                     });
                 }
 
@@ -288,20 +301,28 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
         //Checks to see if the workout has a name.
         var checkName = function(workoutName) {
             if(!workoutName){
-                validWorkout = false;
+
                 toastr.error("Please make sure you enter a Workout Name");
+
+            }else{
+                return(true);
             }
-        }
+        };
 
         //Checks to see if the exercise's have at least one set
-        var checkSets = function(workout){
-            for(var i = 0; i < workout.exercises.length; i++){
-                if(workout.exercises[i].sets.length == 0) {
-                    validWorkout = false;
-                    toastr.error("Please make sure all your exercises have sets added !!");
+        var checkSets = function(workout,valid){
+            if(valid){
+                for(var i = 0; i < workout.exercises.length; i++){
+                    if(workout.exercises[i].sets.length == 0) {
+
+                        toastr.error("Please make sure all your exercises have sets added !!");
+                        return(false);
+                    }
                 }
+                return(true);
             }
-        }
+
+        };
 
         //Coode added to add flat-ui component styling.
         var focusButtons = function() {

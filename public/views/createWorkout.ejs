@@ -86,33 +86,33 @@
         </div>
         <hr>
         <div class="col-sm-12">
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
                 <div class="panel panel-primary">
 
                     <div class="panel-body" style="margin: 0;padding: 0">
-                        <div class="col-sm-6" style="padding: 0">
-                            <h6 style="text-align: center;font-size: 16px;margin-top: 5px">{{ex.name}}</h6>
+                        <div class="col-sm-12" style="padding: 0">
+                            <h6 style="text-align: center;font-size: 14px;margin-top: 5px">{{ex.name}}</h6>
                             <hr style="margin: 0">
-
-                            <div class="btn-group " style="width: 100%">
-                                <button type="button" class="btn btn-sm btn-info " ng-click="addExercise(ex)"
-                                        style="width:50%;border-top-left-radius: 0">
-                                    <i class="fui-plus-circle"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-info"
-                                        style="width:50%;position:absolute;border-top-right-radius: 0;">
-                                    <i class="fui-info-circle"></i>
-                                </button>
-                            </div>
-                            <div class="col-lg-12" style="padding:20px"></div>
-                            <div class="col-lg-12">
+                            <non-sucky-youtube-embed id="{{ex.exerciseURL}}" height="250"
+                                                     width="250"></non-sucky-youtube-embed>
+                        </div>
+                        <div class="col-sm-12" style="padding: 0">
+                            <div class="col-lg-12" style="text-align: center">
                                 <span class="label label-primary">Rating: 0</span>
                                 <span class="label label-primary">Comments: 0</span>
                             </div>
                         </div>
-                        <div class="col-sm-6" style="padding: 0">
-                            <non-sucky-youtube-embed id="{{ex.exerciseURL}}" height="250" width="250"></non-sucky-youtube-embed>
+                        <div class="col-lg-12" style="text-align: center">
+                            <button type="button" class="btn btn-xs btn-info" ng-click="addExercise(ex)"
+                                    style="width:48%">
+                                <i class="fui-plus-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-xs btn-info"
+                                    style="width:48%">
+                                <i class="fui-info-circle"></i>
+                            </button>
                         </div>
+
                     </div>
                 </div>
 
