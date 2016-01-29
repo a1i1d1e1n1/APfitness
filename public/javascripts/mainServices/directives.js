@@ -20,10 +20,10 @@ app.directive('nonSuckyYoutubeEmbed', function factory() {
                     var width = (attrs.width) ;
                     var paddingBottom = ((height / width) * 100) + '%';
                     var iframeStyle = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%';
-                    var iframeContainerStyle = 'position: relative; padding-bottom: '+paddingBottom+'; padding-top: 30px; height: 0; overflow: hidden;'
+                    var iframeContainerStyle = 'position: relative;'
                     element.on('click', function() {
-                        var v = '<iframe type="text/html" style="'+iframeStyle+'" width="'+width+'" height="'+height+'" src="http://youtube.com/embed/'+id+'?autoplay=1" frameborder="0" />'
-                        var newHTML =	'<div style="'+iframeContainerStyle+'">' + v + '</div>';
+                        var v = '<iframe class="embed-responsive" type="text/html" style="'+iframeStyle+'" width="100%" height="auto" src="http://youtube.com/embed/'+id+'?autoplay=1" allowfullscreen />'
+                        var newHTML =	'<div class="embed-responsive embed-responsive-4by3" style="'+iframeContainerStyle+'">' + v + '</div>';
                         element.html(newHTML);
                     });
                 }
@@ -31,18 +31,4 @@ app.directive('nonSuckyYoutubeEmbed', function factory() {
         }
     };
     return directiveDefinitionObject;
-});
-
-app.directive('pulldown', function factory() {
-    return {
-        restrict: 'A',
-        link: function ($scope, iElement, iAttrs) {
-            var $parent = iElement.parent();
-            var $parentHeight = $parent.height();
-            var height = iElement.height();
-
-            iElement.css('margin-top', $parentHeight - height);
-        }
-    };
-
 });

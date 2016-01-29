@@ -121,7 +121,7 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
     function($rootScope, $scope, ExerciseService, toastr) {
         $scope.currentPage = 1;
-        $scope.pageSize = 12;
+        $scope.pageSize = 8;
         $scope.exercises = [];
         $scope.searchType = 2;
 
@@ -134,10 +134,20 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
                 value: $scope.pageSize,
                 orientation: "horizontal",
                 range: "min",
+                slide: function( event, ui ) {
+                    $scope.$apply(function() {
+                        $scope.pageSize = ui.value;
+                    });
+                }
 
             }).addSliderSegments($slider.slider("option").max);
         }
 
+        $scope.showVideo = function () {
+            var v = '<iframe width="560" height="315" src="https://www.youtube.com/embed/fGt9o0XUl5g" frameborder="0" allowfullscreen></iframe>'
+            var newHTML =	v;
+            element.html(newHTML);
+        };
 
         ExerciseService.getAllExercises().success(function(data) {
             $scope.exercises = data;
@@ -162,6 +172,7 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
                 $(this).closest('.form-group').removeClass('focus');
             });
         };
+
         $("select").select2({dropdownCssClass: 'dropdown-inverse'});
 
         focusButtons();
@@ -233,10 +244,10 @@ app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     }
 ]);
 
-app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService', 'toastr',
-    function($scope, ExerciseService, WorkoutService, toastr) {
+app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService', 'toastr','$location',
+    function($scope, ExerciseService, WorkoutService, toastr,$location) {
         $scope.currentPage = 1;
-        $scope.pageSize = 12;
+        $scope.pageSize = 8;
         $scope.exercises = [];
         $scope.searchType = 2;
         $scope.workout = {
@@ -288,7 +299,8 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
 
                 if(validWorkout){
                     WorkoutService.saveWorkout(workout).success(function(data){
-                        toastr.success("SAVED!!");
+                        toastr.success("Workout Saved. Available in workouts page.");
+                        $location.path("/userHome");
                     });
                 }
 
