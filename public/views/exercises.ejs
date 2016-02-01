@@ -11,23 +11,26 @@
                     </span>
                 </a>
             </li>
-
             <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-list">
-                    </i>
-                    <span class="nav-text">
-                        Fourm
-                    </span>
-                </a>
-            </li>
             <li>
                 <a>
                     <i class="fui-bookmark">
                     </i>
                     <span class="nav-text">
                         Assigned Workouts
+                    </span>
+
+                    <div class="notification">
+                        <small>1</small>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="fui-location">
+                    </i>
+                    <span class="nav-text">
+                        Tools
                     </span>
                 </a>
             </li>
@@ -54,13 +57,14 @@
             <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
             <li>
                 <a>
-                    <i class="fui-location">
+                    <i class="fui-document">
                     </i>
                     <span class="nav-text">
-                        Tools
+                        Fourm
                     </span>
                 </a>
             </li>
+            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
             <li>
                 <a>
                     <i class="fui-gear">
@@ -116,32 +120,33 @@
         <div class="col-sm-12">
 
 
-            <div class="panel panel-success">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
+                 dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage" style="padding: 10px;">
+                <div class="panel panel-success" style="margin:0;padding:0;border: 0">
 
-                <div class="panel-body" style="padding: 0">
-
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
-                         dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage">
-
+                    <div class="panel-body" style="padding: 0;background-color: #16a085;color: white">
                         <div class="col-sm-12" style="padding: 0">
 
-                            <p style="text-align: left;font-size: 14px;margin-top: 5px;margin-bottom: 0px">{{ex.name}}</p>
+                            <p style="text-align: left;font-size: 14px;margin-top: 5px;margin-bottom: 0px;text-align: center;font-weight: bolder">
+                                {{ex.name}}</p>
 
                         </div>
                         <div class="col-sm-12" style="padding: 0">
-                            <non-sucky-youtube-embed id="{{ex.exerciseURL}}" ></non-sucky-youtube-embed>
+                            <non-sucky-youtube-embed id="{{ex.exerciseURL}}"></non-sucky-youtube-embed>
                         </div>
-                        <div class="col-lg-6" style="text-align: left;padding: 0">
-                            <span class="label-info label" style="font-size: 10px">Rating: {{ex.rating}}</span>
-                        </div>
-                        <div class="col-lg-6" style="text-align: right;padding: 0">
-                            <span class="label-info label" style="font-size: 10px">Comments: 0</span>
-                        </div>
-                        <div class="col-sm-12" style="padding-bottom: 10px">
 
-                        </div>
+
                     </div>
 
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">Rating: 0</div>
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">Comments: 0</div>
+                </div>
+                <div class="col-lg-12" style=";padding: 0">
+                    <button class="btn btn-default btn-sm" style="width: 100%;border-top-left-radius: 0;border-top-right-radius: 0"><i class="fui-info-circle"></i> </button>
                 </div>
 
             </div>

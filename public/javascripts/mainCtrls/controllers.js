@@ -189,22 +189,39 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
         $scope.pageSize = 12;
         $scope.exercises = [];
         $scope.searchType = 2;
+        $scope.gridOptions = {};
+
+        var init = function(){
+            WorkoutService.getAllWorkouts().success(function(data) {
+                $scope.workouts = data;
+                WorkoutService.getAllWorkoutsExercise().success(function(data) {
+                    $scope.workouts_exercises = data;
+                    $scope.WorkoutsWithExercises = assignExercisesToWorkouts();
+
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }).error(function(status, data) {
+                console.log(status);
+                console.log(data);
+            });
 
 
+        };
 
-        WorkoutService.getAllWorkouts().success(function(data) {
-            $scope.workouts = data;
-        }).error(function(status, data) {
-            console.log(status);
-            console.log(data);
-        });
+        var assignExercisesToWorkouts = function(){
+            for(var i = 0 ; i < $scope.workouts.length;i++){
+                $scope.workouts[i].exercises = [];
+                for(var j = 0 ; j < $scope.workouts_exercises.length;j++){
+                    if($scope.workouts[i].workoutID == $scope.workouts_exercises[j].workoutID){
 
-        WorkoutService.getAllWorkoutsExercise().success(function(data) {
-            $scope.workouts_exercises = data;
-        }).error(function(status, data) {
-            console.log(status);
-            console.log(data);
-        });
+                        $scope.workouts[i].exercises.push($scope.workouts_exercises[j]);
+                    }
+                }
+            }
+            return $scope.workouts;
+        };
 
         $scope.pageChangeHandler = function(num) {
             console.log('meals page changed to ' + num);
@@ -223,6 +240,7 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
         };
         $("select").select2({dropdownCssClass: 'dropdown-inverse'});
 
+        init();
         focusButtons();
     }
 ]);

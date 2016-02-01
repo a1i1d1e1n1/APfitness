@@ -77,7 +77,7 @@
     background-color: #2c3e50;
     display: inline-block;
     position: fixed;
-
+width: 24%;
     height: 100%;
     padding-right: 10px;
     padding-left: 10px;
@@ -147,6 +147,12 @@ body {
     font-size: 14px;
     text-align: center;
 }
+.workout-label {
+    background-color: #16a085;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
 
 .panel-green {
     border-color: #16a085;
@@ -171,4 +177,9 @@ body {
 }
 .center-t{
     text-align: center;
+}
+
+.myGrid {
+    width: 100%;
+    height: 300px;
 }

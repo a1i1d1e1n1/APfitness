@@ -60,7 +60,7 @@ app.factory('WorkoutService', function ($http) {
             return $http.post('api/workout/save', {workout: workout});
         },
         getAllWorkoutsExercise: function () {
-            return $http.get('api/workout/getExercises')
+            return $http.get('api/workout/AllWorkoutExercises')
         }
 
     }

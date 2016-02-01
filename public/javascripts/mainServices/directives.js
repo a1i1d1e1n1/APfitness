@@ -7,7 +7,6 @@ app.directive('nonSuckyYoutubeEmbed', function factory() {
     var directiveDefinitionObject = {
         restrict: 'E',
         template: 	'<div style="position: relative;">' +
-        '<img src="img/Play-Button.png" style="position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin-left: -24px; margin-top: -24px; cursor: pointer;" alt="Play" />' +
         '<img src="http://i.ytimg.com/vi/{{id}}/0.jpg" style="width: 100%; height: auto; display: inline; cursor: pointer" alt="" />' +
         '</div>',
         scope: {
@@ -32,3 +31,4 @@ app.directive('nonSuckyYoutubeEmbed', function factory() {
     };
     return directiveDefinitionObject;
 });
+

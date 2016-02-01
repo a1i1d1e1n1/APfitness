@@ -17,29 +17,6 @@ var pool = mysql.createPool({
     database: 'ApFitness'
 });
 
-var getWorkoutAndExercises = function(){
-    return new Promise(function(resolve,reject) {
-        var workouts = [{}];
-
-        pool.getConnection().then(function (connection) {
-            connection.query('SELECT * from workout').then(function (rows) {
-
-                workouts = rows;
-                for (var i = 0; i < workouts.length; i++) {
-                    getExercises(workouts[i].workoutID, connection).then(function (results) {
-                        workouts[i].exercises = results;
-                    });
-                }
-
-
-            }).catch(function (err) {
-                console.log(err);
-            });
-        });
-
-
-    });
-};
 
 var getExercises = function (ID,connection){
     return new Promise(function(resolve,reject) {
@@ -138,7 +115,7 @@ router.route('/')
         })
     });
 
-router.route('/getExercises')
+router.route('/AllWorkoutExercises')
     // fetch all Workouts
     .get(function (req, res, next) {
 
@@ -148,13 +125,15 @@ router.route('/getExercises')
 
         }];
 
-
-        getWorkoutAndExercises().then(function(results){
-            res.json(results);
-        });
-
-
-
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM workout_exercises;', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.');
+            });
+        })
 
     });
 
@@ -167,7 +146,7 @@ router.route('/save')
         var workoutID = 0;
 
         pool.getConnection().then(function (connection) {
-            connection.query('Insert into workout (name,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
+            connection.query('Insert into workout (workoutName,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
                 connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(3) + ')').then(function (rows) {
                 workoutID = rows.insertId;
 
