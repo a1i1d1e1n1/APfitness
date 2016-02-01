@@ -92,6 +92,9 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 
         $scope.auth = AuthenticationService;
 
+        $scope.createWorkout = function(){
+            $location.path("/createworkout");
+        };
 
         $scope.logOut = function logOut() {
             if (AuthenticationService.isAuthenticated) {
@@ -196,6 +199,12 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
             console.log(data);
         });
 
+        WorkoutService.getAllWorkoutsExercise().success(function(data) {
+            $scope.workouts_exercises = data;
+        }).error(function(status, data) {
+            console.log(status);
+            console.log(data);
+        });
 
         $scope.pageChangeHandler = function(num) {
             console.log('meals page changed to ' + num);

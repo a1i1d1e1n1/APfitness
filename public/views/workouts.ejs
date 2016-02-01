@@ -97,25 +97,39 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" dir-paginate="ex in workouts | filter:q | itemsPerPage: pageSize" current-page="currentPage">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
 
-                        <h5 style="font-size: 14px;text-align: center" class="panel-title">{{ex.name}}</h5>
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" ng-init="p = this"
+                 dir-paginate="workout in workouts | filter:q | itemsPerPage: pageSize" current-page="currentPage" style="padding: 10px;">
+                <div class="panel panel-success" style="margin:0;padding:0;border: 0">
 
+                    <div class="panel-body" style="padding: 0;background-color: #16a085;color: white">
+                        <div class="col-sm-12" style="padding: 0">
 
-                    </div>
-                    <div class="panel-body" style="margin: 0;padding: 0">
-                        <div class="btn-group " style="width: 100%">
+                            <p style="text-align: left;font-size: 14px;margin-top: 5px;margin-bottom: 0px;text-align: center;font-weight: bolder">
+                                {{workout.name}}</p>
 
-
-                            <button type="button" class="btn btn-sm btn-info"
-                                    style="width:100%;border-top-right-radius: 0;border-top-left-radius: 0">
-                                <i class="fui-info-circle"></i>
-                            </button>
                         </div>
+                        <div class="col-sm-12" style="padding: 0">
+                            <div ng-repeat="exercises in workouts_exercises">
+
+                                    {{exercises}}
+
+
+                            </div>
+                        </div>
+
+
                     </div>
 
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">Rating: 0</div>
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">Comments: 0</div>
+                </div>
+                <div class="col-lg-12" style=";padding: 0">
+                    <button class="btn btn-default btn-sm" style="width: 100%;border-top-left-radius: 0;border-top-right-radius: 0"><i class="fui-info-circle"></i> </button>
                 </div>
 
             </div>

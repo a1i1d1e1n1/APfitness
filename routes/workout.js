@@ -17,6 +17,43 @@ var pool = mysql.createPool({
     database: 'ApFitness'
 });
 
+var getWorkoutAndExercises = function(){
+    return new Promise(function(resolve,reject) {
+        var workouts = [{}];
+
+        pool.getConnection().then(function (connection) {
+            connection.query('SELECT * from workout').then(function (rows) {
+
+                workouts = rows;
+                for (var i = 0; i < workouts.length; i++) {
+                    getExercises(workouts[i].workoutID, connection).then(function (results) {
+                        workouts[i].exercises = results;
+                    });
+                }
+
+
+            }).catch(function (err) {
+                console.log(err);
+            });
+        });
+
+
+    });
+};
+
+var getExercises = function (ID,connection){
+    return new Promise(function(resolve,reject) {
+        connection.query('SELECT * FROM apfitness.workout_exercises WHERE workoutID = ' +  connection.escape(ID), function (err, rows, fields) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }else{
+                resolve(rows);
+            }
+        });
+    });
+};
+
 var insertExercises = function (workoutID, exercise, connection) {
     return new Promise(function(resolve,reject){
         connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
@@ -99,6 +136,26 @@ router.route('/')
                     console.log('Error while performing Query.');
             });
         })
+    });
+
+router.route('/getExercises')
+    // fetch all Workouts
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+
+        var workouts = [{
+
+        }];
+
+
+        getWorkoutAndExercises().then(function(results){
+            res.json(results);
+        });
+
+
+
+
     });
 
 router.route('/save')

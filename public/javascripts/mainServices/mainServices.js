@@ -48,6 +48,7 @@ app.factory('ExerciseService', function ($http) {
             return $http.get('api/exercise');
         },
 
+
     }
 });
 app.factory('WorkoutService', function ($http) {
@@ -58,6 +59,9 @@ app.factory('WorkoutService', function ($http) {
         saveWorkout: function(workout) {
             return $http.post('api/workout/save', {workout: workout});
         },
+        getAllWorkoutsExercise: function () {
+            return $http.get('api/workout/getExercises')
+        }
 
     }
 });
