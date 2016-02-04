@@ -22,36 +22,32 @@
                     </div>
                     <div ng-show="workout.exercises[$index].sets.length > 0"  >
                     <div class="col-sm-12" style="background-color: #3498db;color: white;padding: 0" ng-hide="collapsed">
-                        <div class="col-sm-1 center-t" >
+                        <div class="col-sm-2 center-t">
                             <p style="font-size: 12px">Set:</p>
                         </div>
                         <div class="col-sm-4 center-t">
                             <p style="font-size: 12px">Reps:</p>
                         </div>
-                        <div class="col-sm-4 center-t">
-                            <p style="font-size: 12px">Weight(KG):</p>
-                        </div>
 
                     </div>
                         </div>
                     <div ng-repeat="set in workout.exercises[$index].sets" ng-hide="collapsed">
-                        <div class="col-sm-12" style="background-color: #3498db;color: white;padding: 0">
-                            <div class="col-sm-1 center-t">
+
+                        <div class="col-sm-12" style="background-color: #3498db;color: white;padding: 0;height:25px">
+
+                            <div class="col-sm-2 center-t" style="height: inherit">
                                 <p style="font-size: 12px">{{$index+1}}:</p>
                             </div>
-                            <div class="col-sm-4 center-t">
+                            <div class="col-sm-4 center-t" style="height: inherit">
                                 <p style="font-size: 12px">{{set.reps}}</p>
                             </div>
-                            <div class="col-sm-4 center-t">
-                                <p style="font-size: 12px">{{set.weight}}</p>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="btn-group">
-                                    <div class="btn btn-xs btn-danger pull-right" ng-click="removeSet(p.$index,$index)" ><i
-                                            class="fui-cross"></i></div>
-                                </div>
+                            <div class="col-sm-2" style="height: inherit">
+
+                                <img src="img/trash.svg" height="25px" ng-click="removeSet(p.$index,$index)">
+
                             </div>
                         </div>
+
                     </div>
                     <div class="btn btn-sm btn-default" ng-click="addSet(p.$index)"
                          style="width: 100%;border-top-right-radius: 0;border-top-left-radius: 0" ng-hide="collapsed">

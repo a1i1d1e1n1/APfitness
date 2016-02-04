@@ -17,7 +17,6 @@ var pool = mysql.createPool({
     database: 'ApFitness'
 });
 
-
 var getExercises = function (ID,connection){
     return new Promise(function(resolve,reject) {
         connection.query('SELECT * FROM apfitness.workout_exercises WHERE workoutID = ' +  connection.escape(ID), function (err, rows, fields) {
@@ -116,7 +115,7 @@ router.route('/')
     });
 
 router.route('/AllWorkoutExercises')
-    // fetch all Workouts
+    // fetch all Workouts_exercises
     .get(function (req, res, next) {
 
         var user = req.decoded;
@@ -131,7 +130,7 @@ router.route('/AllWorkoutExercises')
                 if (!err)
                     res.json(rows);
                 else
-                    console.log('Error while performing Query.');
+                    console.log('Error while performing Query.' + err);
             });
         })
 

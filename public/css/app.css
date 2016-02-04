@@ -154,6 +154,33 @@ body {
     text-align: center;
 }
 
+.panel-blue {
+    border-color: #3498db;
+}
+
+.panel-blue > .panel-heading {
+    color: #fff;
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.panel-blue > .panel-heading + .panel-collapse > .panel-body {
+    border-top-color: #3498db;
+}
+
+.panel-blue > .panel-heading .badge {
+    color: #3498db;
+    background-color: #fff;
+}
+
+.panel-blue > .panel-footer {
+    color: #fff;
+}
+
+.panel-blue > .panel-footer + .panel-collapse > .panel-body {
+    border-bottom-color: #3498db;
+}
+
 .panel-green {
     border-color: #16a085;
 }

@@ -123,33 +123,54 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
 
 app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toastr',
     function($rootScope, $scope, ExerciseService, toastr) {
-        $scope.currentPage = 1;
-        $scope.pageSize = 8;
-        $scope.exercises = [];
-        $scope.searchType = 2;
 
-        var $slider = $("#slider");
+        //Sets up the configuration and variables needed on page startup.
+        var initialise = function () {
+            //Variables set on page load
+            $scope.currentPage = 1;
+            $scope.pageSize = 8;
+            $scope.exercises = [];
+            $scope.searchType = 2;
 
-        if ($slider.length > 0) {
-            $slider.slider({
-                min: 8,
-                max: 24,
-                value: $scope.pageSize,
-                orientation: "horizontal",
-                range: "min",
-                slide: function( event, ui ) {
-                    $scope.$apply(function() {
-                        $scope.pageSize = ui.value;
-                    });
-                }
+            slider();
+            focusButtons();
 
-            }).addSliderSegments($slider.slider("option").max);
+            //Makes sure Iframe videos are stopped once modal is clsoed.
+            $("#modalExercise").on('hidden.bs.modal', function (e) {
+                $("#modalExercise iframe").attr("src", $("#modalExercise iframe").attr("src"));
+            });
+
+            $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+        };
+
+
+        var slider = function () {
+            var $slider = $("#slider");
+
+            if ($slider.length > 0) {
+                $slider.slider({
+                    min: 8,
+                    max: 24,
+                    value: $scope.pageSize,
+                    orientation: "horizontal",
+                    range: "min",
+                    slide: function (event, ui) {
+                        $scope.$apply(function () {
+                            $scope.pageSize = ui.value;
+                        });
+                    }
+
+                }).addSliderSegments($slider.slider("option").max);
+            }
         }
 
-        $scope.showVideo = function () {
-            var v = '<iframe width="560" height="315" src="https://www.youtube.com/embed/fGt9o0XUl5g" frameborder="0" allowfullscreen></iframe>'
-            var newHTML =	v;
-            element.html(newHTML);
+
+        $scope.openExercise = function () {
+            $('#modalExercise').modal('show');
+        };
+
+        $scope.closeExercise = function () {
+            $('#modalExercise').modal('hide');
         };
 
         ExerciseService.getAllExercises().success(function(data) {
@@ -176,9 +197,7 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
             });
         };
 
-        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
-
-        focusButtons();
+        initialise();
     }
 ]);
 
@@ -209,6 +228,7 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
 
 
         };
+
 
         var assignExercisesToWorkouts = function(){
             for(var i = 0 ; i < $scope.workouts.length;i++){
@@ -277,6 +297,7 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
         $scope.pageSize = 8;
         $scope.exercises = [];
         $scope.searchType = 2;
+
         $scope.workout = {
             exercises:[]
         };
