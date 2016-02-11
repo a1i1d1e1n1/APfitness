@@ -11,7 +11,8 @@
     'toastr',
     'angularUtils.directives.dirPagination',
     'ngDraggable',
-    'App.Directives'
+    'App.Directives',
+    'ngTouch'
   ]);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -56,6 +57,7 @@
         }
     });
   });
+
 
   app.run(function($rootScope, $location, AuthenticationService, $window,toastr) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {

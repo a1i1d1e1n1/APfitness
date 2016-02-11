@@ -131,6 +131,7 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
             $scope.pageSize = 8;
             $scope.exercises = [];
             $scope.searchType = 2;
+            $scope.selectedExercise = 1;
 
             slider();
             focusButtons();
@@ -162,10 +163,13 @@ app.controller('ExerciseCtrl', ['$rootScope', '$scope', 'ExerciseService', 'toas
 
                 }).addSliderSegments($slider.slider("option").max);
             }
-        }
+        };
 
 
-        $scope.openExercise = function () {
+        $scope.openExercise = function (exercise) {
+            $scope.selectedExercise = exercise;
+            $scope.selectedExercise.iframe = "https://www.youtube.com/embed/" + $scope.selectedExercise.exerciseURL;
+            console.log($scope.selectedExercise.iframe);
             $('#modalExercise').modal('show');
         };
 
@@ -209,6 +213,7 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
         $scope.exercises = [];
         $scope.searchType = 2;
         $scope.gridOptions = {};
+        $scope.selectedWorkout = 1;
 
         var init = function(){
             WorkoutService.getAllWorkouts().success(function(data) {
@@ -251,6 +256,58 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
             console.log(type);
         };
 
+
+        $scope.openAssignWorkout = function (workout) {
+
+            $scope.selectedWorkout = workout;
+            $('#modalAssignWorkout').modal('show');
+        };
+
+        $scope.closeAssignWorkout = function () {
+            $scope.selectedWorkout = null;
+            $('#modalAssignWorkout').modal('hide');
+        };
+
+        $scope.assignWorkout = function (date, time) {
+            console.log(date, time);
+            console.log($scope.selectedWorkout);
+
+            WorkoutService.assignWorkout($scope.selectedWorkout, date, time).success(function (data) {
+                console.log(data);
+
+            }).error(function (status, data) {
+                console.log(status);
+                console.log(data);
+            });
+
+        };
+
+        var datepickerInit = function () {
+            var datepickerSelector = $('#datepicker-01');
+            datepickerSelector.datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'd MM, yy',
+                yearRange: '-1:+1'
+            }).prev('.input-group-btn').on('click', function (e) {
+                e && e.preventDefault();
+                datepickerSelector.focus();
+            });
+            $.extend($.datepicker, {
+                _checkOffset: function (inst, offset, isFixed) {
+                    return offset;
+                }
+            });
+
+            // Now let's align datepicker with the prepend button
+            datepickerSelector.datepicker('widget').css({'margin-left': -datepickerSelector.prev('.input-group-btn').find('.btn').outerWidth() + 3});
+
+            $('#timepicker-01').timepicker({
+                className: 'timepicker-primary',
+                timeFormat: 'h:i A'
+            });
+        };
+
         var focusButtons = function() {
             $('.input-group').on('focus', '.form-control', function () {
                 $(this).closest('.form-group').addClass('focus');
@@ -262,6 +319,7 @@ app.controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr
 
         init();
         focusButtons();
+        datepickerInit();
     }
 ]);
 
@@ -298,10 +356,12 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
         $scope.exercises = [];
         $scope.searchType = 2;
 
+        //Initialises a blank workout with no exercises on page load.
         $scope.workout = {
             exercises:[]
         };
 
+        //Gets all exercises in database to be displayed on screen.
         ExerciseService.getAllExercises().success(function(data) {
             $scope.exercises = data;
         }).error(function(status, data) {
@@ -317,26 +377,36 @@ app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService
 
         $scope.removeExercise = function (i){
             $scope.workout.exercises.splice(i, 1);;
-        }
+        };
 
         $scope.addSet = function (index){
             var set = {reps: 0, weight:0};
             $scope.workout.exercises[index].sets.push(set);
         };
 
+        //Removes a set from the exercise
         $scope.removeSet = function (index,i){
 
             $scope.workout.exercises[index].sets.splice(i, 1);;
         };
 
+        $scope.showCanvas = function () {
+            $('.row-offcanvas').toggleClass('active')
+        };
+
+        //Swaps the exercises position in the workout when dropped on screen
         $scope.onDropComplete = function (index, obj, evt) {
+
             var otherObj = $scope.workout.exercises[index];
             var otherIndex = $scope.workout.exercises.indexOf(obj);
+
             $scope.workout.exercises[index] = obj;
             $scope.workout.exercises[otherIndex] = otherObj;
+
             console.log($scope.workout);
         };
 
+        //Saves th workout if all conditions are met.
         $scope.saveWorkout = function (workout) {
             //Makes sure workout has at least one exercise
             if(workout.exercises.length > 0){

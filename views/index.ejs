@@ -32,6 +32,7 @@
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+  <script src="/javascripts/scripts/angular-touch/angular-touch.min.js"></script>
   <script src="/javascripts/scripts/angular-toastr.js"></script>
   <script src="/javascripts/scripts/angular-route.js"></script>
   <script src="/javascripts/scripts/calendar.js"></script>
@@ -47,8 +48,6 @@
   <script src="/javascripts/angularApp.js"></script>
   <script src="/javascripts/mainServices/directives.js"></script>
 
-
-
 </head>
 <div ng-controller="HomePageCtrl">
 <body>
@@ -61,7 +60,11 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
        </button>
-       <a class="navbar-brand" href="#/" style="font-size: 36px;margin-bottom: 10px">APfitness</a>
+
+       <a class="navbar-brand" style="font-size: 36px;margin-bottom: 10px"> <img class="img-circle pull-left"
+                                                                                 src="img/fit.svg" height="35px">APfitness<img
+                 class="img-circle pull-right" style="transform: rotate(180deg); margin-left: 5px" src="img/fit.svg"
+                 height="35px"></a>
      </div>
     <div class="collapse navbar-collapse" id="navbar">
       <form class="navbar-form navbar-right" action="#" role="search">

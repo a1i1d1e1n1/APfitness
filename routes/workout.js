@@ -168,4 +168,26 @@ router.route('/save')
 
 
     });
+
+router.route('/assign')
+    // fetch all users
+    .post(function (req, res, next) {
+
+        var user = req.decoded;
+        var workout = req.body.workout;
+
+        var dateTime = new Date(req.body.date + " " + req.body.time);
+
+        pool.getConnection().then(function (connection) {
+            connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(dateTime) + ',' +
+                connection.escape(dateTime) + ',' + connection.escape(3) + ',' + connection.escape(workout.workoutID) + ')').then(function (rows) {
+                console.log(rows);
+
+            });
+
+        });
+
+
+    });
+
 module.exports = router;

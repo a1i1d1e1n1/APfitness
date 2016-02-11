@@ -98,7 +98,8 @@
         </div>
         <div class="col-sm-12">
             <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4" ng-init="p = this"
-                 dir-paginate="workout in WorkoutsWithExercises | filter:q | itemsPerPage: pageSize" current-page="currentPage"
+                 dir-paginate="workout in WorkoutsWithExercises | filter:q | itemsPerPage: pageSize"
+                 current-page="currentPage"
                  style="padding: 10px;">
                 <div class="panel panel-success" style="margin:0;padding:0;border: 0">
 
@@ -110,11 +111,15 @@
                         </div>
                         <div style="overflow-y: scroll;overflow-x:hidden;height: 200px;z-index: -1">
                             <div ng-repeat="exercise in workout.exercises">
-                                <div class="col-sm-12" style="background-color: #3498db;color: white;padding: 0;height: 73px">
-                                    <div class="col-sm-4"style="padding: 0">
-                                        <img src="http://i.ytimg.com/vi/{{exercise.exerciseURL}}/0.jpg" style="width: 100%; height: auto; display: inline; cursor: pointer" alt="" />
+                                <div class="col-sm-12"
+                                     style="background-color: #3498db;color: white;padding: 0;height: 73px">
+                                    <div class="col-sm-4" style="padding: 0">
+                                        <img src="http://i.ytimg.com/vi/{{exercise.exerciseURL}}/0.jpg"
+                                             style="width: 100%; height: auto; display: inline; cursor: pointer"
+                                             alt=""/>
                                     </div>
-                                    <div class="col-sm-8" style="position: relative;top: 50%;transform: translateY(-50%);">
+                                    <div class="col-sm-8"
+                                         style="position: relative;top: 50%;transform: translateY(-50%);">
                                         <p style="font-size: 16px;">{{exercise.name}}</p>
                                     </div>
 
@@ -132,9 +137,15 @@
                     <div class="workout-label">Comments: 0</div>
                 </div>
                 <div class="col-lg-12" style=";padding: 0">
-                    <button class="btn btn-default btn-sm"
-                            style="width: 100%;border-top-left-radius: 0;border-top-right-radius: 0"><i
-                                class="fui-info-circle"></i></button>
+                    <div class="btn-group" style="width: 100%">
+                        <button class="btn btn-default btn-sm" style="width: 50%;border-top-left-radius: 0">
+                            <i class="fui-info-circle"></i>
+                        </button>
+                        <button class="btn btn-default btn-sm" style="width: 50%;border-top-right-radius: 0"
+                                ng-click="openAssignWorkout(workout)">
+                            <i class="fui-plus-circle"></i> Assign Workout
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -149,4 +160,59 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="modalAssignWorkout">
+    <div class="modal-dialog ">
+        <div class="modal-content" style="border-color: #16a085">
+            <div class="modal-header" style="background-color: #16a085;color: white">
+                <button type="button" class="close fui-cross" ng-click="closeAssignWorkout()" aria-hidden="true"
+                        style="color: white"></button>
+                <h4 class="modal-title" style="text-align: center">{{selectedWorkout.workoutName}}</h4>
+            </div>
+
+            <div class="modal-body" style="padding: 0">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span>Date:</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span>Time:</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                            <span class="input-group-btn">
+                              <button class="btn" type="button"><span class="fui-calendar"></span></button>
+                            </span>
+                                <input type="text" class="form-control" id="datepicker-01" ng-model="assignedDate"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" id="timepicker-01" class="form-control" ng-model="assignedTime">
+                                <span class="input-group-btn">
+                                  <button class="btn" type="button"><span class="fui-time"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info" style="width: 100%" ng-click="assignWorkout(assignedDate,assignedTime)">
+                    Assign That Workout Fool !!!
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

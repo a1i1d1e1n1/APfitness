@@ -42,15 +42,17 @@ app.factory('UserService', function ($http) {
 
     }
 });
+
+//Gets data from the api/exercises
 app.factory('ExerciseService', function ($http) {
     return {
         getAllExercises: function() {
             return $http.get('api/exercise');
         },
 
-
     }
 });
+
 app.factory('WorkoutService', function ($http) {
     return {
         getAllWorkouts: function() {
@@ -61,8 +63,10 @@ app.factory('WorkoutService', function ($http) {
         },
         getAllWorkoutsExercise: function () {
             return $http.get('api/workout/AllWorkoutExercises')
+        },
+        assignWorkout: function (workout, date, time) {
+            return $http.post('api/workout/assign', {workout: workout, date: date, time: time})
         }
-
     }
 });
 
