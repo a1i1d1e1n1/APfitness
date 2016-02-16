@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li>
-                <a href="#/assigned">
+                <a href="#/assigned" class="current">
                     <i class="fui-bookmark">
                     </i>
                     <span class="nav-text">
@@ -84,28 +84,41 @@
 </div>
 <div class="col-sm-9 col-md-9 col-lg-9" style="padding-left: 0">
     <div class="container-fluid">
+        {{workouts}}
         <div class="col-sm-12">
-            <div class="col-sm-6">
-                <h3>{{data[0].first_name}} {{data[0].last_name}}</h3>
-            </div>
-        </div>
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+                 dir-paginate="ex in workouts | filter:q | itemsPerPage: pageSize" current-page="currentPage"
+                 style="padding: 10px">
+                <div class="panel panel-success" style="margin:0;padding:0;border: 0">
 
-        <div class="col-sm-6">
-            <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
-                Recent Workouts
+                    <div class="panel-body" style="padding: 0;background-color: #16a085;color: white">
+                        <div class="col-sm-12" style="padding: 0">
+
+                            <p style="text-align: left;font-size: 14px;margin-top: 5px;margin-bottom: 0px;text-align: center;font-weight: bolder">
+                                {{ex.name}}</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">{{ex.start_date}}</div>
+                </div>
+                <div class="col-lg-6" style="padding: 0">
+                    <div class="exercise-label">Comments: 0</div>
+                </div>
+
+
             </div>
-            <div class="col-sm-12"
-                 style="background-color: #5bc0de;color: white;padding: 5px;text-align: center; height: 200px">
-                No Workouts have been completed :-(
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
-                Weight Tracker
-            </div>
-            <div class="col-sm-12"
-                 style="background-color: #5bc0de;color: white;padding: 5px;text-align: center; height: 200px">
-                No Weight to track :-(
+            <div class="col-sm-12">
+                <div ng-controller="OtherController" class="other-controller">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true"
+                                                 on-page-change="pageChangeHandler(newPageNumber)"
+                                                 template-url="/views/dirPagination.tpl.ejs"></dir-pagination-controls>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -92,7 +92,8 @@ router.route('/register')
 
                     if (!err){
                         //Creates a new unique json web token and passes it back to the client.
-                        var token = jwt.sign(email, secret.secretToken, { expiresIn: 3600 });
+                        var payload = {email: email, ID: rows[0].userID};
+                        var token = jwt.sign(payload, secret.secretToken, {expiresIn: 3600});
                         return res.json({token:token});
                     }
                     else{
@@ -152,7 +153,8 @@ router.route('/login')
                 console.log("Password is correct " + email);
 
                 //Assigns a user a token.
-                var token = jwt.sign(email, secret.secretToken, { expiresIn: 3600 });
+                var payload = {email: email, ID: row[0].userID};
+                var token = jwt.sign(payload, secret.secretToken, {expiresIn: 3600});
 
                 return res.json({token:token,admin:row[0].admin});
             });

@@ -29,7 +29,9 @@ app.factory('UserService', function ($http) {
         users: function() {
             return $http.get('api/user');
         },
-
+        profile: function () {
+            return $http.get('api/user/profile');
+        },
         checkAdmin: function() {
             return $http.get('api/user/checkAdmin');
         },
@@ -48,7 +50,7 @@ app.factory('ExerciseService', function ($http) {
     return {
         getAllExercises: function() {
             return $http.get('api/exercise');
-        },
+        }
 
     }
 });
@@ -66,6 +68,9 @@ app.factory('WorkoutService', function ($http) {
         },
         assignWorkout: function (workout, date, time) {
             return $http.post('api/workout/assign', {workout: workout, date: date, time: time})
+        },
+        getAssignWorkout: function () {
+            return $http.get('api/workout/assigned')
         }
     }
 });

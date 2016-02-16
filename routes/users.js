@@ -15,7 +15,7 @@ var pool  = mysql.createPool({
 // route middleware to verify a token
 router.use(function(req, res, next) {
 
-  console.log(req.headers.authorization);
+    console.log("Token received: " + req.headers.authorization);
   // check header or url parameters or post parameters for token
   var token = req.headers.authorization;
 
@@ -30,6 +30,7 @@ router.use(function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
+          console.log("User: ");
         console.log(decoded);
         next();
       }
@@ -63,11 +64,29 @@ router.route('/')
         });
       })
     });
+
+router.route('/profile')
+    // fetch all users
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * from profile WHERE userID ="' + user.ID + '"', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.');
+            });
+        })
+    });
+
 router.route('/checkAdmin')
     // fetch all users
     .get(function (req, res, next) {
 
-      var email = req.decoded;
+        var email = req.decoded.email;
 
       pool.getConnection(function(err, connection) {
         connection.query('SELECT * from User WHERE email ="' + email + '"', function(err, rows) {

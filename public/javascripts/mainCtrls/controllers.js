@@ -79,7 +79,7 @@
                     console.log(status);
                     console.log(data);
                 });
-            }
+            };
 
             $scope.navigate = function(page){
                 $location.path(page);
@@ -95,6 +95,16 @@ app.controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', '
         $scope.createWorkout = function(){
             $location.path("/createworkout");
         };
+
+
+        UserService.profile().success(function (data) {
+            $scope.user = data;
+            console.log(data);
+        }).error(function (status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
 
         $scope.logOut = function logOut() {
             if (AuthenticationService.isAuthenticated) {
@@ -349,10 +359,43 @@ app.controller('UserHomeCtrl', ['$scope', 'UserService','toastr',
     }
 ]);
 
+app.controller('AssignedWorkoutCtrl', ['$scope', 'WorkoutService', 'toastr',
+    function ($scope, WorkoutService, toastr) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 12;
+        $scope.workouts = [];
+        $scope.searchType = 2;
+
+        WorkoutService.getAssignWorkout().success(function (data) {
+            $scope.workouts = data;
+            console.log(data);
+        }).error(function (status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
+
+    }
+]);
+
+app.controller('ProfileCtrl', ['$scope', 'UserService', 'toastr',
+    function ($scope, UserService, toastr) {
+
+        UserService.profile().success(function (data) {
+            $scope.data = data;
+            console.log(data);
+        }).error(function (status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
+    }
+]);
+
 app.controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService', 'toastr','$location',
     function($scope, ExerciseService, WorkoutService, toastr,$location) {
         $scope.currentPage = 1;
-        $scope.pageSize = 8;
+        $scope.pageSize = 12;
         $scope.exercises = [];
         $scope.searchType = 2;
 

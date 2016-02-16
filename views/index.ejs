@@ -70,7 +70,8 @@
       <form class="navbar-form navbar-right" action="#" role="search">
         <div class="form-group">
 
-            <p class="navbar-text navbar-right"> <a class="navbar-link" href="#"><i class="fui-user"></i>  Mark Otto </a></p>
+          <p ng-show="user[0]" class="navbar-text navbar-right"><a class="navbar-link" href="#/profile"><i
+                      class="fui-user"></i> {{user[0].first_name}} {{user[0].last_name}} </a></p>
 
         </div>
       </form>

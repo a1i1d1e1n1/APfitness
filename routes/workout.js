@@ -120,9 +120,6 @@ router.route('/AllWorkoutExercises')
 
         var user = req.decoded;
 
-        var workouts = [{
-
-        }];
 
         pool.getConnection(function (err, connection) {
             connection.query('SELECT * FROM workout_exercises;', function (err, rows, fields) {
@@ -180,13 +177,33 @@ router.route('/assign')
 
         pool.getConnection().then(function (connection) {
             connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(dateTime) + ',' +
-                connection.escape(dateTime) + ',' + connection.escape(3) + ',' + connection.escape(workout.workoutID) + ')').then(function (rows) {
+                connection.escape(dateTime) + ',' + connection.escape(user.ID) + ',' + connection.escape(workout.workoutID) + ')').then(function (rows) {
                 console.log(rows);
 
             });
 
         });
 
+
+    });
+
+router.route('/assigned')
+    // fetch all Workouts_exercises
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+
+        console.log(user);
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM assinged_workout WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
+                connection.release();
+                if (!err)
+
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.' + err);
+            });
+        })
 
     });
 

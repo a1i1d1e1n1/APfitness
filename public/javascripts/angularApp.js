@@ -22,12 +22,21 @@
     $routeProvider.when('/404', { templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', { templateUrl: '/views/userHome.ejs', access: { requiredAuthentication: true }, controller: 'UserHomeCtrl' });
     $routeProvider.when('/exercises', { templateUrl: '/views/exercises.ejs', access: { requiredAuthentication: true }, controller: 'ExerciseCtrl' });
-    $routeProvider.when('/exercises1', { templateUrl: '/views/exercises1.ejs', access: { requiredAuthentication: true }, controller: 'ExerciseCtrl' });
     $routeProvider.when('/adminHome', { templateUrl: '/views/adminHome.ejs', access: { requiredAuthentication: true , requiredAdmin:true} });
     $routeProvider.when('/createworkout', { templateUrl: '/views/createWorkout.ejs', access: { requiredAuthentication: true }, controller: 'CreateWorkoutCtrl' });
     $routeProvider.when('/forgotPassword', { templateUrl: '/views/forgotPassword.ejs', access: { requiredAuthentication: false }, controller: 'PasswordResetCtrl' });
     $routeProvider.when('/workouts', { templateUrl: '/views/workouts.ejs', access: { requiredAuthentication: true }, controller: 'WorkoutCtrl' });
-    $routeProvider.otherwise({ redirectTo: '/' });
+    $routeProvider.when('/assigned', {
+      templateUrl: '/views/assignedWorkouts.ejs',
+      access: {requiredAuthentication: true},
+      controller: 'AssignedWorkoutCtrl'
+    });
+    $routeProvider.when('/profile', {
+      templateUrl: '/views/profile.ejs',
+      access: {requiredAuthentication: true},
+      controller: 'ProfileCtrl'
+    });
+
   }]);
 
   app.config(function ($httpProvider) {
