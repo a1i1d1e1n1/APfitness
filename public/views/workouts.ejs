@@ -109,14 +109,12 @@
                             <p style="font-size: 14px;margin-top: 5px;margin-bottom: 0;text-align: center;font-weight: bolder">
                                 {{workout.workoutName}}</p>
                         </div>
-                        <div style="overflow-y: scroll;overflow-x:hidden;height: 200px;z-index: -1">
+
                             <div ng-repeat="exercise in workout.exercises">
                                 <div class="col-sm-12"
                                      style="background-color: #3498db;color: white;padding: 0;height: 73px">
                                     <div class="col-sm-4" style="padding: 0">
-                                        <img src="http://i.ytimg.com/vi/{{exercise.exerciseURL}}/0.jpg"
-                                             style="width: 100%; height: auto; display: inline; cursor: pointer"
-                                             alt=""/>
+                                        {{$index + 1}}
                                     </div>
                                     <div class="col-sm-8"
                                          style="position: relative;top: 50%;transform: translateY(-50%);">
@@ -126,7 +124,7 @@
 
                                 </div>
                             </div>
-                        </div>
+
                     </div>
 
                 </div>

@@ -178,7 +178,7 @@ router.route('/assign')
         pool.getConnection().then(function (connection) {
             connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(dateTime) + ',' +
                 connection.escape(dateTime) + ',' + connection.escape(user.ID) + ',' + connection.escape(workout.workoutID) + ')').then(function (rows) {
-                console.log(rows);
+                res.json("Workout Assigned");
 
             });
 

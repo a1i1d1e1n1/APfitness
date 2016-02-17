@@ -269,6 +269,8 @@ body {
         width: 50%; /* 6 columns */
     }
 }
-
+.modal {
+    display: block;
+}
 
 
