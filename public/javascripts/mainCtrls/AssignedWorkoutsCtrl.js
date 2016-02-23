@@ -2,9 +2,7 @@
  * Created by nm on 2/17/2016.
  */
 
-var app = angular.module('App.controllers', []);
-
-app.controller('AssignedWorkoutCtrl', ['$scope', 'WorkoutService', 'toastr',
+angular.module('App').controller('AssignedWorkoutCtrl', ['$scope', 'WorkoutService', 'toastr',
     function ($scope, WorkoutService, toastr) {
         $scope.currentPage = 1;
         $scope.pageSize = 12;

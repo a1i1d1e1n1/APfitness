@@ -26,7 +26,10 @@ router.use(function(req, res, next) {
     jwt.verify(token, secret.secretToken, function(err, decoded) {
       if (err) {
 
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
+          return res.status(401).send({
+              success: false,
+              message: 'Token has expired or not valid.'
+          });
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
@@ -40,7 +43,7 @@ router.use(function(req, res, next) {
 
     // if there is no token
     // return an error
-    return res.status(403).send({
+      return res.status(401).send({
       success: false,
       message: 'No token provided.'
     });

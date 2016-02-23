@@ -6,14 +6,14 @@ var app = angular.module('App', [
     'ngRoute',
     'App.factories',
     'navigation.controllers',
-    'App.controllers',
     'ui.calendar',
     'toastr',
     'angularUtils.directives.dirPagination',
     'ngDraggable',
     'App.Directives',
     'ngTouch',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.calendar'
 ]);
 
 

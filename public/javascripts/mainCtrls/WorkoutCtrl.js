@@ -1,17 +1,19 @@
 /**
- * Created by nm on 2/17/2016.
+ * Created by Aiden Pert on 2/17/2016.
+ * The controller for workouts. This will display all the workouts in the system and allow users to to assign and rate
+ * workouts.
  */
 
 angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'WorkoutService', 'toastr', '$location','$uibModal',
     function($rootScope, $scope, WorkoutService, toastr,$location,$uibModal ) {
+        //Pagnation set up
         $scope.currentPage = 1;
         $scope.pageSize = 12;
-        $scope.exercises = [];
-        $scope.searchType = 2;
-        $scope.gridOptions = {};
-        $scope.selectedWorkout = 1;
 
+        //Sets up all initial values and methods on page load.
         var init = function(){
+
+            //Gets all the workouts and then gets all the exercises associated with them.
             WorkoutService.getAllWorkouts().success(function(data) {
                 $scope.workouts = data;
                 WorkoutService.getAllWorkoutsExercise().success(function(data) {
@@ -30,7 +32,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
 
         };
 
-
+        //Assigns the exercises to the corresponding workout.
         var assignExercisesToWorkouts = function(){
             for(var i = 0 ; i < $scope.workouts.length;i++){
                 $scope.workouts[i].exercises = [];
@@ -44,76 +46,25 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
             return $scope.workouts;
         };
 
-        $scope.pageChangeHandler = function(num) {
-            console.log('meals page changed to ' + num);
-        };
-
-        $scope.searchType = function(type) {
-            console.log(type);
-        };
-
-
+        //Opens the assign Modal while passing in the selected workout.
         $scope.openAssignWorkout = function (workout) {
 
             $scope.selectedWorkout = workout;
 
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'views/exerciseModal.html',
-                controller: 'ExerciseModalCtrl',
+                templateUrl: 'views/Modals/exerciseModal.html',
+                controller: 'AssignWorkoutModalCtrl',
                 resolve: {
                     items: function () {
-                        return $scope.items;
+                        return $scope.selectedWorkout;
                     }
                 }
             });
         };
 
-        $scope.closeAssignWorkout = function () {
-            $scope.selectedWorkout = null;
-            $('#modalAssignWorkout').modal('hide');
-        };
 
-        $scope.assignWorkout = function (date, time) {
-            WorkoutService.assignWorkout($scope.selectedWorkout, date, time).success(function (data) {
-                console.log(data);
-                toastr.success("Workout has been assigned to your calender");
-                $location.path("/assigned");
-
-            }).error(function (status, data) {
-                console.log(status);
-                console.log(data);
-            });
-
-        };
-
-        var datepickerInit = function () {
-            var datepickerSelector = $('#datepicker-01');
-            datepickerSelector.datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                minDate: 0,
-                dateFormat: 'd MM, yy',
-                yearRange: '-1:+1'
-            }).prev('.input-group-btn').on('click', function (e) {
-                e && e.preventDefault();
-                datepickerSelector.focus();
-            });
-            $.extend($.datepicker, {
-                _checkOffset: function (inst, offset, isFixed) {
-                    return offset;
-                }
-            });
-
-            // Now let's align datepicker with the prepend button
-            datepickerSelector.datepicker('widget').css({'margin-left': -datepickerSelector.prev('.input-group-btn').find('.btn').outerWidth() + 3});
-
-            $('#timepicker-01').timepicker({
-                className: 'timepicker-primary',
-                timeFormat: 'h:i A'
-            });
-        };
-
+        //Gets search button to display correctly.
         var focusButtons = function() {
             $('.input-group').on('focus', '.form-control', function () {
                 $(this).closest('.form-group').addClass('focus');
@@ -125,6 +76,6 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
 
         init();
         focusButtons();
-        datepickerInit();
+
     }
 ]);

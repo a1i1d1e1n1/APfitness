@@ -7,7 +7,7 @@ app.factory('AuthenticationService', function() {
     var auth = {
         isAuthenticated: false,
         isAdmin: false
-    }
+    };
 
     return auth;
 });
@@ -66,8 +66,8 @@ app.factory('WorkoutService', function ($http) {
         getAllWorkoutsExercise: function () {
             return $http.get('api/workout/AllWorkoutExercises')
         },
-        assignWorkout: function (workout, date, time) {
-            return $http.post('api/workout/assign', {workout: workout, date: date, time: time})
+        assignWorkout: function (workout, datetime) {
+            return $http.post('api/workout/assign', {workout: workout, datetime: datetime})
         },
         getAssignWorkout: function () {
             return $http.get('api/workout/assigned')

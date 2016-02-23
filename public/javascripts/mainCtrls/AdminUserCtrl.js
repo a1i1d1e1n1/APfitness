@@ -1,13 +1,16 @@
 /**
- * Created by nm on 2/17/2016.
+ * Created by Aiden Pert on 2/17/2016.
+ * The controller for handling all admin functions.
  */
 
 angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'toastr',
     function($scope, $location, $window, UserService, AuthenticationService, toastr) {
 
+        //Signs in the user to the application while performing validation.
         $scope.signIn = function signIn(email, password) {
             if (email != null && password != null) {
 
+                //Calls user service to try and sign in user and handles responce.
                 UserService.signIn(email, password).success(function(data) {
 
                     AuthenticationService.isAuthenticated = true;

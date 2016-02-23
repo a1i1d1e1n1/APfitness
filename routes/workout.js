@@ -30,6 +30,21 @@ var getExercises = function (ID,connection){
     });
 };
 
+
+var checkConflicts = function (workout_to_check, workouts) {
+    return new Promise(function (resolve, reject) {
+        var conflict = false;
+        for (var i = 0; i < workouts.length; i++) {
+            if ((workout_to_check.start_time <= workouts[i].end_date) && (workout_to_check.end_time >= workouts[i].end_date)) {
+                console.log("there is a conflict")
+                conflict = true;
+                reject(conflict);
+            }
+        }
+        resolve(workout_to_check);
+    });
+};
+
 var insertExercises = function (workoutID, exercise, connection) {
     return new Promise(function(resolve,reject){
         connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
@@ -89,7 +104,7 @@ router.use(function (req, res, next) {
 
         // if there is no token
         // return an error
-        return res.status(403).send({
+        return res.status(401).send({
             success: false,
             message: 'No token provided.'
         });
@@ -172,16 +187,20 @@ router.route('/assign')
 
         var user = req.decoded;
         var workout = req.body.workout;
+        workout.start_time = new Date(req.body.datetime);
+        workout.end_time = new Date(req.body.datetime);
+        workout.end_time.setHours(workout.end_time.getHours() + 1);
 
-        var dateTime = new Date(req.body.date + " " + req.body.time);
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM workout_calander WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
+                if (!err)
+                    checkConflicts(workout, rows, connection).then(function (results) {
+                        console.log(results);
 
-        pool.getConnection().then(function (connection) {
-            connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(dateTime) + ',' +
-                connection.escape(dateTime) + ',' + connection.escape(user.ID) + ',' + connection.escape(workout.workoutID) + ')').then(function (rows) {
-                res.json("Workout Assigned");
-
+                    });
+                else
+                    console.log('Error while performing Query.' + err);
             });
-
         });
 
 
@@ -195,7 +214,7 @@ router.route('/assigned')
 
         console.log(user);
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * FROM assinged_workout WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
+            connection.query('SELECT * FROM workout_calander WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
                 connection.release();
                 if (!err)
 
