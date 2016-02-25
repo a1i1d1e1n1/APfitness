@@ -75,7 +75,7 @@ app.factory('WorkoutService', function ($http) {
     }
 });
 
-app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope) {
+app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope, toastr) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -108,7 +108,9 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
                 $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
                 AuthenticationService.isAdmin = false;
+                toastr.success(rejection);
                 $location.path("/");
+
             }
 
             return $q.reject(rejection);

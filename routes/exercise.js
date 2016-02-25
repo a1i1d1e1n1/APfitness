@@ -43,7 +43,7 @@ router.use(function(req, res, next) {
 
         // if there is no token
         // return an error
-        return res.status(403).send({
+        return res.status(401).send({
             success: false,
             message: 'No token provided.'
         });
@@ -63,7 +63,10 @@ router.route('/')
                 if (!err)
                     res.json(rows);
                 else
-                    console.log('Error while performing Query.');
+                    return res.status(402).send({
+                        success: false,
+                        message: err
+                    });
             });
         })
     });

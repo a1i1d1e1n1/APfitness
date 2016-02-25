@@ -34,6 +34,7 @@ angular.module('App').controller('AssignWorkoutModalCtrl', ['$scope', '$uibModal
                 $uibModalInstance.dismiss('cancel');
 
             }).error(function (status, data) {
+                toastr.info(status.message);
                 console.log(status);
                 console.log(data);
             });

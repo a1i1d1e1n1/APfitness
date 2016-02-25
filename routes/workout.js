@@ -36,12 +36,11 @@ var checkConflicts = function (workout_to_check, workouts) {
         var conflict = false;
         for (var i = 0; i < workouts.length; i++) {
             if ((workout_to_check.start_time <= workouts[i].end_date) && (workout_to_check.end_time >= workouts[i].end_date)) {
-                console.log("there is a conflict")
                 conflict = true;
                 reject(conflict);
             }
         }
-        resolve(workout_to_check);
+        resolve(conflict);
     });
 };
 
@@ -49,14 +48,14 @@ var insertExercises = function (workoutID, exercise, connection) {
     return new Promise(function(resolve,reject){
         connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
             connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ')', function (err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                }else{
-                    console.log("Inserted Exercise: " + exercise.name);
-                    exercise.insertedId = rows.insertId;
-                    resolve(exercise);
-                }
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                console.log("Inserted Exercise: " + exercise.name);
+                exercise.insertedId = rows.insertId;
+                resolve(exercise);
+            }
         });
     });
 
@@ -65,15 +64,15 @@ var insertExercises = function (workoutID, exercise, connection) {
 
 var insertSets = function (set,insertedID, connection) {
 
-        connection.query('Insert into sets (reps,weight,workout_exerciseID) VALUES (' + connection.escape(set.reps) + ',' +
-            connection.escape(set.weight) + ',' + connection.escape(insertedID) + ')', function (err, rows, fields) {
+    connection.query('Insert into sets (reps,weight,workout_exerciseID) VALUES (' + connection.escape(set.reps) + ',' +
+        connection.escape(set.weight) + ',' + connection.escape(insertedID) + ')', function (err, rows, fields) {
 
-            if (err) {
-                console.log(err);
-            }else{
-                console.log("inserted set: " + set);
-            }
-        });
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("inserted set: " + set);
+        }
+    });
 
 };
 
@@ -149,7 +148,7 @@ router.route('/AllWorkoutExercises')
     });
 
 router.route('/save')
-    // fetch all users
+    // Saves a workout
     .post(function (req, res, next) {
 
         var user = req.decoded;
@@ -158,7 +157,7 @@ router.route('/save')
 
         pool.getConnection().then(function (connection) {
             connection.query('Insert into workout (workoutName,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
-                connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(3) + ')').then(function (rows) {
+                connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(user.ID) + ')').then(function (rows) {
                 workoutID = rows.insertId;
 
                 for (var i = 0; i < workout.exercises.length; i++) {
@@ -172,9 +171,15 @@ router.route('/save')
 
                 }
 
-                res.json("completed");
+                return res.status(200).send({
+                    success: true,
+                    message: "Workout Saved !!!"
+                });
             }).catch(function (err) {
-                console.log(err);
+                return res.status(402).send({
+                    success: false,
+                    message: err
+                });
             });
         });
 
@@ -193,17 +198,32 @@ router.route('/assign')
 
         pool.getConnection(function (err, connection) {
             connection.query('SELECT * FROM workout_calander WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
-                if (!err)
+                if (!err) {
                     checkConflicts(workout, rows, connection).then(function (results) {
-                        console.log(results);
+
+                        connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(workout.start_time) + ',' +
+                            connection.escape(workout.end_time) + ',' + connection.escape(user.ID) + ',' + connection.escape(workout.workoutID) + ')', function (err, rows) {
+                            if (!err) {
+                                return res.status(200).send({
+                                    success: true,
+                                    message: "Workout has been assigned"
+                                });
+                            } else {
+                                return res.status(402).send({
+                                    success: false,
+                                    message: err
+                                });
+                            }
+
+
+                        });
 
                     });
-                else
-                    console.log('Error while performing Query.' + err);
+                } else {
+
+                }
             });
         });
-
-
     });
 
 router.route('/assigned')
@@ -220,7 +240,10 @@ router.route('/assigned')
 
                     res.json(rows);
                 else
-                    console.log('Error while performing Query.' + err);
+                    return res.status(402).send({
+                        success: false,
+                        message: err
+                    });
             });
         })
 
