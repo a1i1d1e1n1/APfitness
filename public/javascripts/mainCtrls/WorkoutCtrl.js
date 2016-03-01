@@ -53,7 +53,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
 
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'views/Modals/exerciseModal.html',
+                templateUrl: 'views/Modals/workoutAssignModal.html',
                 controller: 'AssignWorkoutModalCtrl',
                 resolve: {
                     items: function () {

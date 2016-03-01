@@ -13,7 +13,8 @@ var app = angular.module('App', [
     'App.Directives',
     'ngTouch',
     'ui.bootstrap',
-    'ui.calendar'
+    'ui.calendar',
+    'chart.js'
 ]);
 
 

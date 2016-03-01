@@ -102,10 +102,14 @@
 
                 </div>
                 <div class="col-lg-12" style="padding: 0">
-                    <div class="exercise-label"><p class="pull-left">Start Time:</p> {{ex.start_date}}</div>
+                    <div class="exercise-label"><p class="pull-left">Start Time:</p> {{ex.start_date | date: 'dd, MMMM
+                        HH:mm'}}
+                    </div>
                 </div>
                 <div class="col-lg-12" style="padding: 0">
-                    <div class="exercise-label"><p class="pull-left">End Time:</p>{{ex.end_date}}</div>
+                    <div class="exercise-label"><p class="pull-left">End Time:</p>{{ex.end_date | date: 'dd, MMMM
+                        HH:mm'}}
+                    </div>
                 </div>
 
 

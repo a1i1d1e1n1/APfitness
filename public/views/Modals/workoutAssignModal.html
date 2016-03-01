@@ -1,0 +1,41 @@
+<div class="modal-content">
+    <div class="modal-header" style="background-color: #16a085;color: white">
+        <button type="button" class="close fui-cross" ng-click="close()" aria-hidden="true"
+                style="color: white"></button>
+        <h4 class="modal-title" style="text-align: center">{{workout.workoutName}}</h4>
+    </div>
+
+    <div class="modal-body" style="padding: 0">
+        <div class="col-sm-12">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt"
+                               is-open="popup1.opened" min-date="minDate" max-date="maxDate"
+                               datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+                               close-text="Close" alt-input-formats="altInputFormats"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <uib-timepicker ng-model="dt" ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                                    show-meridian="ismeridian"></uib-timepicker>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" style="width: 100%" ng-click="assignWorkout(dt)">
+            Assign That Workout Fool !!!
+        </button>
+    </div>
+</div>

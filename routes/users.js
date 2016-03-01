@@ -56,7 +56,6 @@ router.route('/')
     .get(function (req, res, next) {
 
       var user = req.decoded;
-      console.log(user);
       pool.getConnection(function(err, connection) {
         connection.query('SELECT * from User WHERE email ="' + user + '"', function(err, rows, fields) {
           connection.release();

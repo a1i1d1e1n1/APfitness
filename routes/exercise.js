@@ -30,7 +30,10 @@ router.use(function(req, res, next) {
         jwt.verify(token, secret.secretToken, function(err, decoded) {
             if (err) {
 
-                return res.json({ success: false, message: 'Failed to authenticate token.' });
+                return res.status(401).send({
+                    success: false,
+                    message: 'Failed to authenticate token.'
+                });
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
@@ -52,21 +55,17 @@ router.use(function(req, res, next) {
 });
 
 router.route('/')
-    // fetch all users
+    // fetch all exercises
     .get(function (req, res, next) {
 
         var user = req.decoded;
-        console.log(user);
         pool.getConnection(function(err, connection) {
             connection.query('SELECT * from exercise', function(err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);
                 else
-                    return res.status(402).send({
-                        success: false,
-                        message: err
-                    });
+                    return res.json(err);
             });
         })
     });

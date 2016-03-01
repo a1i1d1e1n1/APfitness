@@ -248,9 +248,9 @@ angular.module('ui.calendar', [])
               }
 
               scope.destroyCalendar = function () {
-                  if (calendar && calendar.fullCalendar) {
-                      calendar.fullCalendar('destroy');
-                  }
+                  eventsWatcher.onAdded = function (event) {
+                      scope.calendar.fullCalendar('renderEvent', event, true);
+                  };
                   if (attrs.calendar) {
                       calendar = uiCalendarConfig.calendars[attrs.calendar] = $(elm).html('');
                   } else {

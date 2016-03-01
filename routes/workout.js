@@ -37,10 +37,10 @@ var checkConflicts = function (workout_to_check, workouts) {
         for (var i = 0; i < workouts.length; i++) {
             if ((workout_to_check.start_time <= workouts[i].end_date) && (workout_to_check.end_time >= workouts[i].end_date)) {
                 conflict = true;
-                reject(conflict);
+                reject(workouts[i]);
             }
         }
-        resolve(conflict);
+        resolve(workout_to_check);
     });
 };
 
@@ -89,12 +89,14 @@ router.use(function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, secret.secretToken, function (err, decoded) {
             if (err) {
+                return res.status(401).send({
+                    success: false,
+                    message: 'Failed to authenticate token.'
+                });
 
-                return res.json({success: false, message: 'Failed to authenticate token.'});
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
-                console.log(decoded);
                 next();
             }
         });
@@ -161,7 +163,7 @@ router.route('/save')
                 workoutID = rows.insertId;
 
                 for (var i = 0; i < workout.exercises.length; i++) {
-                    var exercise = workout.exercises[i]
+                    var exercise = workout.exercises[i];
 
                     insertExercises(workoutID, exercise, connection).then(function(results){
                         for (var j = 0; j < results.sets.length; j++) {
@@ -171,12 +173,9 @@ router.route('/save')
 
                 }
 
-                return res.status(200).send({
-                    success: true,
-                    message: "Workout Saved !!!"
-                });
+                res.json("Workout saved");
             }).catch(function (err) {
-                return res.status(402).send({
+                return res.status(400).send({
                     success: false,
                     message: err
                 });
@@ -204,12 +203,9 @@ router.route('/assign')
                         connection.query('Insert into assinged_workout (start_date,end_date,userID,workoutID) VALUES (' + connection.escape(workout.start_time) + ',' +
                             connection.escape(workout.end_time) + ',' + connection.escape(user.ID) + ',' + connection.escape(workout.workoutID) + ')', function (err, rows) {
                             if (!err) {
-                                return res.status(200).send({
-                                    success: true,
-                                    message: "Workout has been assigned"
-                                });
+                                res.json("Workout Assinged");
                             } else {
-                                return res.status(402).send({
+                                return res.status(400).send({
                                     success: false,
                                     message: err
                                 });
@@ -218,9 +214,18 @@ router.route('/assign')
 
                         });
 
+                    }).catch(function (error) {
+                        //do something with the error and handle it
+                        return res.status(400).send({
+                            success: false,
+                            message: "workout cant be assigned as it conflicts with" + error
+                        });
                     });
                 } else {
-
+                    return res.status(400).send({
+                        success: false,
+                        message: err
+                    });
                 }
             });
         });
@@ -237,7 +242,6 @@ router.route('/assigned')
             connection.query('SELECT * FROM workout_calander WHERE userID =' + connection.escape(user.ID), function (err, rows, fields) {
                 connection.release();
                 if (!err)
-
                     res.json(rows);
                 else
                     return res.status(402).send({

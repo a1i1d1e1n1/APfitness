@@ -51,11 +51,11 @@ angular.module('App').controller('ExerciseCtrl', ['$rootScope', '$scope', 'Exerc
 
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'views/exerciseModal.html',
+                templateUrl: 'views/Modals/exerciseModal.html',
                 controller: 'ExerciseModalCtrl',
                 resolve: {
                     items: function () {
-                        return $scope.items;
+                        return exercise;
                     }
                 }
             });
