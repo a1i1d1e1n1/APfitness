@@ -70,5 +70,46 @@ router.route('/')
         })
     });
 
+router.route('/comments/:id')
+    // fetch all exercises
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+        var exerciseID = req.query('id');
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * from exercise_comments WHERE exerciseID =' + connection.escape(exerciseID), function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    return res.json(err);
+            });
+        })
+    });
+
+router.route('/comment/save')
+    // fetch all exercises
+    .post(function (req, res, next) {
+
+        var user = req.decoded;
+
+        var comment = req.body.comment;
+
+        pool.getConnection(function (err, connection) {
+            connection.query('INSERT INTO exercise_comments (description, exerciseID, userID) VALUES (' + connection.escape(comment.desc) + ',' + connection.escape(comment.exerciseID) + ',' + connection.escape(user.ID) + ')', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    return res.status(200).send({
+                        success: true,
+                        message: "Comment Added"
+                    });
+                else
+                    return res.status(400).send({
+                        success: false,
+                        message: err
+                    });
+            });
+        })
+    });
 
 module.exports = router;

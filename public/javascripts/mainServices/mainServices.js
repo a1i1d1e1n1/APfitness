@@ -50,6 +50,12 @@ app.factory('ExerciseService', function ($http) {
     return {
         getAllExercises: function() {
             return $http.get('api/exercise');
+        },
+        getAllComments: function (id) {
+            return $http.get('api/exercise/comments/' + id);
+        },
+        saveComment: function (comment) {
+            return $http.post('api/exercise/comment/save', {comment: comment});
         }
 
     }

@@ -6,15 +6,16 @@
     </div>
 
     <div class="modal-body" style="padding: 0">
-        <div class="col-sm-12">
 
-            <iframe width="100%" height="315" ng-src="http://www.youtube.com/embed/exercise.exerciseURL" frameborder="0"
+
+        <iframe width="100%" height="315" ng-src="{{videoUrl}}" frameborder="0"
                     allowfullscreen></iframe>
-            <div class="row">
-                <div class="col-sm-12">
+
+        <div class="col-sm-12" style="padding: 0">
                     <div class="panel panel-blue" style="margin: 0">
                         <div class="panel-heading">
-                            <img src="img/chat.svg" height="20px"> Comments
+                            <img src="img/chat.svg" height="20px" style="padding-right: 5px"> Comments
+                            <span class="pull-right" ng-click="openComment(exercise)"><i class="fui-plus"></i></span>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -33,43 +34,10 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <img class="img-circle" src="img/support.svg" height="75px">
-                                </div>
-                                <div class="col-sm-9">
-                                    <p style="margin: 0;font-weight: bolder">USER1@GMAIL.COM</p>
-
-                                    <p class="text-info" style="font-size: 12px;margin: 0"> July 1, 2010 At
-                                        5:30PM</p>
-
-                                    <p>I found this exercise to be very good. Would recommend !!</p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <img class="img-circle" src="img/support.svg" height="75px">
-                                </div>
-                                <div class="col-sm-9">
-                                    <p style="margin: 0;font-weight: bolder">USER1@GMAIL.COM</p>
-
-                                    <p class="text-info" style="font-size: 12px;margin: 0"> July 1, 2010 At
-                                        5:30PM</p>
-
-                                    <p>I found this exercise to be very good. Would recommend !!</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-info" style="width: 100%" ng-click="assignWorkout(dt)">
-                Assign That Workout Fool !!!
-            </button>
-        </div>
+    </div>
+    <div class="modal-footer">
     </div>
 </div>

@@ -131,7 +131,13 @@ app.run(function ($rootScope, $location, AuthenticationService, $window, toastr)
     });
 });
 
+//Allows youtube videos to be embedded dynamically
+app.config(['$routeProvider', '$sceDelegateProvider',
+    function ($routeProvider, $sceDelegateProvider) {
 
+        $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$')]);
+
+    }]);
 
 
 
