@@ -61,9 +61,6 @@ angular.module('App').controller('ExerciseCtrl', ['$rootScope', '$scope', 'Exerc
             });
         };
 
-        $scope.closeExercise = function () {
-            $('#modalExercise').modal('hide');
-        };
 
         ExerciseService.getAllExercises().success(function(data) {
             $scope.exercises = data;

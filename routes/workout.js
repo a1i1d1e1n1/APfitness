@@ -11,10 +11,10 @@ var secret = require('../config/secret');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'localhost',
-    user: 'root',
-    password: 'maddog_1',
-    database: 'ApFitness'
+    host: 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'y9bbg4eovsunfldv',
+    password: 'n3fg5jelhe20abhm',
+    database: 'osf9zjz6on7aapqd'
 });
 
 var getExercises = function (ID,connection){
@@ -120,7 +120,24 @@ router.route('/')
         var user = req.decoded;
         console.log(user);
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * from workout', function (err, rows, fields) {
+            connection.query('SELECT * from workout_page', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.');
+            });
+        })
+    });
+
+router.route('/recent')
+    // fetch all Workouts
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+        console.log(user);
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * from workout_calander where userID =' + connection.escape(user.ID) + " Limit 5", function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);
@@ -253,4 +270,45 @@ router.route('/assigned')
 
     });
 
+router.route('/comments/:id')
+    // fetch all exercises
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+        var params = req.params;
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * from workout_comments_details WHERE workoutID =' + connection.escape(params.id), function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    return res.json(err);
+            });
+        })
+    });
+
+router.route('/comment/save')
+    // Save a comment to the database
+    .post(function (req, res, next) {
+
+        var user = req.decoded;
+
+        var comment = req.body.comment;
+
+        pool.getConnection(function (err, connection) {
+            connection.query('INSERT INTO workout_comments (description, workoutID, userID) VALUES (' + connection.escape(comment.desc) + ',' + connection.escape(comment.workoutID) + ',' + connection.escape(user.ID) + ')', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    return res.status(200).send({
+                        success: true,
+                        message: "Comment Added"
+                    });
+                else
+                    return res.status(400).send({
+                        success: false,
+                        message: err
+                    });
+            });
+        })
+    });
 module.exports = router;

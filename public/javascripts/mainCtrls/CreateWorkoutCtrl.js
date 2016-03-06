@@ -2,8 +2,8 @@
  * Created by nm on 2/17/2016.
  */
 
-angular.module('App').controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService','WorkoutService', 'toastr','$location',
-    function($scope, ExerciseService, WorkoutService, toastr,$location) {
+angular.module('App').controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService', 'WorkoutService', 'toastr', '$location', '$uibModal',
+    function ($scope, ExerciseService, WorkoutService, toastr, $location, $uibModal) {
         $scope.currentPage = 1;
         $scope.pageSize = 12;
         $scope.exercises = [];
@@ -12,6 +12,19 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$scope', 'ExerciseServic
         //Initialises a blank workout with no exercises on page load.
         $scope.workout = {
             exercises:[]
+        };
+
+        $scope.openExercise = function (exercise) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/Modals/exerciseModal.html',
+                controller: 'ExerciseModalCtrl',
+                resolve: {
+                    items: function () {
+                        return exercise;
+                    }
+                }
+            });
         };
 
         //Gets all exercises in database to be displayed on screen.

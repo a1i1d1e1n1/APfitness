@@ -59,6 +59,7 @@
   <script src="/javascripts/mainCtrls/WorkoutCtrl.js"></script>
   <script src="/javascripts/mainCtrls/OtherCtrl.js"></script>
   <script src="/javascripts/mainCtrls/CommentCtrl.js"></script>
+  <script src="/javascripts/mainCtrls/WorkoutModalCtrl.js"></script>
   <script src="/javascripts/Scripts/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
   <script src="/javascripts/mainServices/mainServices.js"></script>
   <script src="/javascripts/mainServices/directives.js"></script>
@@ -87,8 +88,8 @@
       <form class="navbar-form navbar-right" action="#" role="search">
         <div class="form-group">
 
-          <p ng-show="user[0]" class="navbar-text navbar-right"><a class="navbar-link" href="#/profile"><i
-                      class="fui-user"></i> {{user[0].first_name}} {{user[0].last_name}} </a></p>
+          <p ng-show="auth.isAuthenticated" class="navbar-text navbar-right"><a class="navbar-link" href="#/profile"><i
+                      class="fui-user"></i> {{user.first_name}} {{user.last_name}} </a></p>
 
         </div>
       </form>
@@ -97,7 +98,87 @@
 
   <div class="container-fluid" style="padding-left: 0px;padding-right: 0px">
 
+    <div class="col-sm-3 col-md-3 col-lg-3" style="padding:0;margin: 0" ng-show="auth.isAuthenticated">
+      <nav class="left-menu">
+        <ul class="left-menu-nav">
+
+          <li>
+            <a href="#/userHome">
+              <i class="fui-home">
+              </i>
+                    <span class="nav-text">
+                        Home
+                    </span>
+            </a>
+          </li>
+
+          <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
+          <li>
+            <a>
+              <i class="fui-list">
+              </i>
+                    <span class="nav-text">
+                        Fourm
+                    </span>
+            </a>
+          </li>
+          <li>
+            <a href="#/assigned">
+              <i class="fui-bookmark">
+              </i>
+                    <span class="nav-text">
+                        Assigned Workouts
+                    </span>
+            </a>
+          </li>
+          <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
+          <li>
+            <a href="#/workouts">
+              <i class="fui-document">
+              </i>
+                    <span class="nav-text">
+                        Workouts
+                    </span>
+            </a>
+          </li>
+          <li>
+            <a href="#/exercises">
+              <i class="fui-document">
+              </i>
+                    <span class="nav-text">
+                        Exercises
+                    </span>
+
+            </a>
+          </li>
+          <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
+          <li>
+            <a>
+              <i class="fui-gear">
+              </i>
+                    <span class="nav-text">
+                        Settings
+                    </span>
+            </a>
+          </li>
+          <li ng-click="logout()">
+            <a>
+              <i class="fui-exit">
+              </i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-sm-9" ng-show="auth.isAuthenticated">
       <div ng-view></div>
+    </div>
+    <div class="col-sm-12" style="padding: 0" ng-show="!auth.isAuthenticated">
+      <div ng-view></div>
+    </div>
 
   </div>
 

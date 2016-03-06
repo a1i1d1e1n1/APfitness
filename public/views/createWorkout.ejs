@@ -41,7 +41,9 @@
                                     <p style="font-size: 12px">{{$index+1}}:</p>
                                 </div>
                                 <div class="col-sm-8 center-t" style="height: inherit">
-                                    <p style="font-size: 12px">{{set.reps}}</p>
+                                    <div class="form-group">
+                                        <input type="text" id="spinner-01" value="0" class="spinner"/>
+                                    </div>
                                 </div>
                                 <div class="col-sm-2" style="height: inherit">
 
@@ -130,7 +132,8 @@
                                 <i class="fui-plus-circle"></i>
                             </button>
                             <button class="btn btn-default btn-sm"
-                                    style="width: 50%;border-top-left-radius: 0;border-top-right-radius: 0">
+                                    style="width: 50%;border-top-left-radius: 0;border-top-right-radius: 0"
+                                    ng-click="openExercise(ex)">
                                 <i class="fui-info-circle"></i>
                             </button>
                         </div>

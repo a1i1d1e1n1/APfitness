@@ -4,13 +4,14 @@ var mysql      = require('mysql');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
 
-var pool  = mysql.createPool({
-  connectionLimit : 10,
-  host     : 'localhost',
-  user     : 'root',
-  password : 'maddog_1',
-  database : 'ApFitness'
+var pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'y9bbg4eovsunfldv',
+    password: 'n3fg5jelhe20abhm',
+    database: 'osf9zjz6on7aapqd'
 });
+
 
 // route middleware to verify a token
 router.use(function(req, res, next) {

@@ -1,89 +1,6 @@
-<div class="col-sm-3 col-md-3 col-lg-3" style="padding:0;margin: 0">
-    <nav class="left-menu">
-        <ul class="left-menu-nav">
 
-            <li>
-                <a href="#/userHome" class="current">
-                    <i class="fui-home">
-                    </i>
-                    <span class="nav-text">
-                        Home
-                    </span>
-                </a>
-            </li>
 
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-list">
-                    </i>
-                    <span class="nav-text">
-                        Fourm
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/assigned">
-                    <i class="fui-bookmark">
-                    </i>
-                    <span class="nav-text">
-                        Assigned Workouts
-                    </span>
-                </a>
-            </li>
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a href="#/workouts">
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Workouts
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/exercises" >
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Exercises
-                    </span>
 
-                </a>
-            </li>
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-location">
-                    </i>
-                    <span class="nav-text">
-                        Tools
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-gear">
-                    </i>
-                    <span class="nav-text">
-                        Settings
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-exit">
-                    </i>
-                    <span class="nav-text">
-                        Logout
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<div class="col-sm-9 col-md-9 col-lg-9">
     <br>
     <!--<div class="col-sm-3">-->
     <!--<button class="btn btn-primary pull-right" ng-click="createWorkout()">Create Workout</button>-->
@@ -91,7 +8,6 @@
     <div class="col-sm-9">
         <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="span8 calendar"></div>
     </div>
-    <div class="col-sm-3 well">
-        <p>Upcoming Workouts</p>
+    <div class="col-sm-3">
+        <button class="btn btn-primary" ng-click="createWorkout()" style="width: 100%"> Create Workout</button>
     </div>
-</div>

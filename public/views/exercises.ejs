@@ -1,91 +1,4 @@
-<div class="col-md-3 col-lg-3  hidden-sm" style="padding:0;margin: 0">
-    <nav class="left-menu">
-        <ul class="left-menu-nav">
 
-            <li>
-                <a href="#/userHome">
-                    <i class="fui-home">
-                    </i>
-                    <span class="nav-text">
-                        Home
-                    </span>
-                </a>
-            </li>
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-list">
-                    </i>
-                    <span class="nav-text">
-                        Fourm
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/assigned">
-                    <i class="fui-bookmark">
-                    </i>
-                    <span class="nav-text">
-                        Assigned Workouts
-                    </span>
-
-                </a>
-            </li>
-
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a href="#/workouts">
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Workouts
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/exercises" class="current">
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Exercises
-                    </span>
-
-                </a>
-            </li>
-
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-location">
-                    </i>
-                    <span class="nav-text">
-                        Tools
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-gear">
-                    </i>
-                    <span class="nav-text">
-                        Settings
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-exit">
-                    </i>
-                    <span class="nav-text">
-                        Logout
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<div class="col-sm-12 col-md-9 col-lg-9" style="padding-left: 0; padding-top: 15px">
     <div class="container-fluid">
         <div class="col-sm-12">
             <div class="col-xs-5 col-sm-5 col-lg-4">
@@ -139,10 +52,10 @@
 
                 </div>
                 <div class="col-lg-6" style="padding: 0">
-                    <div class="exercise-label">Rating: 0</div>
+                    <div class="exercise-label">Rating: {{ex.rating}}</div>
                 </div>
                 <div class="col-lg-6" style="padding: 0">
-                    <div class="exercise-label">Comments: 0</div>
+                    <div class="exercise-label">Comments: {{ex.comments}}</div>
                 </div>
                 <div class="col-lg-12" style=";padding: 0">
                     <button class="btn btn-default btn-sm"

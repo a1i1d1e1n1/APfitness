@@ -1,5 +1,5 @@
 /**
- * Created by nm on 10/30/2015.
+ * Created by Aiden on 10/30/2015.
  */
 var app = angular.module('App.factories', []);
 
@@ -10,6 +10,15 @@ app.factory('AuthenticationService', function() {
     };
 
     return auth;
+});
+
+app.factory('ProfileService', function () {
+    var profile = {
+        first_name: "",
+        last_name: ""
+    };
+
+    return profile;
 });
 
 app.factory('UserService', function ($http) {
@@ -77,11 +86,20 @@ app.factory('WorkoutService', function ($http) {
         },
         getAssignWorkout: function () {
             return $http.get('api/workout/assigned')
+        },
+        getAllComments: function (id) {
+            return $http.get('api/workout/comments/' + id)
+        },
+        saveComment: function (comment) {
+            return $http.post('api/workout/comment/save', {comment: comment});
+        },
+        getMostRecent: function () {
+            return $http.get('api/workout/recent');
         }
     }
 });
 
-app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, $rootScope, toastr) {
+app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService, ProfileService, $rootScope, toastr) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -101,9 +119,7 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
                 AuthenticationService.isAuthenticated = true;
                 $rootScope.isAuthenticated = true;
             }
-            if ((response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAdmin)){
 
-            }
             return response || $q.when(response);
         },
 
@@ -111,11 +127,15 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
         responseError: function(rejection) {
             if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
                 delete $window.sessionStorage.token;
+                delete $window.sessionStorage.first_name;
+                delete $window.sessionStorage.last_name;
                 $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
                 AuthenticationService.isAdmin = false;
-                toastr.success(rejection);
-                $location.path("/");
+                ProfileService.first_name = "";
+                ProfileService.last_name = "";
+                toastr.success("Your session has expired please log in again :)");
+                $location.path("/login");
 
             }
 

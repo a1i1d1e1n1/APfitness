@@ -97,18 +97,21 @@ app.config(function (toastrConfig) {
     });
 });
 
-app.run(function ($rootScope, AuthenticationService, UserService, $location) {
-    UserService.checkAdmin().success(function (data) {
-        if (data == 1) {
-            AuthenticationService.isAdmin = true;
-            $location.path("/adminHome");
-        }
-    });
-});
 
-
-app.run(function ($rootScope, $location, AuthenticationService, $window, toastr) {
+app.run(function ($rootScope, $location, AuthenticationService, $window, toastr, UserService, ProfileService) {
     $rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
+
+        checkProfile(ProfileService, $window);
+
+
+        if (nextRoute.access.requiredAdmin) {
+            UserService.checkAdmin().success(function (data) {
+                if (data == 1) {
+                    AuthenticationService.isAdmin = true;
+                    $location.path("/adminHome");
+                }
+            });
+        }
 
         //  If the users is authenticated and has a token they will not be able to access routes
         //  such as login page etc. They will be redirected to user home.
@@ -140,4 +143,10 @@ app.config(['$routeProvider', '$sceDelegateProvider',
     }]);
 
 
+var checkProfile = function (ProfileService, $window) {
 
+    if ($window.sessionStorage.first_name || $window.sessionStorage.last_name) {
+        ProfileService.first_name = $window.sessionStorage.first_name;
+        ProfileService.last_name = $window.sessionStorage.last_name;
+    }
+};

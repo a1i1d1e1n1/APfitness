@@ -3,11 +3,11 @@
  * The controller for handling all admin functions.
  */
 
-angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'toastr',
-    function($scope, $location, $window, UserService, AuthenticationService, toastr) {
+angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'ProfileService', 'toastr',
+    function ($scope, $location, $window, UserService, AuthenticationService, ProfileService, toastr) {
 
         //Signs in the user to the application while performing validation.
-        $scope.signIn = function signIn(email, password) {
+        $scope.signIn = function (email, password) {
             if (email != null && password != null) {
 
                 //Calls user service to try and sign in user and handles responce.
@@ -16,14 +16,25 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                     AuthenticationService.isAuthenticated = true;
                     $window.sessionStorage.token = data.token;
                     toastr.success("Logged In");
+                    var admin = data.admin;
+                    UserService.profile().success(function (data) {
+                        $scope.profile = data;
+                        $window.sessionStorage.first_name = data[0].first_name;
+                        $window.sessionStorage.last_name = data[0].last_name;
+                        if (admin == 1) {
+                            AuthenticationService.isAdmin = true;
+                            $location.path("/adminHome");
+                        } else {
+                            AuthenticationService.isAdmin = false;
+                            $location.path("/userHome");
+                        }
+                        console.log(data);
+                    }).error(function (status, data) {
+                        console.log(status);
+                        console.log(data);
+                    });
 
-                    if (data.admin == 1){
-                        AuthenticationService.isAdmin = true;
-                        $location.path("/adminHome");
-                    }else{
-                        AuthenticationService.isAdmin = false;
-                        $location.path("/userHome");
-                    }
+
 
                 }).error(function(data, status) {
                     toastr.error(data.message);
@@ -36,7 +47,7 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
         };
 
 
-        $scope.register = function register(email, password, passwordConfirm) {
+        $scope.register = function (email, password, passwordConfirm) {
 
             if (AuthenticationService.isAuthenticated && $window.sessionStorage.token) {
 
@@ -53,7 +64,19 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                                 toastr.success("Registered");
                                 AuthenticationService.isAuthenticated = true;
                                 $window.sessionStorage.token = data.token;
-                                $location.path("/userHome");
+
+                                UserService.profile().success(function (data) {
+                                    $scope.profile = data;
+                                    ProfileService.first_name = data[0].first_name;
+                                    ProfileService.last_name = data[0].last_name;
+                                    $window.sessionStorage.first_name = data[0].first_name;
+                                    $window.sessionStorage.last_name = data[0].last_name;
+                                    $location.path("/userHome");
+                                    console.log(data);
+                                }).error(function (status, data) {
+                                    console.log(status);
+                                    console.log(data);
+                                });
 
                             }).error(function (data, status) {
                                 toastr.error(data.message);

@@ -2,35 +2,31 @@
  * Created by nm on 2/17/2016.
  */
 
-angular.module('App').controller('HomePageCtrl', ['$rootScope', '$scope','$location', '$window', 'UserService', 'AuthenticationService', 'toastr',
-    function($rootScope, $scope, $location, $window, UserService, AuthenticationService, toastr) {
+angular.module('App').controller('HomePageCtrl', ['$rootScope', '$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'toastr', 'ProfileService',
+    function ($rootScope, $scope, $location, $window, UserService, AuthenticationService, toastr, ProfileService) {
 
         $scope.auth = AuthenticationService;
 
-        $scope.createWorkout = function(){
-            $location.path("/createworkout");
-        };
+
+        $scope.user = ProfileService;
 
 
-        UserService.profile().success(function (data) {
-            $scope.user = data;
-            console.log(data);
-        }).error(function (status, data) {
-            console.log(status);
-            console.log(data);
-        });
-
-
-        $scope.logOut = function logOut() {
+        $scope.logout = function () {
             if (AuthenticationService.isAuthenticated) {
 
                 UserService.logOut().success(function(data) {
-                    $rootScope.isAuthenticated = false;
-                    AuthenticationService.isAdmin = false;
-                    AuthenticationService.isAuthenticated = false;
+
                     delete $window.sessionStorage.token;
-                    toastr.success("Logged Out");
+                    delete $window.sessionStorage.first_name;
+                    delete $window.sessionStorage.last_name;
+                    $rootScope.isAuthenticated = false;
+                    AuthenticationService.isAuthenticated = false;
+                    AuthenticationService.isAdmin = false;
+                    ProfileService.first_name = "";
+                    ProfileService.last_name = "";
+                    toastr.success("Logged Out Successfully");
                     $location.path("/");
+
                 }).error(function(status, data) {
                     toastr.error("Error Logging Out:" + data);
                     $location.path("/userHome");

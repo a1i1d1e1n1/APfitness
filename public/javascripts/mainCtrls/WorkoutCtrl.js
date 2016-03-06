@@ -63,6 +63,24 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
             });
         };
 
+        $scope.openWorkout = function (workout) {
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/Modals/workoutModal.html',
+                controller: 'WorkoutModalCtrl',
+                resolve: {
+                    items: function () {
+                        return workout;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                init();
+            }, function () {
+            });
+        };
 
         //Gets search button to display correctly.
         var focusButtons = function() {

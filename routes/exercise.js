@@ -8,12 +8,12 @@ var mysql      = require('mysql');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
 
-var pool  = mysql.createPool({
-    connectionLimit : 10,
-    host     : 'localhost',
-    user     : 'root',
-    password : 'maddog_1',
-    database : 'ApFitness'
+var pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'y9bbg4eovsunfldv',
+    password: 'n3fg5jelhe20abhm',
+    database: 'osf9zjz6on7aapqd'
 });
 
 // route middleware to verify a token
@@ -60,7 +60,7 @@ router.route('/')
 
         var user = req.decoded;
         pool.getConnection(function(err, connection) {
-            connection.query('SELECT * from exercise', function(err, rows, fields) {
+            connection.query('SELECT * from exercise_page', function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);
@@ -75,9 +75,9 @@ router.route('/comments/:id')
     .get(function (req, res, next) {
 
         var user = req.decoded;
-        var exerciseID = req.query('id');
+        var params = req.params;
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * from exercise_comments WHERE exerciseID =' + connection.escape(exerciseID), function (err, rows, fields) {
+            connection.query('SELECT * from exercise_comments_details WHERE exerciseID =' + connection.escape(params.id), function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);

@@ -1,184 +1,69 @@
-<div class="col-sm-3 col-md-3 col-lg-3" style="padding:0;margin: 0">
-    <nav class="left-menu">
-        <ul class="left-menu-nav">
 
-            <li>
-                <a href="#/userHome">
-                    <i class="fui-home">
-                    </i>
-                    <span class="nav-text">
-                        Home
-                    </span>
-                </a>
-            </li>
-
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-list">
-                    </i>
-                    <span class="nav-text">
-                        Fourm
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/assigned">
-                    <i class="fui-bookmark">
-                    </i>
-                    <span class="nav-text">
-                        Assigned Workouts
-                    </span>
-                </a>
-            </li>
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a href="#/workouts">
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Workouts
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#/exercises">
-                    <i class="fui-document">
-                    </i>
-                    <span class="nav-text">
-                        Exercises
-                    </span>
-
-                </a>
-            </li>
-            <hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">
-            <li>
-                <a>
-                    <i class="fui-location">
-                    </i>
-                    <span class="nav-text">
-                        Tools
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-gear">
-                    </i>
-                    <span class="nav-text">
-                        Settings
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <i class="fui-exit">
-                    </i>
-                    <span class="nav-text">
-                        Logout
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<div class="col-sm-9 col-md-9 col-lg-9" style="padding-left: 0">
     <br>
     <div class="container-fluid">
-
-
-        <div class="col-sm-5">
-            <div class="col-sm-12">
-
+        <div class="col-sm-3">
+            <div style="text-align: center">
                 <img class="img-responsive" src="/img/profile.jpg">
 
+                <p> {{data[0].first_name}} {{data[0].last_name}}</p>
 
+                <p>{{data[0].email}}</p>
+
+                <p>{{data[0].gender}}</p>
+
+                <p>{{data[0].weight}} kg</p>
             </div>
         </div>
-        <div class="col-sm-7">
-            <div class="col-sm-12">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group has-feedback">
-                        <label class="col-lg-6 control-label pull-left" style="text-align:left;">First Name:</label>
-                        <label class="col-lg-6 control-label pull-left" style="text-align:left;">Last Name:</label>
 
-                        <div class="col-lg-6">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="First Name"
-                                   name="First Name"
-                                   ng-model="data[0].first_name">
-                        </div>
-                        <div class="col-lg-6">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Last Name"
-                                   name="Last Name"
-                                   ng-model="data[0].last_name">
-                        </div>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label class="col-lg-12 control-label" style="text-align:left;">Email:</label>
 
-                        <div class="col-lg-12">
-                            <input type="email"
-                                   class="form-control"
-                                   placeholder="Email"
-                                   name="email"
-                                   ng-model="data[0].email">
-                        </div>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label class="col-lg-6 control-label pull-left" style="text-align:left;">Gender:</label>
-                        <label class="col-lg-6 control-label pull-left" style="text-align:left;">Weight:</label>
-
-                        <div class="col-lg-6">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Gender"
-                                   name="Gender"
-                                   ng-model="data[0].gender">
-                        </div>
-                        <div class="col-lg-6">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Weight"
-                                   name="Weight"
-                                   ng-model="data[0].weight">
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-        <div class="col-sm-12">
-            <div class="col-sm-6">
-                <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
-                    Recent Workouts
-                </div>
-                <div class="col-sm-12"
-                     style="background-color: #5bc0de;color: white;padding: 5px;text-align: center; height: 200px">
-                    No Workouts have been completed :-(
-                </div>
-            </div>
-
+        <div class="col-sm-9">
             <div class="col-sm-6">
                 <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
                     Weight Tracker
                 </div>
                 <div class="col-sm-12"
-                     style="background-color: #5bc0de;color: white;padding: 5px;text-align: center">
-                    <div class="well">
-                        <canvas id="line" class="chart chart-line" chart-data="chartdata"
+                     style="background-color: #ffffff;padding: 5px;text-align: center">
+
+                    <canvas id="line" class="chart chart-line" chart-data="chartdata"
                                 chart-labels="labels" chart-legend="true" chart-series="series"
                                 chart-click="onClick" chart-colours="">
                         </canvas>
-                    </div>
                     <h1 ng-hide="chartdata">No Data</h1>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
+                    Recent Workouts
+                </div>
+                <div class="col-sm-12"
+                     style="background-color: #ffffff;padding: 5px;text-align: center; height: 200px">
+                    <h4 ng-show="!recent_workouts">No Workouts have been completed :-(</h4>
+
+                    <div style="overflow-y: scroll;overflow-x:hidden;height: 175px">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="workout in recent_workouts">
+                                <th>{{$index+1}}</th>
+                                <th>{{workout.workoutName}}</th>
+                                <th>
+                                    <button class="btn btn-xs"><i class="fui-search"></i></button>
+                                </th>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
+
     </div>
-</div>

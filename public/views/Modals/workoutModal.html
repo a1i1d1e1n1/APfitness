@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="modal-header" style="background-color: #16a085;color: white">
+        <button type="button" class="close fui-cross" ng-click="close()" aria-hidden="true"
+                style="color: white"></button>
+        <h4 class="modal-title" style="text-align: center">{{workout.workoutName}}</h4>
+    </div>
+
+    <div class="modal-body" style="padding: 0">
+
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Rest</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="w in workout.exercises">
+                        <th>{{w.name}}</th>
+                        <th>{{w.duration}}</th>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-12" style="padding: 0">
+            <div class="panel panel-blue" style="margin: 0">
+                <div class="panel-heading">
+                    <img src="img/chat.svg" height="20px" style="padding-right: 5px"> Comments
+                    <span class="pull-right" ng-click="openComment(workout)"><i class="fui-plus"></i></span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
+                    <div ng-repeat="comment in comments">
+
+                        <div class="row" style="height: 100px">
+                            <div class="col-sm-3">
+                                <img class="img-circle" src="img/support.svg" height="75px">
+                            </div>
+                            <div class="col-sm-9">
+                                <p style="margin: 0;font-weight: bolder">{{comment.first_name}}
+                                    {{comment.last_name}}</p>
+
+                                <p class="text-info" style="font-size: 12px;margin: 0"> {{comment.date_created}}</p>
+
+                                <p>{{comment.description}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <h2 style="text-align: center" ng-show="comments.length == 0">No Comments !!</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>

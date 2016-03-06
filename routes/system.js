@@ -7,12 +7,12 @@ var secret = require('../config/secret');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport();
 
-var pool  = mysql.createPool({
-  connectionLimit : 10,
-  host     : 'localhost',
-  user     : 'root',
-  password : 'maddog_1',
-  database : 'ApFitness'
+var pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'y9bbg4eovsunfldv',
+    password: 'n3fg5jelhe20abhm',
+    database: 'osf9zjz6on7aapqd'
 });
 
 var setsalt = function(){
@@ -87,14 +87,23 @@ router.route('/register')
                     connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) +
                     ',false,false)', function (err, rows, fields) {
 
-                    //Returns connection to the pool
-                    connection.release();
-
                     if (!err){
-                        //Creates a new unique json web token and passes it back to the client.
-                        var payload = {email: email, ID: rows[0].userID};
+                        var payload = {email: email, ID: rows.insertId};
                         var token = jwt.sign(payload, secret.secretToken, {expiresIn: 3600});
-                        return res.json({token:token});
+
+                        //Creates a new unique json web token and passes it back to the client.
+                        connection.query('Insert into profile (first_name,last_name,userID) VALUES (' +
+                            connection.escape("New") + ',' + connection.escape("user") + ',' + connection.escape(rows.insertId) + ')', function (err, rows, fields) {
+                            if (!err) {
+
+                                return res.json({token: token});
+                            }
+                            else {
+                                res.status(401);
+                                return res.json({message: "Profile couldn't be created :?."});
+                            }
+
+                        });
                     }
                     else{
 
