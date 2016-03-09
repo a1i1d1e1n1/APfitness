@@ -21,6 +21,7 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                         $scope.profile = data;
                         $window.sessionStorage.first_name = data[0].first_name;
                         $window.sessionStorage.last_name = data[0].last_name;
+                        $window.sessionStorage.user_id = data[0].userID;
                         if (admin == 1) {
                             AuthenticationService.isAdmin = true;
                             $location.path("/adminHome");
@@ -69,8 +70,10 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                                     $scope.profile = data;
                                     ProfileService.first_name = data[0].first_name;
                                     ProfileService.last_name = data[0].last_name;
+                                    ProfileService.userID = data[0].userID;
                                     $window.sessionStorage.first_name = data[0].first_name;
                                     $window.sessionStorage.last_name = data[0].last_name;
+                                    $window.sessionStorage.user_id = data[0].userID;
                                     $location.path("/userHome");
                                     console.log(data);
                                 }).error(function (status, data) {

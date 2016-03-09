@@ -15,7 +15,8 @@ app.factory('AuthenticationService', function() {
 app.factory('ProfileService', function () {
     var profile = {
         first_name: "",
-        last_name: ""
+        last_name: "",
+        userID: null
     };
 
     return profile;
@@ -65,6 +66,9 @@ app.factory('ExerciseService', function ($http) {
         },
         saveComment: function (comment) {
             return $http.post('api/exercise/comment/save', {comment: comment});
+        },
+        deleteComment: function (comment) {
+            return $http.post('api/exercise/comment/delete', {comment: comment});
         }
 
     }
@@ -95,6 +99,9 @@ app.factory('WorkoutService', function ($http) {
         },
         getMostRecent: function () {
             return $http.get('api/workout/recent');
+        },
+        deleteComment: function (comment) {
+            return $http.post('api/workout/comment/delete', {comment: comment});
         }
     }
 });
@@ -129,11 +136,13 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
                 delete $window.sessionStorage.token;
                 delete $window.sessionStorage.first_name;
                 delete $window.sessionStorage.last_name;
+                delete $window.sessionStorage.user_id;
                 $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
                 AuthenticationService.isAdmin = false;
                 ProfileService.first_name = "";
                 ProfileService.last_name = "";
+                ProfileService.userID = null;
                 toastr.success("Your session has expired please log in again :)");
                 $location.path("/login");
 

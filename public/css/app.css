@@ -273,3 +273,12 @@ body {
     display: block;
 }
 
+.myGrid {
+    width: 100%;
+    height: 250px;
+}
+
+.profileGrid {
+    width: 100%;
+    height: 200px;
+}

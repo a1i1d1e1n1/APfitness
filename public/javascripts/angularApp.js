@@ -14,7 +14,8 @@ var app = angular.module('App', [
     'ngTouch',
     'ui.bootstrap',
     'ui.calendar',
-    'chart.js'
+    'chart.js',
+    'ui.grid'
 ]);
 
 
@@ -148,5 +149,6 @@ var checkProfile = function (ProfileService, $window) {
     if ($window.sessionStorage.first_name || $window.sessionStorage.last_name) {
         ProfileService.first_name = $window.sessionStorage.first_name;
         ProfileService.last_name = $window.sessionStorage.last_name;
+        ProfileService.userID = $window.sessionStorage.user_id;
     }
 };

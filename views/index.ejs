@@ -20,6 +20,7 @@
   <link href="css/toastr.css" rel="stylesheet">
   <link rel="stylesheet" href="css/fullcalendar.css"/>
   <link rel="stylesheet" href="css/angular-chart.min.css">
+  <link rel="styleSheet" href="javascripts/Scripts/angular-ui-grid//ui-grid.min.css"/>
 
 
   <!--Main js files-->
@@ -43,6 +44,7 @@
   <script src="/javascripts/Scripts/ngDraggable.js"></script>
   <script src="/javascripts/Scripts/chart.js"></script>
   <script src="/javascripts/Scripts/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="/javascripts/Scripts/angular-ui-grid/ui-grid.min.js"></script>
 
   <!-- Angular files-->
   <script src="/javascripts/angularApp.js"></script>
@@ -60,6 +62,7 @@
   <script src="/javascripts/mainCtrls/OtherCtrl.js"></script>
   <script src="/javascripts/mainCtrls/CommentCtrl.js"></script>
   <script src="/javascripts/mainCtrls/WorkoutModalCtrl.js"></script>
+  <script src="/javascripts/mainCtrls/profileModalCtrl.js"></script>
   <script src="/javascripts/Scripts/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
   <script src="/javascripts/mainServices/mainServices.js"></script>
   <script src="/javascripts/mainServices/directives.js"></script>
@@ -98,7 +101,8 @@
 
   <div class="container-fluid" style="padding-left: 0px;padding-right: 0px">
 
-    <div class="col-sm-3 col-md-3 col-lg-3" style="padding:0;margin: 0" ng-show="auth.isAuthenticated">
+    <div class="col-sm-3 col-md-3 col-lg-3" style="padding:0;margin: 0"
+         ng-hide="!auth.isAuthenticated || $root.hidemenu == true">
       <nav class="left-menu">
         <ul class="left-menu-nav">
 
@@ -173,10 +177,10 @@
         </ul>
       </nav>
     </div>
-    <div class="col-sm-9" ng-show="auth.isAuthenticated">
+    <div class="col-sm-9" ng-show="auth.isAuthenticated && $root.hidemenu == false">
       <div ng-view></div>
     </div>
-    <div class="col-sm-12" style="padding: 0" ng-show="!auth.isAuthenticated">
+    <div class="col-sm-12" style="padding: 0" ng-show="!auth.isAuthenticated || $root.hidemenu == true ">
       <div ng-view></div>
     </div>
 

@@ -2,10 +2,12 @@
  * Created by aiden on 02/03/2016.
  */
 
-angular.module('App').controller('CommentCtrl', ['$scope', 'ExerciseService', 'toastr', 'items', '$uibModalInstance',
-    function ($scope, ExerciseService, toastr, items, $uibModalInstance) {
+angular.module('App').controller('CommentCtrl', ['$scope', 'ExerciseService', 'WorkoutService', 'toastr', 'items', '$uibModalInstance',
+    function ($scope, ExerciseService, WorkoutService, toastr, items, $uibModalInstance) {
 
-        $scope.comment = {desc:"",exerciseID:null};
+        $scope.comment = {desc: "", rate: 0, exerciseID: null};
+        $scope.max = 10;
+        $scope.isReadonly = false;
 
         $scope.close = function () {
             $uibModalInstance.dismiss('cancel');
@@ -26,14 +28,36 @@ angular.module('App').controller('CommentCtrl', ['$scope', 'ExerciseService', 't
         };
 
         $scope.saveComment = function (comment){
-            comment.exerciseID = items.exerciseID;
-            ExerciseService.saveComment(comment).success(function(data) {
-                toastr.success(data.message);
-                $uibModalInstance.dismiss('cancel');
-            }).error(function(status, data) {
-                toastr.error(data.message);
-            });
-        }
+            if (comment.desc == null || comment.desc == "") {
+                toastr.error("Please enter comment");
+            } else {
+                if (items.exerciseID != null) {
+                    comment.exerciseID = items.exerciseID;
+                    ExerciseService.saveComment(comment).success(function (data) {
+                        toastr.success(data.message);
+                        $uibModalInstance.close();
+                    }).error(function (status, data) {
+                        toastr.error(data.message);
+                    });
+                }
+                if (items.workoutID != null) {
+                    comment.workoutID = items.workoutID;
+                    WorkoutService.saveComment(comment).success(function (data) {
+                        toastr.success(data.message);
+                        $uibModalInstance.close();
+                    }).error(function (status, data) {
+                        toastr.error(data.message);
+                    });
+                }
+            }
+
+        };
+
+
+        $scope.hoveringOver = function (value) {
+            $scope.overStar = value;
+            $scope.percent = 100 * (value / $scope.max);
+        };
 
     }
 ]);

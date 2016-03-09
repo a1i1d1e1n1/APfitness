@@ -2,12 +2,14 @@
  * Created by nm on 2/17/2016.
  */
 
-angular.module('App').controller('CreateWorkoutCtrl', ['$scope', 'ExerciseService', 'WorkoutService', 'toastr', '$location', '$uibModal',
-    function ($scope, ExerciseService, WorkoutService, toastr, $location, $uibModal) {
+angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', 'ExerciseService', 'WorkoutService', 'toastr', '$location', '$uibModal',
+    function ($rootScope, $scope, ExerciseService, WorkoutService, toastr, $location, $uibModal) {
         $scope.currentPage = 1;
         $scope.pageSize = 12;
         $scope.exercises = [];
         $scope.searchType = 2;
+
+        $rootScope.hidemenu = true;
 
         //Initialises a blank workout with no exercises on page load.
         $scope.workout = {

@@ -26,21 +26,21 @@
 
                     </div>
                     <div class="panel-body" style="padding: 0">
-
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Sets</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                         <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
                             <table class="table">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Sets</th>
-                                </tr>
-                                </thead>
                                 <tbody>
                                 <tr ng-repeat="exercise in workout.exercises">
-                                    <th>{{$index+1}}</th>
                                     <th>{{exercise.name}}</th>
-                                    <th>{{exercise.duration}}</th>
+                                    <th>{{exercise.sets}}</th>
                                 </tr>
                                 </tbody>
 

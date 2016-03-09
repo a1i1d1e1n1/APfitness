@@ -11,10 +11,10 @@ var secret = require('../config/secret');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'y9bbg4eovsunfldv',
-    password: 'n3fg5jelhe20abhm',
-    database: 'osf9zjz6on7aapqd'
+    host: 'localhost',
+    user: 'root',
+    password: 'maddog_1',
+    database: 'ApFitness'
 });
 
 var getExercises = function (ID,connection){
@@ -310,5 +310,39 @@ router.route('/comment/save')
                     });
             });
         })
+    });
+
+router.route('/comment/delete')
+    // fetch all exercises
+    .post(function (req, res, next) {
+
+        var user = req.decoded;
+
+        var comment = req.body.comment;
+
+        if (comment.userID == user.ID) {
+            pool.getConnection(function (err, connection) {
+                connection.query('DELETE FROM workout_comments WHERE w_commentID = ' + connection.escape(comment.commentID), function (err, rows, fields) {
+                    connection.release();
+                    if (!err)
+                        return res.status(200).send({
+                            success: true,
+                            message: "Comment Deleted"
+                        });
+                    else
+                        return res.status(400).send({
+                            success: false,
+                            message: err
+                        });
+                });
+            })
+        } else {
+            return res.status(400).send({
+                success: false,
+                message: "That is not your comment to delete!"
+            });
+        }
+
+
     });
 module.exports = router;

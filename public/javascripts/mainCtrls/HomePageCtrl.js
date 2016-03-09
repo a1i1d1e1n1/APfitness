@@ -10,6 +10,7 @@ angular.module('App').controller('HomePageCtrl', ['$rootScope', '$scope', '$loca
 
         $scope.user = ProfileService;
 
+        $rootScope.hidemenu = false;
 
         $scope.logout = function () {
             if (AuthenticationService.isAuthenticated) {

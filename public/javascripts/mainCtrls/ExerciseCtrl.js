@@ -13,6 +13,7 @@ angular.module('App').controller('ExerciseCtrl', ['$rootScope', '$scope', 'Exerc
             $scope.exercises = [];
             $scope.searchType = 2;
             $scope.selectedExercise = 1;
+            $rootScope.hidemenu = false;
 
             slider();
             focusButtons();

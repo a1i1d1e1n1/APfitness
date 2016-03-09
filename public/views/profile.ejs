@@ -4,6 +4,8 @@
         <div class="col-sm-3">
             <div style="text-align: center">
                 <img class="img-responsive" src="/img/profile.jpg">
+                <button class="btn btn-primary" style="width: 100%" ng-click="profileEdit(data[0])">Edit Profile
+                </button>
 
                 <p> {{data[0].first_name}} {{data[0].last_name}}</p>
 
@@ -17,7 +19,21 @@
 
 
         <div class="col-sm-9">
-            <div class="col-sm-6">
+
+            <div class="col-sm-12">
+                <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
+                    Recent Workouts
+                </div>
+                <div class="col-sm-12"
+                     style="background-color: #ffffff;padding:0;text-align: center">
+                    <h4 ng-show="!recent_workouts">No Workouts have been completed :-(</h4>
+
+                    <div>
+                        <div ui-grid="gridOptions" ui-grid-expandable class="profileGrid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
                 <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
                     Weight Tracker
                 </div>
@@ -25,44 +41,12 @@
                      style="background-color: #ffffff;padding: 5px;text-align: center">
 
                     <canvas id="line" class="chart chart-line" chart-data="chartdata"
-                                chart-labels="labels" chart-legend="true" chart-series="series"
-                                chart-click="onClick" chart-colours="">
-                        </canvas>
+                            chart-labels="labels" chart-legend="true" chart-series="series"
+                            chart-click="onClick" chart-colours="">
+                    </canvas>
                     <h1 ng-hide="chartdata">No Data</h1>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="col-sm-12" style="background-color: #16a085;color: white;padding: 5px;text-align: center">
-                    Recent Workouts
-                </div>
-                <div class="col-sm-12"
-                     style="background-color: #ffffff;padding: 5px;text-align: center; height: 200px">
-                    <h4 ng-show="!recent_workouts">No Workouts have been completed :-(</h4>
-
-                    <div style="overflow-y: scroll;overflow-x:hidden;height: 175px">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="workout in recent_workouts">
-                                <th>{{$index+1}}</th>
-                                <th>{{workout.workoutName}}</th>
-                                <th>
-                                    <button class="btn btn-xs"><i class="fui-search"></i></button>
-                                </th>
-                            </tr>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
 

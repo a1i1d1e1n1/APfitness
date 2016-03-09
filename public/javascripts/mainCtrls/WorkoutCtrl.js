@@ -9,6 +9,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
         //Pagnation set up
         $scope.currentPage = 1;
         $scope.pageSize = 12;
+        $rootScope.hidemenu = false;
 
         //Sets up all initial values and methods on page load.
         var init = function(){

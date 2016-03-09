@@ -1,13 +1,13 @@
 /**
  * Created by nm on 2/17/2016.
  */
-angular.module('App').controller('UserHomeCtrl', ['$scope', 'UserService', 'toastr', 'WorkoutService', '$location',
-    function ($scope, UserService, toastr, WorkoutService, $location) {
+angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserService', 'toastr', 'WorkoutService', '$location',
+    function ($rootScope, $scope, UserService, toastr, WorkoutService, $location) {
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-        $scope.profile = {first_name: "", last_name: ""};
+        $rootScope.hidemenu = false;
 
         WorkoutService.getAssignWorkout().success(function (data) {
             for (var i = 0; i < data.length; i++) {

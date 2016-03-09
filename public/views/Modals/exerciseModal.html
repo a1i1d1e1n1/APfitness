@@ -12,28 +12,31 @@
                     allowfullscreen></iframe>
 
         <div class="col-sm-12" style="padding: 0">
-                    <div class="panel panel-blue" style="margin: 0">
+            <div class="panel panel-default" style="margin: 0">
                         <div class="panel-heading">
                             <img src="img/chat.svg" height="20px" style="padding-right: 5px"> Comments
                             <span class="pull-right" ng-click="openComment(exercise)"><i class="fui-plus"></i></span>
                         </div>
                     </div>
-                    <div class="panel-body">
+            <div class="panel-body" style="border: 2px solid #16a085">
                         <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
                             <div ng-repeat="comment in comments">
 
                                 <div class="row" style="height: 75px">
                                     <div class="col-sm-3">
-                                        <img class="img-circle" src="img/support.svg" height="75px">
+                                        <img class="img-circle" src="img/anyone.png" height="75px">
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-7">
                                         <p style="margin: 0;font-weight: bolder">{{comment.first_name}}
-                                            {{comment.last_name}}</p>
-
-                                        <p class="text-info" style="font-size: 12px;margin: 0">
-                                            {{comment.date_created}}</p>
+                                            {{comment.last_name}} - <span class="text-info"
+                                                                          style="font-size: 12px;margin: 0">{{comment.date_created}}</span>
+                                        </p>
 
                                         <p>{{comment.description}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="glyphicon glyphicon-remove text-danger "
+                                           ng-show="comment.userID == userID" ng-click="deleteComment(comment)"></i>
                                     </div>
                                 </div>
 
