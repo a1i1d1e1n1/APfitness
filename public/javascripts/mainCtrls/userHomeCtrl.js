@@ -1,10 +1,23 @@
 /**
  * Created by nm on 2/17/2016.
  */
-angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserService', 'toastr', 'WorkoutService', '$location', 'GAPI', 'Calendar',
-    function ($rootScope, $scope, UserService, toastr, WorkoutService, $location, Calendar) {
+angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, toastr, WorkoutService, $location, GAPI, Calendar) {
 
         $rootScope.hidemenu = false;
+    $scope.events = [
+        {
+            title: 'Event1',
+            start: '2014-07-19'
+        }
+    ];
+    $scope.eventSources = [$scope.events];
+
+    GAPI.init().then(function (data) {
+        Calendar.getCalendars('primary').then(function (data) {
+
+            var gevents = data.items;
+        });
+    });
 
         var getWorkouts = function () {
             WorkoutService.getAssignWorkout().success(function (data) {
@@ -19,7 +32,10 @@ angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserS
             });
         };
 
+    $scope.getevent = function () {
 
+
+    };
         var addEvent = function (title, start, end) {
             $scope.events.push({
                 title: title,
@@ -40,22 +56,14 @@ angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserS
                     left: 'month basicWeek basicDay agendaWeek agendaDay',
                     center: 'title',
                     right: 'today prev,next'
-                },
-                eventClick: $scope.alertOnEventClick,
-                dayClick: $scope.alertEventOnClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize
+                }
+
             }
         };
 
-        $scope.alertOnEventClick = function (date, jsEvent, view) {
-            $scope.alertMessage = (date.title + ' was clicked ');
-        };
+
 
         getWorkouts();
 
-        $scope.events = [];
 
-
-    }
-]);
+});

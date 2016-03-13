@@ -27,7 +27,7 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                             $location.path("/adminHome");
                         } else {
                             AuthenticationService.isAdmin = false;
-                            GAPI.init();
+
                             $location.path("/userHome");
                         }
                         console.log(data);

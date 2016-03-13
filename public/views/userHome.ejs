@@ -6,8 +6,14 @@
     <!--<button class="btn btn-primary pull-right" ng-click="createWorkout()">Create Workout</button>-->
     <!--</div>-->
     <div class="col-sm-9">
-        <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="span8 calendar"></div>
+
+        <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar" calendar="mycalendar1"></div>
     </div>
     <div class="col-sm-3">
+        <div class="btn-group">
+            <button class="btn btn-success" ng-click="changeView('agendaWeek', 'mycalendar1')">AgendaWeek</button>
+            <button class="btn btn-success" ng-click="changeView('month', 'mycalendar1')">Month</button>
+        </div>
         <button class="btn btn-primary" ng-click="createWorkout()" style="width: 100%"> Create Workout</button>
+        <button class="btn btn-primary" ng-click="getevent()" style="width: 100%">Populate Google Events</button>
     </div>

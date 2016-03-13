@@ -6,7 +6,7 @@ angular.module('App').controller('CommentCtrl', ['$scope', 'ExerciseService', 'W
     function ($scope, ExerciseService, WorkoutService, toastr, items, $uibModalInstance) {
 
         $scope.comment = {desc: "", rate: 0, exerciseID: null};
-        $scope.max = 10;
+        $scope.max = 5;
         $scope.isReadonly = false;
 
         $scope.close = function () {
