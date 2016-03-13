@@ -12,11 +12,9 @@
                           ng-model="comment.desc"></textarea>
             </form>
             <div style="text-align: center">
+
                 <uib-rating ng-model="comment.rate" max="max" read-only="isReadonly" on-hover="hoveringOver(value)"
                             on-leave="overStar = null" aria-labelledby="default-rating"></uib-rating>
-                <span class="label"
-                      ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-                      ng-show="overStar && !isReadonly">{{percent}}%</span>
             </div>
 
 

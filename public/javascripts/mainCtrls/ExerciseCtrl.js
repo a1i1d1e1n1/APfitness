@@ -9,19 +9,16 @@ angular.module('App').controller('ExerciseCtrl', ['$rootScope', '$scope', 'Exerc
         var initialise = function () {
             //Variables set on page load
             $scope.currentPage = 1;
-            $scope.pageSize = 8;
+            $scope.pageSize = 9;
             $scope.exercises = [];
             $scope.searchType = 2;
             $scope.selectedExercise = 1;
+            $scope.max = 5;
             $rootScope.hidemenu = false;
 
             slider();
             focusButtons();
 
-            //Makes sure Iframe videos are stopped once modal is clsoed.
-            $("#modalExercise").on('hidden.bs.modal', function (e) {
-                $("#modalExercise iframe").attr("src", $("#modalExercise iframe").attr("src"));
-            });
 
             $("select").select2({dropdownCssClass: 'dropdown-inverse'});
         };

@@ -96,7 +96,7 @@ router.route('/comment/save')
         var comment = req.body.comment;
 
         pool.getConnection(function (err, connection) {
-            connection.query('INSERT INTO exercise_comments (description, exerciseID, userID) VALUES (' + connection.escape(comment.desc) + ',' + connection.escape(comment.exerciseID) + ',' + connection.escape(user.ID) + ')', function (err, rows, fields) {
+            connection.query('INSERT INTO exercise_comments (description, exerciseID, userID,rating) VALUES (' + connection.escape(comment.desc) + ',' + connection.escape(comment.exerciseID) + ',' + connection.escape(user.ID) + ',' + connection.escape(comment.rate) + ')', function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     return res.status(200).send({

@@ -1,22 +1,24 @@
 /**
  * Created by nm on 2/17/2016.
  */
-angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserService', 'toastr', 'WorkoutService', '$location',
-    function ($rootScope, $scope, UserService, toastr, WorkoutService, $location) {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
+angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserService', 'toastr', 'WorkoutService', '$location', 'GAPI', 'Calendar',
+    function ($rootScope, $scope, UserService, toastr, WorkoutService, $location, Calendar) {
+
         $rootScope.hidemenu = false;
 
-        WorkoutService.getAssignWorkout().success(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                addEvent(data[i].workoutName, data[i].start_date, data[i].end_date);
-            }
-        }).error(function (status, data) {
-            console.log(status);
-            console.log(data);
-        });
+        var getWorkouts = function () {
+            WorkoutService.getAssignWorkout().success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    addEvent(data[i].workoutName, data[i].start_date, data[i].end_date);
+                }
+                $scope.eventSources = $scope.events;
+
+            }).error(function (status, data) {
+                console.log(status);
+                console.log(data);
+            });
+        };
+
 
         var addEvent = function (title, start, end) {
             $scope.events.push({
@@ -50,11 +52,9 @@ angular.module('App').controller('UserHomeCtrl', ['$rootScope', '$scope', 'UserS
             $scope.alertMessage = (date.title + ' was clicked ');
         };
 
+        getWorkouts();
+
         $scope.events = [];
-
-
-        $scope.eventSources = [$scope.events];
-
 
 
     }

@@ -596,7 +596,7 @@ angular.module('gapi', [])
 
       Calendar.freeBusy = function (data) {
           return Calendar.post('freeBusy', data);
-      }
+      };
 
       Calendar.stopWatching = function (data) {
           return Calendar.post('channels', 'stop', data)

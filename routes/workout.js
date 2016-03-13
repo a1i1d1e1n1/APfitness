@@ -296,7 +296,9 @@ router.route('/comment/save')
         var comment = req.body.comment;
 
         pool.getConnection(function (err, connection) {
-            connection.query('INSERT INTO workout_comments (description, workoutID, userID) VALUES (' + connection.escape(comment.desc) + ',' + connection.escape(comment.workoutID) + ',' + connection.escape(user.ID) + ')', function (err, rows, fields) {
+            connection.query('INSERT INTO workout_comments (description, workoutID, userID,rating) VALUES (' + connection.escape(comment.desc) + ',' +
+                connection.escape(comment.workoutID) + ',' + connection.escape(user.ID) + ',' + connection.escape(comment.rate) +
+                ')', function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     return res.status(200).send({

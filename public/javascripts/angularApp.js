@@ -15,11 +15,13 @@ var app = angular.module('App', [
     'ui.bootstrap',
     'ui.calendar',
     'chart.js',
-    'ui.grid'
+    'ui.grid',
+    'gapi'
 ]);
 
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+
     $routeProvider.when('/', {
         templateUrl: 'views/home.ejs',
         controller: 'AdminUserCtrl',
@@ -143,6 +145,16 @@ app.config(['$routeProvider', '$sceDelegateProvider',
 
     }]);
 
+app.value('GoogleApp', {
+    apiKey: 'AIzaSyAEp--6Nm1MNnDIanhBa9cg4GBKEs-Edi4',
+    clientId: '86288733958-nsqjpjkpjpnmel29l6hou0k64v3rnqnb.apps.googleusercontent.com',
+    scopes: [
+        // whatever scopes you need for your app, for example:
+        'https://www.googleapis.com/auth/calendar',
+        'https://www.googleapis.com/auth/userinfo.profile'
+        // ...
+    ]
+});
 
 var checkProfile = function (ProfileService, $window) {
 
