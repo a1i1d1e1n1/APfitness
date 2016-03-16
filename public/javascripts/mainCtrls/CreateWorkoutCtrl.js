@@ -8,12 +8,23 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', '
         $scope.pageSize = 12;
         $scope.exercises = [];
         $scope.searchType = 2;
+        $scope.max = 5;
 
         $rootScope.hidemenu = true;
 
         //Initialises a blank workout with no exercises on page load.
         $scope.workout = {
             exercises:[]
+        };
+
+        $scope.increment = function (set) {
+            set.reps += 1;
+        };
+
+        $scope.decrement = function (set) {
+            if (set.reps > 0) {
+                set.reps -= 1;
+            }
         };
 
         $scope.openExercise = function (exercise) {

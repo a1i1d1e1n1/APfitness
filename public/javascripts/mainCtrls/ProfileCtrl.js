@@ -13,7 +13,7 @@ angular.module('App').controller('ProfileCtrl', ['$rootScope', '$scope', 'UserSe
             columnDefs: [
                 {name: 'workoutName', width: '40%'},
                 {name: 'start_date', width: '30%'},
-                {name: 'end_date', width: '30%'},
+                {name: 'end_date', width: '30%'}
             ]
         };
 
@@ -46,6 +46,17 @@ angular.module('App').controller('ProfileCtrl', ['$rootScope', '$scope', 'UserSe
                         return profile;
                     }
                 }
+            });
+
+            modalInstance.result.then(function () {
+                UserService.profile().success(function (data) {
+                    $scope.data = data;
+                    console.log(data);
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }, function () {
             });
         };
 

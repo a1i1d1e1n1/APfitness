@@ -84,6 +84,29 @@ router.route('/profile')
         })
     });
 
+router.route('/profile')
+    // fetch all users
+    .post(function (req, res, next) {
+
+        var user = req.decoded;
+
+        var profile = req.body.profile;
+
+        pool.getConnection(function (err, connection) {
+            connection.query('UPDATE profile SET first_name=' + connection.escape(profile.first_name) +
+                ', last_name=' + connection.escape(profile.last_name) + ', height=' + connection.escape(profile.height) +
+                ', age=' + connection.escape(profile.age) + ', gender=' + connection.escape(profile.gender) +
+                ', weight=' + connection.escape(profile.weight) + ' WHERE profileID=' + connection.escape(profile.profileID) +
+                ' and userID=' + user.ID + ';', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.');
+            });
+        })
+    });
+
 router.route('/checkAdmin')
     // fetch all users
     .get(function (req, res, next) {

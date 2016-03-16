@@ -1,7 +1,6 @@
 /**
  * Created by aiden on 03/01/2016.
  */
-
 var express = require('express');
 var router = express.Router();
 var mysql = require('promise-mysql');
@@ -137,7 +136,7 @@ router.route('/recent')
         var user = req.decoded;
         console.log(user);
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * from workout_calander where userID =' + connection.escape(user.ID) + " Limit 5", function (err, rows, fields) {
+            connection.query('SELECT * from workout_calander where userID =' + connection.escape(user.ID) + " ORDER BY start_date DESC Limit 10", function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);

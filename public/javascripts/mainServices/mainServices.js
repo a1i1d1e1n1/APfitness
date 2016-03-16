@@ -32,6 +32,9 @@ app.factory('UserService', function ($http) {
             return $http.get('api/logout');
         },
 
+        checkAuth: function () {
+            return $http.get('api/auth');
+        },
         register: function(email, password, passwordConfirmation) {
             return $http.post('api/register', {email: email, password: password, passwordConfirmation: passwordConfirmation });
         },
@@ -41,6 +44,9 @@ app.factory('UserService', function ($http) {
         },
         profile: function () {
             return $http.get('api/user/profile');
+        },
+        saveProfile: function (profile) {
+            return $http.post('api/user/profile', {profile: profile});
         },
         checkAdmin: function() {
             return $http.get('api/user/checkAdmin');
@@ -60,6 +66,24 @@ app.factory('ExerciseService', function ($http) {
     return {
         getAllExercises: function() {
             return $http.get('api/exercise');
+        },
+        getAllComments: function (id) {
+            return $http.get('api/exercise/comments/' + id);
+        },
+        saveComment: function (comment) {
+            return $http.post('api/exercise/comment/save', {comment: comment});
+        },
+        deleteComment: function (comment) {
+            return $http.post('api/exercise/comment/delete', {comment: comment});
+        }
+
+    }
+});
+
+app.factory('GoogleService', function ($http) {
+    return {
+        getAllEvents: function () {
+            return $http.get('googleapi/events');
         },
         getAllComments: function (id) {
             return $http.get('api/exercise/comments/' + id);

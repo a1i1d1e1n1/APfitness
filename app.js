@@ -10,6 +10,7 @@ var system = require('./routes/system');
 var users = require('./routes/users');
 var exercise = require('./routes/exercise');
 var workout = require('./routes/workout');
+var googleapi = require('./routes/googleapi');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/api', system);
 app.use('/api/user', users);
 app.use('/api/exercise', exercise);
 app.use('/api/workout', workout);
+app.use('/googleapi/', googleapi);
 
 
 // catch 404 and forward to error handler

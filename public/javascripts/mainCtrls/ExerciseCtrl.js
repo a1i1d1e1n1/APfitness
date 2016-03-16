@@ -9,7 +9,7 @@ angular.module('App').controller('ExerciseCtrl', ['$rootScope', '$scope', 'Exerc
         var initialise = function () {
             //Variables set on page load
             $scope.currentPage = 1;
-            $scope.pageSize = 9;
+            $scope.pageSize = 8;
             $scope.exercises = [];
             $scope.searchType = 2;
             $scope.selectedExercise = 1;
