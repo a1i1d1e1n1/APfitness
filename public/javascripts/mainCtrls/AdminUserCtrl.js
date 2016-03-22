@@ -3,8 +3,8 @@
  * The controller for handling all admin functions.
  */
 
-angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'ProfileService', 'toastr', 'GAPI',
-    function ($scope, $location, $window, UserService, AuthenticationService, ProfileService, toastr, GAPI) {
+angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', 'ProfileService', 'toastr', 'GoogleService',
+    function ($scope, $location, $window, UserService, AuthenticationService, ProfileService, toastr, GoogleService) {
 
         //Signs in the user to the application while performing validation.
         $scope.signIn = function (email, password) {
@@ -27,8 +27,10 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                             $location.path("/adminHome");
                         } else {
                             AuthenticationService.isAdmin = false;
+                            GoogleService.auth().success(function (data) {
+                                $location.path("/userHome");
+                            });
 
-                            $location.path("/userHome");
                         }
                         console.log(data);
                     }).error(function (status, data) {

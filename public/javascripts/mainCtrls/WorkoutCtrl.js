@@ -16,15 +16,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
 
             //Gets all the workouts and then gets all the exercises associated with them.
             WorkoutService.getAllWorkouts().success(function(data) {
-                $scope.workouts = data;
-                WorkoutService.getAllWorkoutsExercise().success(function(data) {
-                    $scope.workouts_exercises = data;
-                    $scope.WorkoutsWithExercises = assignExercisesToWorkouts();
-
-                }).error(function(status, data) {
-                    console.log(status);
-                    console.log(data);
-                });
+                getAllExercies(data);
             }).error(function(status, data) {
                 console.log(status);
                 console.log(data);
@@ -33,18 +25,31 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
 
         };
 
-        //Assigns the exercises to the corresponding workout.
-        var assignExercisesToWorkouts = function(){
-            for(var i = 0 ; i < $scope.workouts.length;i++){
-                $scope.workouts[i].exercises = [];
-                for(var j = 0 ; j < $scope.workouts_exercises.length;j++){
-                    if($scope.workouts[i].workoutID == $scope.workouts_exercises[j].workoutID){
+        var getAllExercies = function (workout) {
+            WorkoutService.getAllWorkoutsExercise().success(function (data) {
+                $scope.WorkoutsWithExercises = assignExercisesToWorkouts(workout, data);
+            }).error(function (status, data) {
+                console.log(status);
+                console.log(data);
+            });
+        };
 
-                        $scope.workouts[i].exercises.push($scope.workouts_exercises[j]);
+        //Assigns the exercises to the corresponding workout.
+        var assignExercisesToWorkouts = function (workout, exercises) {
+            for (var i = 0; i < workout.length; i++) {
+                workout[i].exercises = [];
+                for (var j = 0; j < exercises.length; j++) {
+                    if (workout[i].workoutID == exercises[j].workoutID) {
+
+                        workout[i].exercises.push(exercises[j]);
                     }
                 }
             }
-            return $scope.workouts;
+            return workout;
+        };
+
+        $scope.deleteWorkout = function (workout) {
+
         };
 
         //Opens the assign Modal while passing in the selected workout.

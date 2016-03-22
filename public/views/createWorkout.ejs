@@ -74,9 +74,13 @@
             </div>
             </div>
         </div>
-        <button class="btn btn-block btn-info" ng-click="saveWorkout(workout,workoutName)"
+        <button class="btn btn-block btn-info" ng-click="saveWorkout(workout,true)"
                 style="padding-top: 10px;">
-            Save Workout
+            Add Private Workout
+        </button>
+        <button class="btn btn-block btn-info" ng-click="saveWorkout(workout,false)"
+                style="padding-top: 10px;">
+            Add Public Workout
         </button>
     </nav>
 </div>

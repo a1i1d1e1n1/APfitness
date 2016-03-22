@@ -16,7 +16,6 @@ var app = angular.module('App', [
     'ui.calendar',
     'chart.js',
     'ui.grid',
-    'gapi',
     'angularSpinner'
 ]);
 
@@ -170,16 +169,7 @@ app.config(['$routeProvider', '$sceDelegateProvider',
 
     }]);
 
-app.value('GoogleApp', {
-    apiKey: 'AIzaSyBtOZwPQ88cRMIlCRLVaGfevKQ7i4nAVzg',
-    clientId: '845494265719-7a6t8i8ulbmfpdl05utiblba6oc67vtu.apps.googleusercontent.com',
-    scopes: [
-        // whatever scopes you need for your app, for example:
-        'https://www.googleapis.com/auth/calendar',
-        'https://www.googleapis.com/auth/calendar.readonly'
-        // ...
-    ]
-});
+
 
 function checkAuth(ProfileService, $window, UserService, AuthenticationService, $q) {
     return $q(function (resolve, reject) {
@@ -191,6 +181,13 @@ function checkAuth(ProfileService, $window, UserService, AuthenticationService, 
                     ProfileService.userID = data.user_id;
                     AuthenticationService.isAuthenticated = true;
                     resolve();
+                }).error(function (data) {
+                    delete $window.sessionStorage.token;
+                    AuthenticationService.isAuthenticated = false;
+                    ProfileService.first_name = "";
+                    ProfileService.last_name = "";
+                    ProfileService.userID = "";
+
                 });
             } else {
                 reject();

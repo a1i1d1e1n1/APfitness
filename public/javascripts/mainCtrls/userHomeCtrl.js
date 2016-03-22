@@ -9,6 +9,8 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
             start: '2014-07-19'
         }
     ];
+
+
     $scope.eventSources = [$scope.events];
 
     //GoogleService.getAllEvents().success(function(data){
@@ -36,10 +38,13 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
 
     };
     var addEvent = function (title, start, end) {
+
         $scope.events.push({
             title: title,
-            start: start,
-            end: end
+            start: new Date(start),
+            end: new Date(end),
+            sticky: true,
+            allDay: false
         });
     };
 

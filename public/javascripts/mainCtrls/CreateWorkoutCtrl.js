@@ -86,13 +86,15 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', '
         };
 
         //Saves th workout if all conditions are met.
-        $scope.saveWorkout = function (workout) {
+        $scope.saveWorkout = function (workout, private) {
             //Makes sure workout has at least one exercise
             if(workout.exercises.length > 0){
                 var validWorkout = false;
 
                 validWorkout = checkName(workout.name);
                 validWorkout = checkSets(workout,validWorkout);
+
+                workout.private = private;
 
                 if(validWorkout){
                     WorkoutService.saveWorkout(workout).success(function(data){

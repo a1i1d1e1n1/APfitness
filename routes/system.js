@@ -4,6 +4,7 @@ var mysql = require('mysql');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/secret');
+var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
 
 //Sets the mysqlCredentails
@@ -31,8 +32,12 @@ router.route('/passwordReset')
             connection.query('SELECT * from User where email = "' + email + '"', function (err, row) {
                 if (!err) {
                     if (row[0]) {
+                        var tempPass = randomstring.generate({
+                            length: 8,
+                            charset: 'hex'
+                        });
 
-                        var hash = getHash("NEW", row[0].salt);
+                        var hash = getHash(tempPass, row[0].salt);
 
                         connection.query('UPDATE User SET hash =' + connection.escape(hash) + ' WHERE email =' + connection.escape(email), function (err, row) {
                             if (!err) {
@@ -43,7 +48,7 @@ router.route('/passwordReset')
                                     to: email, // list of receivers
                                     subject: 'Password Reset', // Subject line
                                     html: '<p>Hi,</p><p>A new password has been generated:</p>' +
-                                    '<h3>NEW</h3>' +
+                                    '<h3>' + tempPass + '</h3>' +
                                     '<p>Please log into your account with this password and then change it once logged in.</p>' +
                                     '<p>Thanks</p>' // html body
                                 };

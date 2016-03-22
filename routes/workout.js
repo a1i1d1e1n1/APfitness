@@ -174,8 +174,9 @@ router.route('/save')
         var workoutID = 0;
 
         pool.getConnection().then(function (connection) {
-            connection.query('Insert into workout (workoutName,description,rating,userID) VALUES (' + connection.escape(workout.name) + ',' +
-                connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(user.ID) + ')').then(function (rows) {
+            connection.query('Insert into workout (workoutName,description,rating,userID,private_workout) VALUES (' + connection.escape(workout.name) + ',' +
+                connection.escape(workout.name) + ',' + connection.escape(0) + ',' + connection.escape(user.ID)
+                + ',' + connection.escape(workout.private) + ')').then(function (rows) {
                 workoutID = rows.insertId;
 
                 for (var i = 0; i < workout.exercises.length; i++) {

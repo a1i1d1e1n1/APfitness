@@ -82,11 +82,11 @@ app.factory('ExerciseService', function ($http) {
 
 app.factory('GoogleService', function ($http) {
     return {
-        getAllEvents: function () {
-            return $http.get('googleapi/events');
+        auth: function () {
+            return $http.get('googleapi/auth');
         },
-        getAllComments: function (id) {
-            return $http.get('api/exercise/comments/' + id);
+        getAllEvents: function (id) {
+            return $http.get('googleapi/auth');
         },
         saveComment: function (comment) {
             return $http.post('api/exercise/comment/save', {comment: comment});
@@ -158,9 +158,6 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
         responseError: function(rejection) {
             if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
                 delete $window.sessionStorage.token;
-                delete $window.sessionStorage.first_name;
-                delete $window.sessionStorage.last_name;
-                delete $window.sessionStorage.user_id;
                 $rootScope.isAuthenticated = false;
                 AuthenticationService.isAuthenticated = false;
                 AuthenticationService.isAdmin = false;
