@@ -1,7 +1,7 @@
 /**
  * Created by nm on 2/17/2016.
  */
-angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, toastr, WorkoutService, $location, GoogleService) {
+angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, $compile, $timeout, uiCalendarConfig, toastr, WorkoutService, $location, GoogleService) {
     $rootScope.hidemenu = false;
     $scope.events = [
         {
@@ -46,7 +46,7 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
             title: title,
             start: new Date(start),
             end: new Date(end),
-            sticky: true,
+            stick: true,
             allDay: false
         });
     };
@@ -57,7 +57,7 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
 
     $scope.uiConfig = {
         calendar: {
-            height: 200,
+
             editable: true,
             header: {
                 left: 'month basicWeek basicDay agendaWeek agendaDay',
@@ -69,5 +69,7 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
     };
 
     getWorkouts();
+
+
 
 });
