@@ -13,21 +13,20 @@ angular.module('App').controller('AdminUserCtrl', ['$scope', '$location', '$wind
                 //Calls user service to try and sign in user and handles responce.
                 UserService.signIn(email, password).success(function(data) {
 
-                    AuthenticationService.isAuthenticated = true;
+
                     $window.sessionStorage.token = data.token;
                     toastr.success("Logged In");
                     var admin = data.admin;
                     UserService.profile().success(function (data) {
                         $scope.profile = data;
-                        $window.sessionStorage.first_name = data[0].first_name;
-                        $window.sessionStorage.last_name = data[0].last_name;
-                        $window.sessionStorage.user_id = data[0].userID;
                         if (admin == 1) {
                             AuthenticationService.isAdmin = true;
                             $location.path("/adminHome");
                         } else {
                             AuthenticationService.isAdmin = false;
                             GoogleService.auth().success(function (data) {
+                                AuthenticationService.isAuthenticated = true;
+                                $window.open(data);
                                 $location.path("/userHome");
                             });
 

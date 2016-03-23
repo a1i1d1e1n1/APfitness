@@ -13,12 +13,15 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
 
     $scope.eventSources = [$scope.events];
 
-    //GoogleService.getAllEvents().success(function(data){
-    //    var a = data;
-    //}).error(function (status, data) {
-    //    console.log(status);
-    //    console.log(data);
-    //});
+    GoogleService.events().success(function (data) {
+        var a = data.items;
+        for (var i = 0; i < a.length; i++) {
+            addEvent(a[i].summary, a[i].start.dateTime, a[i].end.dateTime);
+        }
+    }).error(function (status, data) {
+        console.log(status);
+        console.log(data);
+    });
 
     var getWorkouts = function () {
         WorkoutService.getAssignWorkout().success(function (data) {

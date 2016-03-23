@@ -85,11 +85,11 @@ app.factory('GoogleService', function ($http) {
         auth: function () {
             return $http.get('googleapi/auth');
         },
-        getAllEvents: function (id) {
-            return $http.get('googleapi/auth');
+        callback: function (code) {
+            return $http.post('googleapi/oauth2callback', {code: code});
         },
-        saveComment: function (comment) {
-            return $http.post('api/exercise/comment/save', {comment: comment});
+        events: function (comment) {
+            return $http.get('googleapi/events');
         },
         deleteComment: function (comment) {
             return $http.post('api/exercise/comment/delete', {comment: comment});

@@ -10,7 +10,6 @@ var google = require('googleapis');
 var calendar = google.calendar('v3');
 var OAuth2 = google.auth.OAuth2;
 
-
 var oauth2Client = new OAuth2('845494265719-7a6t8i8ulbmfpdl05utiblba6oc67vtu.apps.googleusercontent.com', 'rSRRhqErBIlokPmcot_rc6qs', 'http://localhost:3000/googleapi/oauth2callback');
 
 google.options({auth: oauth2Client});
@@ -25,7 +24,7 @@ router.get('/auth', function (req, res) {
         access_type: 'online',
         scope: scopes
     });
-    res.redirect(url);
+    res.send(url);
 });
 
 router.get('/oauth2callback', function (req, res) {
@@ -35,13 +34,13 @@ router.get('/oauth2callback', function (req, res) {
         // Now tokens contains an access_token and an optional refresh_token. Save them.
         if (!err) {
             oauth2Client.setCredentials(tokens);
+
         }
+
+        res.send("Logged into google please close this tab");
+
     });
 
-    return res.status(200).send({
-        success: true,
-        message: "Logged into Google"
-    });
 });
 
 
@@ -88,7 +87,7 @@ router.use(function (req, res, next) {
 router.route('/events')
     // fetch all Workouts
     .get(function (req, res, next) {
-        calendar.events.list({calendarId: 'primary', auth: oauth2Client}, function (err, response) {
+        calendar.events.list({calendarId: 'primary'}, function (err, response) {
             // handle err and response
             var a = response;
             res.json(a);
