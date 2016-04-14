@@ -4,19 +4,21 @@
 angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, $compile, $timeout, uiCalendarConfig, toastr, WorkoutService, $location, GoogleService) {
     $rootScope.hidemenu = false;
     $scope.events = [
-        {
-            title: 'Event1',
-            start: '2014-07-19'
-        }
+
     ];
 
+    $scope.google_events = {
+        color: '#FFA500',
+        textColor: 'white',
+        events: []
+    };
 
-    $scope.eventSources = [$scope.events];
+    $scope.eventSources = [$scope.events, $scope.google_events];
 
     GoogleService.events().success(function (data) {
         var a = data.items;
         for (var i = 0; i < a.length; i++) {
-            addEvent(a[i].summary, a[i].start.dateTime, a[i].end.dateTime);
+            addGoogleEvent(a[i].summary, a[i].start.dateTime, a[i].end.dateTime);
         }
     }).error(function (status, data) {
         console.log(status);
@@ -36,10 +38,6 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
         });
     };
 
-    $scope.getevent = function () {
-
-
-    };
     var addEvent = function (title, start, end) {
 
         $scope.events.push({
@@ -51,17 +49,24 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
         });
     };
 
-    $scope.createWorkout = function () {
-        $location.path("/createworkout");
+    var addGoogleEvent = function (title, start, end) {
+
+        $scope.google_events.events.push({
+            title: title,
+            start: new Date(start),
+            end: new Date(end),
+            stick: true,
+            allDay: false
+        });
     };
 
     $scope.uiConfig = {
         calendar: {
 
-            editable: true,
+            editable: false,
             header: {
-                left: 'month basicWeek basicDay agendaWeek agendaDay',
-                center: 'title',
+                left: 'title',
+                center: 'month agendaWeek agendaDay',
                 right: 'today prev,next'
             }
 

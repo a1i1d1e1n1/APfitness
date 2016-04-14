@@ -29,7 +29,7 @@ var getExercises = function (ID,connection){
     });
 };
 
-
+//Checks to see if an events clashes with another event
 var checkConflicts = function (workout_to_check, workouts) {
     return new Promise(function (resolve, reject) {
         var conflict = false;

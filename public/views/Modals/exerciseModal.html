@@ -12,23 +12,17 @@
                     allowfullscreen></iframe>
 
         <div class="col-sm-12" style="padding: 0">
-            <div class="panel panel-primary" style="margin: 0">
-                        <div class="panel-heading">
-                            <img src="img/chat.svg" height="20px" style="padding-right: 5px"> Comments
-                            <span class="pull-right" ng-click="openComment(exercise)"><i class="fui-plus"></i></span>
-                        </div>
-                    </div>
-            <div class="panel-body">
+
                         <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
                             <div ng-repeat="comment in comments">
 
-                                <div class="row" style="height: 75px">
+                                <div style="height: 75px">
                                     <div class="col-sm-3">
                                         <img class="img-circle" src="img/anyone.png" height="75px">
                                     </div>
                                     <div class="col-sm-7">
                                         <p style="margin: 0;font-weight: bolder">{{comment.first_name}}
-                                            {{comment.last_name}} - <span class="text-info"
+                                            {{comment.last_name}} - <span class="text-info pull-right"
                                                                           style="font-size: 12px;margin: 0">{{comment.date_created}}</span>
                                         </p>
 
@@ -44,9 +38,12 @@
                             <h2 style="text-align: center" ng-show="comments.length == 0">No Comments !!</h2>
 
                         </div>
-                    </div>
-                </div>
+
+        </div>
     </div>
     <div class="modal-footer">
+        <span class="btn btn-primary btn-lg" ng-click="openComment(exercise)" style="width:100%"><i
+                class="fui-plus"></i> Add Comment</span>
+
     </div>
 </div>

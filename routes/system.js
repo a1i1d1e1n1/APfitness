@@ -112,7 +112,8 @@ router.route('/register')
 
                         //Creates a new unique json web token and passes it back to the client.
                         connection.query('Insert into profile (first_name,last_name,userID) VALUES (' +
-                            connection.escape("New") + ',' + connection.escape("user") + ',' + connection.escape(rows.insertId) + ')', function (err, rows, fields) {
+                            connection.escape("New") + ',' + connection.escape("user") + ',' + connection.escape(rows.insertId) + ')'
+                            , function (err, rows, fields) {
                             if (!err) {
 
                                 return res.json({token: token});

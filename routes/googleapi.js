@@ -37,7 +37,7 @@ router.get('/oauth2callback', function (req, res) {
 
         }
 
-        res.send("Logged into google please close this tab");
+        res.render('error', {title: 'Express'});
 
     });
 

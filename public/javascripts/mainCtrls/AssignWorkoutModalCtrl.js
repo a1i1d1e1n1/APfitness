@@ -25,6 +25,19 @@ angular.module('App').controller('AssignWorkoutModalCtrl', ['$scope', '$uibModal
             mstep: [1, 5, 10, 15, 25, 30]
         };
 
+        $scope.uiConfig = {
+            calendar: {
+
+                editable: false,
+                header: {
+                    left: 'title',
+                    center: ' agendaWeek ',
+                    right: 'today prev,next'
+                }
+
+            }
+        };
+
         //Assigns a workout to the users schedule by calling workout service and handles response.
         $scope.assignWorkout = function (datetime) {
             WorkoutService.assignWorkout($scope.workout, datetime).success(function (data) {
