@@ -61,6 +61,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
                 animation: $scope.animationsEnabled,
                 templateUrl: 'views/Modals/workoutAssignModal.html',
                 controller: 'AssignWorkoutModalCtrl',
+                size: 'lg',
                 resolve: {
                     items: function () {
                         return $scope.selectedWorkout;
@@ -75,6 +76,7 @@ angular.module('App').controller('WorkoutCtrl', ['$rootScope', '$scope', 'Workou
                 animation: $scope.animationsEnabled,
                 templateUrl: 'views/Modals/workoutModal.html',
                 controller: 'WorkoutModalCtrl',
+                size: 'lg',
                 resolve: {
                     items: function () {
                         return workout;

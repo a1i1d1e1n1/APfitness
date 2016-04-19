@@ -1,8 +1,9 @@
+<div class="bg-pic">
 <div class="container">
     <br>
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary main-page-jumbo">
             <div class="panel-body">
                 <h4>Register</h4>
                 <hr>
@@ -48,10 +49,14 @@
                         </div>
                     </form>
                 <hr>
-                <button type="submit" class="btn btn-primary btn-lg pull-right" ng-click="register(user.email, user.password,user.passwordConfirm)">Register</button>
-
+                <div class="btn-block">
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%"
+                            ng-click="register(user.email, user.password,user.passwordConfirm)">Register
+                    </button>
+                </div>
             </div>
 
         </div>
     </div>
+</div>
 </div>
