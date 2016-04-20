@@ -73,6 +73,15 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
         }
     };
 
+    WorkoutService.getMostRecent().success(function (data) {
+        $scope.recent_workouts = data;
+        $scope.gridOptions.data = data;
+        console.log(data);
+    }).error(function (status, data) {
+        console.log(status);
+        console.log(data);
+    });
+
     getWorkouts();
 
 

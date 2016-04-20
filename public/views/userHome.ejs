@@ -3,8 +3,31 @@
 
     <br>
     <div class="container">
-    <div class="col-xs-12">
 
-        <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar" id="myCalendar3"></div>
-    </div>
+        <div class="col-xs-12  col-lg-8 col-xl-10">
+
+            <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar" id="myCalendar3"></div>
+        </div>
+        <div class="col-xs-12 col-lg-4 col-xl-2">
+            <div class="panel panel-green">
+                <div class="panel-heading" style="text-align: center">
+                    Workouts
+                </div>
+                <div class="panel-body">
+                    <span ng-show="!recent_workouts">You have no workouts planned for this week.</span>
+                    <table class="table" ng-show="recent_workouts">
+
+                        <tbody>
+                        <tr ng-repeat="workout in recent_workouts">
+                            <th>{{workout.workoutName}}</th>
+                            <th>
+                                <button></button>
+                            </th>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
