@@ -10,6 +10,8 @@ var users = require('./routes/users');
 var exercise = require('./routes/exercise');
 var workout = require('./routes/workout');
 var googleapi = require('./routes/googleapi');
+var schedule = require('node-schedule');
+
 
 var app = express();
 
@@ -65,5 +67,11 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var rule = new schedule.RecurrenceRule();
+rule.minute = 8;
+
+var j = schedule.scheduleJob(rule, function () {
+  console.log('The answer to life, the universe, and everything!');
+});
 
 module.exports = app;
