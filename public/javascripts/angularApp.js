@@ -178,7 +178,7 @@ function checkAuth(ProfileService, $window, UserService, AuthenticationService, 
                 UserService.checkAuth().success(function (data) {
                     ProfileService.first_name = data.first_name;
                     ProfileService.last_name = data.last_name;
-                    ProfileService.userID = data.user_id;
+                    ProfileService.userID = data.ID;
                     AuthenticationService.isAuthenticated = true;
                     resolve();
                 }).error(function (data) {

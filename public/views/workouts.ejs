@@ -17,8 +17,9 @@
                  dir-paginate="workout in WorkoutsWithExercises | filter:q | itemsPerPage: pageSize"
                  current-page="currentPage"
                  style="padding: 10px;">
-                <div class="panel panel-success" style="margin:0;padding:0;border: 0">
-                    <div class="panel-heading" style="padding: 0;background-color: #16a085;color: white">
+                <div class="panel" style="margin:0;padding:0;border: 0"
+                     ng-class="{'panel-green': workout.private_workout == 1, 'panel-primary': workout.private_workout == 0}">
+                    <div class="panel-heading">
                         <i class="fui fui-cross pull-right text-danger" ng-show="workout.private_workout == 1"
                            style="margin-right: 5px" ng-click="delete_workout(workout)"></i>
 
@@ -26,27 +27,23 @@
                                 {{workout.workoutName}}</p>
 
                     </div>
-                    <div class="panel-body" style="padding: 0">
+                    <div class="panel-body" style="padding: 0;height: 250px; overflow-y: auto">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Sets</th>
+                                <th>Reps</th>
                             </tr>
                             </thead>
-
+                            <tbody>
+                            <tr ng-repeat="exercise in workout.exercises">
+                                <th>{{exercise.name}}</th>
+                                <th>{{exercise.sets}}</th>
+                                <th>{{exercise.reps}}</th>
+                            </tr>
+                            </tbody>
                         </table>
-                        <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
-                            <table class="table">
-                                <tbody>
-                                <tr ng-repeat="exercise in workout.exercises">
-                                    <th>{{exercise.name}}</th>
-                                    <th>{{exercise.sets}}</th>
-                                </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
 
                     </div>
                 </div>

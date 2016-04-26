@@ -1,235 +1,143 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="App" class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]>
+<html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="App" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="App" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html lang="en" ng-app="App" ng-controller="HomePageCtrl">
 <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AP Fitness</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AP Fitness</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!--css -->
-  <link rel="stylesheet" href="css/app.css" />
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/BootstrapXL.css" rel="stylesheet">
-  <link href="css/flat-ui-pro.css" rel="stylesheet">
-  <link href="css/toastr.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/fullcalendar.css"/>
-  <link rel="stylesheet" href="css/angular-chart.min.css">
-  <link rel="styleSheet" href="javascripts/Scripts/angular-ui-grid/ui-grid.min.css"/>
-
-
-
-  <script src="/javascripts/Scripts/jquery.min.js"></script>
-  <script src="/javascripts/Scripts/moment.min.js"></script>
-
-  <script src="/javascripts/Scripts/vendor/video.js"></script>
-  <script src="/javascripts/Scripts/flat-ui-pro.js"></script>
-  <script src="/javascripts/Scripts/prettify.js"></script>
-  <script src="/javascripts/Scripts/application.js"></script>
-  <script src="/javascripts/Scripts/application-docs.js"></script>
+    <!--css -->
+    <link rel="stylesheet" href="css/app.css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/BootstrapXL.css" rel="stylesheet">
+    <link href="css/flat-ui-pro.css" rel="stylesheet">
+    <link href="css/toastr.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fullcalendar.css"/>
+    <link rel="stylesheet" href="css/angular-chart.min.css">
+    <link rel="styleSheet" href="javascripts/Scripts/angular-ui-grid/ui-grid.min.css"/>
 
 
-  <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>-->
-  <!--Main js files-->
-  <script src="/javascripts/Scripts/angular.min.js"></script>
-  <script src="/javascripts/Scripts/fullcalendar.js"></script>
-  <script src="/javascripts/Scripts/calendar.js"></script>
-  <script src="/javascripts/Scripts/angular-touch/angular-touch.min.js"></script>
-  <script src="/javascripts/Scripts/angular-toastr.js"></script>
-  <script src="/javascripts/Scripts/angular-route.js"></script>
+    <script src="/javascripts/Scripts/jquery.min.js"></script>
+    <script src="/javascripts/Scripts/moment.min.js"></script>
 
-  <script src="/javascripts/Scripts/dirPagination.js"></script>
-  <script src="/javascripts/Scripts/ngDraggable.js"></script>
-  <script src="/javascripts/Scripts/chart.js"></script>
-  <script src="/javascripts/Scripts/angular-chart.js/dist/angular-chart.min.js"></script>
-  <script src="/javascripts/Scripts/angular-ui-grid/ui-grid.min.js"></script>
-  <script src="/javascripts/Scripts/spinner/spin.min.js"></script>
-  <script src="/javascripts/Scripts/spinner/angular-spinner.min.js"></script>
+    <script src="/javascripts/Scripts/vendor/video.js"></script>
+    <script src="/javascripts/Scripts/flat-ui-pro.js"></script>
+    <script src="/javascripts/Scripts/prettify.js"></script>
+    <script src="/javascripts/Scripts/application.js"></script>
+    <script src="/javascripts/Scripts/application-docs.js"></script>
 
 
-  <!-- Angular files-->
-  <script src="/javascripts/angularApp.js"></script>
-  <script src="/javascripts/mainCtrls/HomePageCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/AdminUserCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/AssignedWorkoutsCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/CreateWorkoutCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/ExerciseCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/ExerciseModalCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/AssignWorkoutModalCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/PasswordResetCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/ProfileCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/userHomeCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/WorkoutCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/OtherCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/CommentCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/workoutModalCtrl.js"></script>
-  <script src="/javascripts/mainCtrls/profileModalCtrl.js"></script>
-  <script src="/javascripts/Scripts/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-  <script src="/javascripts/mainServices/mainServices.js"></script>
-  <script src="/javascripts/mainServices/directives.js"></script>
-  <script src="/javascripts/navigation/navCtrl.js"></script>
-  <script src="/javascripts/mainServices/directives.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>-->
+    <!--Main js files-->
+    <script src="/javascripts/Scripts/angular.min.js"></script>
+    <script src="/javascripts/Scripts/fullcalendar.js"></script>
+    <script src="/javascripts/Scripts/calendar.js"></script>
+    <script src="/javascripts/Scripts/angular-touch/angular-touch.min.js"></script>
+    <script src="/javascripts/Scripts/angular-toastr.js"></script>
+    <script src="/javascripts/Scripts/angular-route.js"></script>
+
+    <script src="/javascripts/Scripts/dirPagination.js"></script>
+    <script src="/javascripts/Scripts/ngDraggable.js"></script>
+    <script src="/javascripts/Scripts/chart.js"></script>
+    <script src="/javascripts/Scripts/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="/javascripts/Scripts/angular-ui-grid/ui-grid.min.js"></script>
+    <script src="/javascripts/Scripts/spinner/spin.min.js"></script>
+    <script src="/javascripts/Scripts/spinner/angular-spinner.min.js"></script>
+
+
+    <!-- Angular files-->
+    <script src="/javascripts/angularApp.js"></script>
+    <script src="/javascripts/mainCtrls/HomePageCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/AdminUserCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/AssignedWorkoutsCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/CreateWorkoutCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/ExerciseCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/ExerciseModalCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/AssignWorkoutModalCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/PasswordResetCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/ProfileCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/userHomeCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/WorkoutCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/OtherCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/CommentCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/workoutModalCtrl.js"></script>
+    <script src="/javascripts/mainCtrls/profileModalCtrl.js"></script>
+    <script src="/javascripts/Scripts/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="/javascripts/mainServices/mainServices.js"></script>
+    <script src="/javascripts/mainServices/directives.js"></script>
+    <script src="/javascripts/navigation/navCtrl.js"></script>
+    <script src="/javascripts/mainServices/directives.js"></script>
 
 </head>
 
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" ng-show="auth.isAuthenticated">
-     <div class="navbar-header">
-       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-         <span class="sr-only">Toggle navigation</span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-       </button>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
 
-       <a class="navbar-brand" style="font-size: 36px;margin-bottom: 10px"> <img class="img-circle pull-left"
-                                                                                 src="Img/fit.svg" height="35px">APfitness<img
-                 class="img-circle pull-right" style="transform: rotate(180deg); margin-left: 5px" src="Img/fit.svg"
-                 height="35px"></a>
-     </div>
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav">
-
-        <li><a href="#/userHome"><i class="fui-home"></i> Home</a></li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Workout
-            <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#/createworkout"><i class="glyphicon glyphicon-copyright-mark"></i> Create</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#/workouts"><i class="fui-document"></i> View Workouts</a></li>
-          </ul>
-        <li><a href="#/exercises"><i class="fui-document"></i> Exercises</a></li>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-right" action="#" role="search">
-        <div class="form-group">
-          <p ng-show="auth.isAuthenticated" class="navbar-text navbar-right"><a class="navbar-link" ng-click="logout()"><i
-                      class="glyphicon glyphicon-share"></i> Logout </a></p>
-
-          <p ng-show="auth.isAuthenticated" class="navbar-text navbar-right"><a class="navbar-link" href="#/profile"><i
-                      class="fui-user"></i> {{user.first_name}} {{user.last_name}} </a></p>
-
-
-        </div>
-      </form>
+        <a class="navbar-brand" style="font-size: 36px;margin-bottom: 10px"> <img class="img-circle pull-left"
+                                                                                  src="Img/fit.svg" height="35px">APfitness<img
+                    class="img-circle pull-right" style="transform: rotate(180deg); margin-left: 5px" src="Img/fit.svg"
+                    height="35px"></a>
     </div>
-  </nav>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav" ng-hide="auth.isAdmin">
+
+            <li><a href="#/userHome"><i class="fui-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Workout
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#/createworkout"><i class="glyphicon glyphicon-copyright-mark"></i> Create</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#/workouts"><i class="fui-document"></i> View Workouts</a></li>
+                </ul>
+            <li><a href="#/exercises"><i class="fui-document"></i> Exercises</a></li>
+            </li>
+        </ul>
+        <form class="navbar-form navbar-right" action="#" role="search">
+            <div class="form-group">
+                <p ng-show="auth.isAuthenticated" class="navbar-text navbar-right"><a class="navbar-link"
+                                                                                      ng-click="logout()"><i
+                                class="glyphicon glyphicon-share"></i> Logout </a></p>
+
+                <p ng-show="auth.isAuthenticated" class="navbar-text navbar-right"><a class="navbar-link"
+                                                                                      href="#/profile"><i
+                                class="fui-user"></i> {{user.first_name}} {{user.last_name}} </a></p>
+
+
+            </div>
+        </form>
+    </div>
+</nav>
 
 <div class="container-fluid" style="padding: 0">
 
-  <!--<div class="col-sm-3 col-md-3 col-lg-3 hidden-xs" style="padding:0;margin: 0"-->
-  <!--ng-hide="!auth.isAuthenticated || $root.hidemenu == true">-->
-  <!--<nav class="left-menu">-->
-  <!--<ul class="left-menu-nav">-->
 
-  <!--<li>-->
-  <!--<a href="#/userHome">-->
-  <!--<i class="fui-home">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Home-->
-  <!--</span>-->
-  <!--</a>-->
-  <!--</li>-->
-
-  <!--<hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">-->
-          <!--<li>-->
-  <!--<a href="#/createworkout">-->
-  <!--<i class="glyphicon glyphicon-copyright-mark">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Create Workout-->
-  <!--</span>-->
-  <!--</a>-->
-          <!--</li>-->
-  <!--&lt;!&ndash;<li>&ndash;&gt;-->
-  <!--&lt;!&ndash;<a href="#/assigned">&ndash;&gt;-->
-  <!--&lt;!&ndash;<i class="fui-calendar">&ndash;&gt;-->
-  <!--&lt;!&ndash;</i>&ndash;&gt;-->
-  <!--&lt;!&ndash;<span class="nav-text">&ndash;&gt;-->
-  <!--&lt;!&ndash;Assigned Workouts&ndash;&gt;-->
-  <!--&lt;!&ndash;</span>&ndash;&gt;-->
-  <!--&lt;!&ndash;</a>&ndash;&gt;-->
-  <!--&lt;!&ndash;</li>&ndash;&gt;-->
-  <!--<hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">-->
-  <!--<li>-->
-  <!--<a href="#/workouts">-->
-  <!--<i class="fui-document">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Workouts-->
-  <!--</span>-->
-  <!--</a>-->
-  <!--</li>-->
-  <!--<li>-->
-  <!--<a href="#/exercises">-->
-  <!--<i class="fui-document">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Exercises-->
-  <!--</span>-->
-
-  <!--</a>-->
-  <!--</li>-->
-  <!--<hr style="border-top-color: white;margin-left: 22px;margin-right: 22px">-->
-  <!--<li>-->
-  <!--<a>-->
-  <!--<i class="fui-gear">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Settings-->
-  <!--</span>-->
-  <!--</a>-->
-  <!--</li>-->
-  <!--<li ng-click="logout()">-->
-  <!--<a>-->
-  <!--<i class="fui-exit">-->
-  <!--</i>-->
-  <!--<span class="nav-text">-->
-  <!--Logout-->
-  <!--</span>-->
-  <!--</a>-->
-  <!--</li>-->
-  <!--</ul>-->
-  <!--</nav>-->
-  <!--</div>-->
-
-  <div class="col-sm-12" style="padding: 0">
-      <div ng-view></div>
+    <div class="col-sm-12" style="padding: 0">
+        <div ng-view></div>
     </div>
 
-  </div>
+</div>
 
 
 </body>
-<!--<footer class="footer" ng-hide="auth.isAuthenticated">-->
-<!--<div class="bottom-menu bottom-menu-inverse">-->
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col-md-2 col-sm-2">-->
-<!--<a class="bottom-menu-brand" href="#fakelink">APfitness</a>-->
-<!--</div>-->
-<!--<div class="col-md-8 col-sm-8">-->
-
-<!--</div>-->
-<!--<div class="col-md-2 col-sm-2">-->
-<!--<ul class="bottom-menu-iconic-list">-->
-<!--<li><a class="fui-pinterest" href="#fakelink"></a></li>-->
-<!--<li><a class="fui-facebook" href="#fakelink"></a></li>-->
-<!--<li><a class="fui-twitter" href="#fakelink"></a></li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</footer>-->
 
 </html>

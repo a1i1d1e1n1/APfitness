@@ -19,61 +19,60 @@
                          ng-model="collapsed" ng-dblclick="collapsed=!collapsed">
                         {{exercise.name}}
                     </div>
-                    <div ng-show="workout.exercises[$index].sets.length > 0">
-                        <div class="col-sm-12" style="background-color: #ffffff;color: #000000;padding: 0"
-                             ng-hide="collapsed">
-                            <div class="col-sm-2 center-t">
-                                <p style="font-size: 12px">Set:</p>
-                            </div>
-                            <div class="col-sm-8">
-                                <p style="font-size: 12px">Reps:</p>
-                            </div>
-
+                    <div class="col-sm-12"
+                         style="background-color: #ffffff;color: #000000;padding: 0;height:35px">
+                        <div class="col-xs-6">
+                            <span>Sets</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>Reps</span>
                         </div>
                     </div>
-                    <div ng-repeat="set in workout.exercises[$index].sets" ng-hide="collapsed">
+                    <div class="col-sm-12"
+                         style="background-color: #ffffff;color: #000000;padding: 0;height:35px">
 
-                        <div class="col-sm-12"
-                             style="background-color: #ffffff;color: #000000;padding: 0;height:40px">
-
-                            <div class="col-sm-2 center-t" style="height: inherit">
-                                <p style="font-size: 12px">{{$index+1}}:</p>
-                            </div>
-                            <div class="col-sm-8" style="height: inherit">
-                                <div class="input-group input-group-sm">
-                                    <input ng-model="set.reps" type="text" class="form-control" placeholder="Small"/>
+                        <div class="col-sm-6 center-t" style="height: inherit;padding: 0">
+                            <div class="input-group input-group-sm">
+                                <input ng-prevent-drag ng-model="exercise.sets" type="text" class="form-control"
+                                       placeholder="sets"/>
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" ng-click="decrement(set)"><i
+                                            <button class="btn btn-default" type="button"
+                                                    ng-click="decrementSets(exercise)"><i
                                                         class="fui fui-triangle-down-small"></i></button>
-                                            <button class="btn btn-default" type="button" ng-click="increment(set)"><i
+                                            <button class="btn btn-default" type="button"
+                                                    ng-click="incrementSets(exercise)"><i
                                                         class="fui fui-triangle-up-small"></i></button>
                                         </span>
-                                </div><!-- /input-group -->
-
-
+                            </div><!-- /input-group -->
                         </div>
-                            <div class="col-sm-2" style="height: inherit">
-
-                                <img class="pull-left img-circle" src="img/trash.svg" height="25px"
-                                     ng-click="removeSet(p.$index,$index)">
+                        <div class="col-sm-6" style="height: inherit;padding: 0">
+                            <div class="input-group input-group-sm">
+                                <input ng-prevent-drag ng-model="exercise.reps" type="text" class="form-control"
+                                       placeholder="reps"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"
+                                                    ng-click="decrementReps(exercise)"><i
+                                                        class="fui fui-triangle-down-small"></i></button>
+                                            <button class="btn btn-default" type="button"
+                                                    ng-click="incrementReps(exercise)"><i
+                                                        class="fui fui-triangle-up-small"></i></button>
+                                        </span>
+                            </div><!-- /input-group -->
 
                         </div>
                     </div>
+
 
                 </div>
-                    <div class="btn btn-sm btn-info" ng-click="addSet(p.$index)"
-                         style="width: 100%;border-top-right-radius: 0;border-top-left-radius: 0;z-index: 1400"
-                         ng-hide="collapsed">
-                        <i class="fui-plus"> </i>ADD SET
-                    </div>
 
-                    <div ng-hide="workout.exercises.length == $index+1" style="text-align: center;padding:0">
 
-                        <i class="fui-location" style="color: white"></i>
-                    </div>
-            </div>
+                <div ng-hide="workout.exercises.length == $index+1" style="text-align: center;padding:0">
+
+                    <i class="fui-location" style="color: white"></i>
+                </div>
             </div>
         </div>
+
 
         <button class="btn btn-block btn-info" ng-click="saveWorkout(workout,true)"
                 style="padding-top: 10px;">
@@ -92,13 +91,8 @@
     <div class="container-fluid">
         <div class="col-sm-12">
 
-            <div class="col-xs-6">
-                <p class="pull-right visible-xs visible-sm pull-left">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="showCanvas()">Toggle nav</button>
-                </p>
 
-            </div>
-            <div class="col-xs-4">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <div class="input-group input-group-rounded">
                           <span class="input-group-btn">
@@ -110,8 +104,6 @@
             </div>
         </div>
         <div class="col-sm-12">
-
-
             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
                  dir-paginate="ex in exercises | filter:q | itemsPerPage: pageSize" current-page="currentPage"
                  style="padding: 10px;">

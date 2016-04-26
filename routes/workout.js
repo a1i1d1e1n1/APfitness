@@ -16,19 +16,6 @@ var pool = mysql.createPool({
     database: 'ApFitness'
 });
 
-var getExercises = function (ID,connection){
-    return new Promise(function(resolve,reject) {
-        connection.query('SELECT * FROM apfitness.workout_exercises WHERE workoutID = ' +  connection.escape(ID), function (err, rows, fields) {
-            if (err) {
-                console.log(err);
-                reject(err);
-            }else{
-                resolve(rows);
-            }
-        });
-    });
-};
-
 //Checks to see if an events clashes with another event
 var checkConflicts = function (workout_to_check, workouts) {
     return new Promise(function (resolve, reject) {
@@ -45,8 +32,8 @@ var checkConflicts = function (workout_to_check, workouts) {
 
 var insertExercises = function (workoutID, exercise, connection) {
     return new Promise(function(resolve,reject){
-        connection.query('Insert into workout_exercise (duration,workoutID,exerciseId) VALUES (' + connection.escape(30) + ',' +
-            connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ')', function (err, rows, fields) {
+        connection.query('Insert into workout_exercise (duration,workoutID,exerciseId,reps,sets) VALUES (' + connection.escape(30) + ',' +
+            connection.escape(workoutID) + ',' + connection.escape(exercise.exerciseID) + ',' + connection.escape(exercise.reps) + ',' + connection.escape(exercise.sets) + ')', function (err, rows, fields) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -61,19 +48,6 @@ var insertExercises = function (workoutID, exercise, connection) {
 
 };
 
-var insertSets = function (set,insertedID, connection) {
-
-    connection.query('Insert into sets (reps,weight,workout_exerciseID) VALUES (' + connection.escape(set.reps) + ',' +
-        connection.escape(set.weight) + ',' + connection.escape(insertedID) + ')', function (err, rows, fields) {
-
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("inserted set: " + set);
-        }
-    });
-
-};
 
 // route middleware to verify a token
 router.use(function (req, res, next) {
@@ -119,7 +93,24 @@ router.route('/')
         var user = req.decoded;
         console.log(user);
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * from workout_page', function (err, rows, fields) {
+            connection.query('SELECT * from workout_page WHERE private_workout = 1 AND userID = ' + user.ID + ' OR private_workout = 0 ORDER BY workoutID desc', function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.');
+            });
+        })
+    });
+
+router.route('/weekly')
+    // fetch all Workouts
+    .get(function (req, res, next) {
+
+        var user = req.decoded;
+        console.log(user);
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM workout_calander where userID =' + connection.escape(user.ID) + ' AND start_date > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY start_date', function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);
@@ -183,9 +174,8 @@ router.route('/save')
                     var exercise = workout.exercises[i];
 
                     insertExercises(workoutID, exercise, connection).then(function(results){
-                        for (var j = 0; j < results.sets.length; j++) {
-                            insertSets(results.sets[j],results.insertedId,connection);
-                        }
+
+
                     });
 
                 }
@@ -277,7 +267,7 @@ router.route('/comments/:id')
         var user = req.decoded;
         var params = req.params;
         pool.getConnection(function (err, connection) {
-            connection.query('SELECT * from workout_comments_details WHERE workoutID =' + connection.escape(params.id), function (err, rows, fields) {
+            connection.query('SELECT * from workout_comments_details WHERE workoutID =' + connection.escape(params.id) + 'ORDER BY date_created desc', function (err, rows, fields) {
                 connection.release();
                 if (!err)
                     res.json(rows);

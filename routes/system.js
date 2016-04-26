@@ -104,7 +104,7 @@ router.route('/register')
                 //Inserts the new user into the database.
                 connection.query('Insert into user (email,hash,salt,admin,google_user) VALUES (' +
                     connection.escape(email) + ',' + connection.escape(hash) + ',' + connection.escape(salt) +
-                    ',false,false)', function (err, rows, fields) {
+                    ',false,' + connection.escape(req.body.google_user) + ')', function (err, rows, fields) {
 
                     if (!err) {
                         var payload = {email: email, ID: rows.insertId, first_name: "New", last_name: "User"};
@@ -191,7 +191,7 @@ router.route('/login')
                 };
                 var token = jwt.sign(payload, secret.secretToken, {expiresIn: 3600});
 
-                return res.json({token: token, admin: row[0].admin});
+                return res.json({token: token, admin: row[0].admin, google: row[0].google_user});
             });
         });
     });

@@ -7,9 +7,13 @@
 
     <div class="modal-body" style="padding: 0">
         <div class="col-sm-12">
-
-            <div class="row">
-                <div class="col-sm-6">
+            <div class="col-sm-8">
+                <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar"
+                     id="myCalendar3"></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="col-sm-12">
+                    Date
                     <p class="input-group">
                         <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt"
                                is-open="popup1.opened" min-date="minDate" max-date="maxDate"
@@ -21,17 +25,15 @@
               </span>
                     </p>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
+                    Time
                     <uib-timepicker ng-model="dt" ng-change="changed()" hour-step="hstep" minute-step="mstep"
                                     show-meridian="ismeridian"></uib-timepicker>
                 </div>
+
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar"
-                         id="myCalendar3"></div>
-                </div>
-            </div>
+
+
         </div>
     </div>
     <div class="modal-footer">

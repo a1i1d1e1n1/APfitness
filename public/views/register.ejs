@@ -44,14 +44,16 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Do you want to sync your google calendar on startup?
+                                <input ng-model="user.google_user" type="checkbox"> Do you want to sync your google
+                                calendar on startup?
                             </label>
                         </div>
                     </form>
                 <hr>
                 <div class="btn-block">
                     <button type="submit" class="btn btn-primary btn-lg" style="width: 100%"
-                            ng-click="register(user.email, user.password,user.passwordConfirm)">Register
+                            ng-click="register(user.email, user.password,user.passwordConfirm,user.google_user)">
+                        Register
                     </button>
                 </div>
             </div>

@@ -7,6 +7,19 @@
 
 angular.module('App').controller('AssignWorkoutModalCtrl', ['$scope', '$uibModalInstance', 'WorkoutService', 'items', 'toastr', '$location',
     function ($scope, $uibModalInstance, WorkoutService, items, toastr, $location) {
+
+        $scope.event = [];
+
+        // Eventscope that stores all google events and styles them different colours
+        $scope.google_events = {
+            color: '#FFA500',
+            textColor: 'white',
+            events: []
+        };
+
+        //The scope used to display the events on the calendar, can use multiple eventsources.
+        $scope.eventSources = [$scope.event, $scope.google_events];
+
         //Assign the workout being passed into controller
         $scope.workout = items;
 
@@ -37,6 +50,35 @@ angular.module('App').controller('AssignWorkoutModalCtrl', ['$scope', '$uibModal
 
             }
         };
+
+
+        var getWorkouts = function () {
+            WorkoutService.getAssignWorkout().success(function (data) {
+                //Assigns these workout to the calendar.
+                for (var i = 0; i < data.length; i++) {
+                    addEvent(data[i].workoutName, data[i].start_date, data[i].end_date);
+                }
+                $scope.eventSources = $scope.event;
+
+            }).error(function (status, data) {
+                console.log(status);
+                console.log(data);
+            });
+        };
+
+        //Method used to add events to the workout eventscope
+        var addEvent = function (title, start, end) {
+
+            $scope.event.push({
+                title: title,
+                start: new Date(start),
+                end: new Date(end),
+                stick: true,
+                allDay: false
+            });
+        };
+
+        getWorkouts();
 
         //Assigns a workout to the users schedule by calling workout service and handles response.
         $scope.assignWorkout = function (datetime) {

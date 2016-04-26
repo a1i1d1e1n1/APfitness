@@ -17,8 +17,9 @@ angular.module('App').controller('WorkoutModalCtrl', ['$scope', 'WorkoutService'
             enableFiltering: false,
 
             columnDefs: [
-                {name: 'name', width: '70%'},
-                {name: 'sets', width: '30%'},
+                {name: 'name', width: '50%'},
+                {name: 'sets', width: '25%'},
+                {name: 'reps', width: '25%'},
             ]
         };
 

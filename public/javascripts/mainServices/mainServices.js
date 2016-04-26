@@ -6,7 +6,8 @@ var app = angular.module('App.factories', []);
 app.factory('AuthenticationService', function() {
     var auth = {
         isAuthenticated: false,
-        isAdmin: false
+        isAdmin: false,
+        isGoogle: false
     };
 
     return auth;
@@ -35,8 +36,13 @@ app.factory('UserService', function ($http) {
         checkAuth: function () {
             return $http.get('api/auth');
         },
-        register: function(email, password, passwordConfirmation) {
-            return $http.post('api/register', {email: email, password: password, passwordConfirmation: passwordConfirmation });
+        register: function (email, password, passwordConfirmation, google) {
+            return $http.post('api/register', {
+                email: email,
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                google_user: google
+            });
         },
 
         users: function() {
@@ -114,6 +120,9 @@ app.factory('WorkoutService', function ($http) {
         },
         getAssignWorkout: function () {
             return $http.get('api/workout/assigned')
+        },
+        getWeeklyWorkout: function () {
+            return $http.get('api/workout/weekly')
         },
         getAllComments: function (id) {
             return $http.get('api/workout/comments/' + id)

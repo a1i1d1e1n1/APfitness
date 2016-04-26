@@ -17,13 +17,25 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', '
             exercises:[]
         };
 
-        $scope.increment = function (set) {
-            set.reps += 1;
+        $scope.incrementSets = function (exercise) {
+            exercise.sets += 1;
+
         };
 
-        $scope.decrement = function (set) {
-            if (set.reps > 0) {
-                set.reps -= 1;
+        $scope.decrementSets = function (exercise) {
+            if (exercise.sets > 0) {
+                exercise.sets -= 1;
+            }
+        };
+
+        $scope.incrementReps = function (exercise) {
+            exercise.reps += 1;
+
+        };
+
+        $scope.decrementReps = function (exercise) {
+            if (exercise.reps > 0) {
+                exercise.reps -= 1;
             }
         };
 
@@ -49,24 +61,14 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', '
         });
 
         $scope.addExercise = function (exercise){
-            exercise.sets = [];
+            exercise.sets = 0;
+            exercise.reps = 0;
             $scope.workout.exercises.push(exercise);
 
         };
 
         $scope.removeExercise = function (i){
             $scope.workout.exercises.splice(i, 1);;
-        };
-
-        $scope.addSet = function (index){
-            var set = {reps: 0, weight:0};
-            $scope.workout.exercises[index].sets.push(set);
-        };
-
-        //Removes a set from the exercise
-        $scope.removeSet = function (index,i){
-
-            $scope.workout.exercises[index].sets.splice(i, 1);;
         };
 
         $scope.showCanvas = function () {
@@ -124,7 +126,7 @@ angular.module('App').controller('CreateWorkoutCtrl', ['$rootScope', '$scope', '
         var checkSets = function(workout,valid){
             if(valid){
                 for(var i = 0; i < workout.exercises.length; i++){
-                    if(workout.exercises[i].sets.length == 0) {
+                    if (workout.exercises[i].sets == 0 || workout.exercises[i].reps == 0) {
 
                         toastr.error("Please make sure all your exercises have sets added !!");
                         return(false);
