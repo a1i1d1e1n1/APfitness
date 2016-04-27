@@ -73,6 +73,9 @@ app.factory('ExerciseService', function ($http) {
         getAllExercises: function() {
             return $http.get('api/exercise');
         },
+        getExercises: function (id) {
+            return $http.get('api/publicexercise/' + id);
+        },
         getAllComments: function (id) {
             return $http.get('api/exercise/comments/' + id);
         },
@@ -112,6 +115,9 @@ app.factory('WorkoutService', function ($http) {
         saveWorkout: function(workout) {
             return $http.post('api/workout/save', {workout: workout});
         },
+        getWorkoutsExercise: function (id) {
+            return $http.get('api/publicworkout/' + id)
+        },
         getAllWorkoutsExercise: function () {
             return $http.get('api/workout/AllWorkoutExercises')
         },
@@ -123,6 +129,9 @@ app.factory('WorkoutService', function ($http) {
         },
         getWeeklyWorkout: function () {
             return $http.get('api/workout/weekly')
+        },
+        completeWorkout: function (workout) {
+            return $http.post('api/workout/complete', {workout: workout})
         },
         getAllComments: function (id) {
             return $http.get('api/workout/comments/' + id)

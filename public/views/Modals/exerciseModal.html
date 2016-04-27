@@ -11,7 +11,7 @@
         <iframe width="100%" height="315" ng-src="{{videoUrl}}" frameborder="0"
                     allowfullscreen></iframe>
 
-        <div class="col-sm-12" style="padding: 0">
+        <div class="col-sm-12" style="padding: 0" ng-show="comments">
 
                         <div style="overflow-y: scroll;overflow-x:hidden;height: 150px">
                             <div ng-repeat="comment in comments">
@@ -41,7 +41,7 @@
 
         </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" ng-show="comments">
         <span class="btn btn-primary btn-lg" ng-click="openComment(exercise)" style="width:100%"><i
                 class="fui-plus"></i> Add Comment</span>
 

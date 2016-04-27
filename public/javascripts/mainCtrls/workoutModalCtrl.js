@@ -23,6 +23,7 @@ angular.module('App').controller('WorkoutModalCtrl', ['$scope', 'WorkoutService'
             ]
         };
 
+
         $scope.gridOptions.data = items.exercises;
 
         var getAllComments = function () {

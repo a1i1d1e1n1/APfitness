@@ -22,6 +22,39 @@ var compareHash = function (storedHash, genHash) {
     return storedHash == genHash;
 };
 
+router.route('/publicworkout/:id')
+    // fetch all Workouts_exercises
+    .get(function (req, res) {
+
+        var params = req.params;
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM workout_exercises where workoutID = ' + params.id, function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.' + err);
+            });
+        })
+
+    });
+
+router.route('/publicexercise/:id')
+    // fetch all Workouts_exercises
+    .get(function (req, res) {
+
+        var params = req.params;
+        pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM exercise where exerciseID = ' + params.id, function (err, rows, fields) {
+                connection.release();
+                if (!err)
+                    res.json(rows);
+                else
+                    console.log('Error while performing Query.' + err);
+            });
+        })
+
+    });
 
 router.route('/passwordReset')
     .post(function (req, res) {
@@ -209,7 +242,10 @@ router.use(function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, secret.secretToken, function (err, decoded) {
             if (err) {
-
+                return res.status(401).send({
+                    success: false,
+                    message: 'Failed to authenticate token.'
+                });
 
             } else {
                 // if everything is good, save to request for use in other routes

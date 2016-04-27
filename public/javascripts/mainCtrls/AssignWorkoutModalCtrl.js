@@ -82,17 +82,22 @@ angular.module('App').controller('AssignWorkoutModalCtrl', ['$scope', '$uibModal
 
         //Assigns a workout to the users schedule by calling workout service and handles response.
         $scope.assignWorkout = function (datetime) {
-            WorkoutService.assignWorkout($scope.workout, datetime).success(function (data) {
-                console.log(data);
-                toastr.success("Workout has been assigned to your calender");
-                $location.path("/assigned");
-                $uibModalInstance.dismiss('cancel');
+            if (datetime) {
+                WorkoutService.assignWorkout($scope.workout, datetime).success(function (data) {
+                    console.log(data);
+                    toastr.success("Workout has been assigned to your calender");
+                    $location.path("/userHome");
+                    $uibModalInstance.dismiss('cancel');
 
-            }).error(function (status, data) {
-                toastr.info(status.message.workoutName);
-                console.log(status);
-                console.log(data);
-            });
+                }).error(function (status, data) {
+                    toastr.info(status.message);
+                    console.log(status);
+                    console.log(data);
+                });
+            } else {
+                toastr.info("Please ensure you have entered a valid date and time");
+            }
+
 
         };
 

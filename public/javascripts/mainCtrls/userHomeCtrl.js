@@ -1,7 +1,7 @@
 /**
  * Created by nm on 2/17/2016.
  */
-angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, $compile, $timeout, uiCalendarConfig, toastr, WorkoutService, $location, GoogleService) {
+angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, UserService, $compile, $timeout, usSpinnerService, uiCalendarConfig, toastr, WorkoutService, $location, GoogleService, $uibModal) {
 
     $scope.alertOnEventClick = function (date, jsEvent, view) {
         $scope.alertMessage = (date.title + ' was clicked ');
@@ -10,6 +10,7 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
     $scope.events = [
 
     ];
+
 
     // Eventscope that stores all google events and styles them different colours
     $scope.google_events = {
@@ -90,20 +91,73 @@ angular.module('App').controller('UserHomeCtrl', function ($rootScope, $scope, U
         eventClick: $scope.alertOnEventClick
     };
 
+    $scope.workoutComplete = function (workout) {
+        WorkoutService.completeWorkout(workout).success(function (data) {
+            getWeeklyWorkouts();
+
+        }).error(function (status, data) {
+            console.log(status);
+            console.log(data);
+        });
+    };
+
+    var countWorkoutCompleted = function (workouts) {
+        var total = 0;
+        for (var i = 0; i < workouts.length; i++) {
+            if (workouts[i].completed == 1) {
+                total += 1;
+            }
+        }
+        return total;
+    };
+
+    $scope.openWorkout = function (workout) {
+        WorkoutService.getWorkoutsExercise(workout.workoutID).success(function (data) {
+            workout.exercises = [];
+            workout.exercises = data;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/Modals/workoutModal.html',
+                controller: 'WorkoutModalCtrl',
+                size: 'lg',
+                resolve: {
+                    items: function () {
+                        return workout;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+
+            }, function () {
+            });
+        }).error(function (status, data) {
+            console.log(status);
+            console.log(data);
+        });
+
+
+    };
 
     //Gets the workout for the week to show the user how many have been completed.
-    WorkoutService.getWeeklyWorkout().success(function (data) {
-        if (data.length > 0) {
-            $scope.recent_workouts = data;
+    var getWeeklyWorkouts = function () {
+        usSpinnerService.spin('spinner-2');
+        WorkoutService.getWeeklyWorkout().success(function (data) {
+            usSpinnerService.stop('spinner-2');
+            if (data.length > 0) {
+                $scope.recent_workouts = data;
+                $scope.totalCompleted = countWorkoutCompleted(data);
+                console.log(data);
+            }
 
+        }).error(function (status, data) {
+            usSpinnerService.stop('spinner-2');
+            console.log(status);
             console.log(data);
-        }
+        });
+    };
 
-    }).error(function (status, data) {
-        console.log(status);
-        console.log(data);
-    });
-
+    getWeeklyWorkouts();
     getWorkouts();
 
 

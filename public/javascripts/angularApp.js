@@ -49,27 +49,27 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $routeProvider.when('/', {
         templateUrl: 'views/home.ejs',
         controller: 'AdminUserCtrl',
-        access: {requiredAuthentication: false}
+        access: {requiredAuthentication: false, requiredAdmin: false}
     });
     $routeProvider.when('/login', {
         templateUrl: 'views/login.ejs',
         controller: 'AdminUserCtrl',
-        access: {requiredAuthentication: false}
+        access: {requiredAuthentication: false, requiredAdmin: false}
     });
     $routeProvider.when('/register', {
         templateUrl: 'views/register.ejs',
         controller: 'AdminUserCtrl',
-        access: {requiredAuthentication: false}
+        access: {requiredAuthentication: false, requiredAdmin: false}
     });
     $routeProvider.when('/404', {templateUrl: '/views/404.ejs'});
     $routeProvider.when('/userHome', {
         templateUrl: '/views/userHome.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'UserHomeCtrl'
     });
     $routeProvider.when('/exercises', {
         templateUrl: '/views/exercises.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'ExerciseCtrl'
     });
     $routeProvider.when('/adminHome', {
@@ -78,30 +78,34 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     });
     $routeProvider.when('/createworkout', {
         templateUrl: '/views/createWorkout.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'CreateWorkoutCtrl'
     });
     $routeProvider.when('/forgotPassword', {
         templateUrl: '/views/forgotPassword.ejs',
-        access: {requiredAuthentication: false},
+        access: {requiredAuthentication: false, requiredAdmin: false},
         controller: 'PasswordResetCtrl'
     });
     $routeProvider.when('/workouts', {
         templateUrl: '/views/workouts.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'WorkoutCtrl'
     });
     $routeProvider.when('/assigned', {
         templateUrl: '/views/assignedWorkouts.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'AssignedWorkoutCtrl'
     });
     $routeProvider.when('/profile', {
         templateUrl: '/views/profile.ejs',
-        access: {requiredAuthentication: true},
+        access: {requiredAuthentication: true, requiredAdmin: false},
         controller: 'ProfileCtrl'
     });
-
+    $routeProvider.when('/workouts/:id', {
+        templateUrl: '/views/public/exercise.html',
+        access: {requiredAuthentication: false, requiredAdmin: false},
+        controller: 'PublicWorkoutCtrl'
+    });
 }]);
 
 
@@ -138,7 +142,7 @@ app.run(function ($rootScope, $location, AuthenticationService, $window, toastr,
                 (!nextRoute.access.requiredAuthentication && AuthenticationService.isAuthenticated) ||
                 (nextRoute.access.requiredAdmin && !AuthenticationService.isAdmin)) {
                 $location.path("/userHome");
-                toastr.info("you are already logged in");
+                toastr.info("You are not authorized to view that page");
             }
         }, function (reason) {
             //  If the users is not authenticated  they will not be able to access routes that require authentication.

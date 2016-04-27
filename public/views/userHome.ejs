@@ -1,28 +1,33 @@
-
-
+<span us-spinner spinner-theme="bigBlue" spinner-key="spinner-2"></span>
 
     <br>
     <div class="container">
 
-        <div class="col-xs-12  col-lg-8 col-xl-10">
+        <div class="col-xs-12 col-md-7  col-lg-7 col-xl-10">
 
             <div ui-calendar="uiConfig.calendar" ng-model="eventSources" class="calendar" id="myCalendar3"></div>
         </div>
-        <div class="col-xs-12 col-lg-4 col-xl-2">
+        <div class="col-xs-12 col-md-5 col-lg-5 col-xl-2">
             <div class="panel panel-green">
-                <div class="panel-heading" style="text-align: center">
-                    Workouts Completed {{0}} / {{recent_workouts.length}}
+                <div class="panel-heading" style="text-align: center" ng-show="recent_workouts.length > 0">
+
+                    Workouts Completed {{totalCompleted}} / {{recent_workouts.length}}
                 </div>
                 <div class="panel-body">
 
-                    <span ng-show="!recent_workouts">You have no workouts planned for this week.</span>
+                    <span ng-show="recent_workouts.length == 0">You have no workouts planned. Please assign one from the list of workouts. </span>
                     <table class="table" ng-show="recent_workouts">
 
                         <tbody>
-                        <tr ng-repeat="workout in recent_workouts">
+                        <tr ng-repeat="workout in recent_workouts" ng-click="openWorkout(workout)">
                             <th>{{workout.workoutName}}</th>
+                            <th>{{workout.start_date | date: 'MMMM dd - HH:mm'}}</th>
+
                             <th>
-                                <button class="btn btn-info"><i class="glyphicon glyphicon-thumbs-up"></i></button>
+                                <button class="btn btn-info btn-xs" ng-show="workout.completed == 0"
+                                        ng-click="workoutComplete(workout)"><i
+                                            class="glyphicon glyphicon-thumbs-up"></i></button>
+                                <i ng-show="workout.completed == 1" class="glyphicon glyphicon-ok"></i>
                             </th>
                         </tr>
 
